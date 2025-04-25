@@ -5,8 +5,8 @@ int Member::lastId = 0;
 
 Member::Member() : id(0), isVip(false), age(0) {}
 
-Member::Member(const QString& name, const QString& email, const QString& gender, bool isVip, const QString& phone, const QString& address, int age)
-    : id(++lastId),name(name), email(email), gender(gender), isVip(isVip), phone(phone), address(address), age(age) {}
+Member::Member(const QString& name, const QString& email, const QString &password, const QString& gender, bool isVip, const QString& phone, const QString& address, int age)
+    : id(++lastId),name(name), email(email),password(password), gender(gender), isVip(isVip), phone(phone), address(address), age(age) {}
 
 void Member::setName(const QString& newName) {name = newName;}
 void Member::addClass(GymClass* gymClass) {classes.push_back(gymClass);gymClass->getMembers().append(this);}
@@ -15,6 +15,7 @@ void Member::setGender(const QString& newGender) {gender = newGender;}
 void Member::setIsVip(bool vipStatus) {isVip = vipStatus;}
 int Member::getId() const {return id;}
 QString Member::getName() const {return name;}
+QString Member::getPassword() const {return password;}
 QString Member::getEmail() const {return email;}
 QString Member::getGender() const {return gender;}
 bool Member::getIsVip() const {return isVip;}

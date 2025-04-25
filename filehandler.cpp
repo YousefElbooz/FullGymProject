@@ -24,17 +24,18 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath) {
         if (line.isEmpty() || line.startsWith("#")) continue;
 
         QStringList parts = line.split(":");
-        if (parts.size() == 8) {
+        if (parts.size() == 9) {
             int id = parts[0].toInt();
             QString name = parts[1];
             QString email = parts[2];
-            QString gender = parts[3];
-            bool isVip = (parts[4].toLower() == "true");
-            QString phone = parts[5];
-            QString address = parts[6];
-            int age = parts[7].toInt();
+            QString password = parts[3];
+            QString gender = parts[4];
+            bool isVip = (parts[5].toLower() == "true");
+            QString phone = parts[6];
+            QString address = parts[7];
+            int age = parts[8].toInt();
 
-            Member* m = new Member(name, email, gender, isVip, phone, address, age);
+            Member* m = new Member(name, email,password, gender, isVip, phone, address, age);
             members[id] = m;
         }
     }
@@ -111,7 +112,7 @@ void FileHandler::saveMembers(const QString& filePath, const QMap<int, Member*>&
     QTextStream out(&file);
     for (auto it = members.begin(); it != members.end(); ++it) {
         Member* m = it.value();
-        out << it.key() << ":" << m->getName() << ":" << m->getEmail()
+        out << it.key() << ":" << m->getName() << ":" << m->getEmail()<<":"<< m->getPassword()
             << ":" << m->getGender() << ":" << (m->getIsVip() ? "true" : "false")
             << ":" << m->getPhone() << ":" << m->getAddress() << ":" << m->getAge() << "\n";
     }

@@ -13,17 +13,19 @@ private:
     int id;
     QString name;
     QString email;
+    QString password;
     QString gender;
     bool isVip;
     QVector<GymClass*> classes;
     // QVector<PadelCourt*> classes;
     QString phone;   // New field
     QString address; // New field
-    int age;         // New field
+    int age;         // New
+    //payment duration
 
 public:
     Member();  // Default constructor
-    Member(const QString& name, const QString& email, const QString& gender, bool isVip, const QString& phone, const QString& address, int age);
+    Member(const QString& name, const QString& email,const QString& password, const QString& gender, bool isVip, const QString& phone, const QString& address, int age);
 
     void addClass(GymClass* gymClass);
     void setName(const QString& newName);
@@ -36,6 +38,7 @@ public:
 
     int getId() const;
     QString getName() const;
+    QString getPassword() const;
     QString getEmail() const;
     QString getGender() const;
     bool getIsVip() const;

@@ -24,6 +24,7 @@ private slots:
     void onAddClass();
     void onAssignClass();
     void loadPhotos();
+    void onSignUp();
     void showEvent(QShowEvent *event) override;
 
 private:
