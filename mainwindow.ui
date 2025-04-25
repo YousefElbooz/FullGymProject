@@ -432,7 +432,7 @@ padding:2px;</string>
 </string>
       </property>
      </widget>
-     <widget class="QWidget" name="widget" native="true">
+     <widget class="QStackedWidget" name="stackedWidget">
       <property name="geometry">
        <rect>
         <x>370</x>
@@ -444,343 +444,319 @@ padding:2px;</string>
       <property name="styleSheet">
        <string notr="true">background-color: rgba(255, 255, 255, 0);
 border-color: rgb(243, 200, 26);
-border:4px solid;</string>
+border:3px solid;</string>
       </property>
-      <widget class="QLineEdit" name="NameLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>20</y>
-         <width>151</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	padding-left:20px;
-	color: rgb(0,0,0);
-	font: 14pt &quot;Motley Forces&quot;;
-	background-color: rgb(243, 200, 26);
-	border-radius:20px;
-	border:1px solid black;
-
-}
-
-QLineEdit:focus {
-	color: rgb(243, 200, 26);
-	background-color: black;
-
-}
-
-</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="EmaillineEdit">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>70</y>
-         <width>151</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	padding-left:20px;
-	color: rgb(0,0,0);
-	font: 14pt &quot;Motley Forces&quot;;
-	background-color: rgb(243, 200, 26);
-	border-radius:20px;
-	border:1px solid black;
-
-}
-
-QLineEdit:focus {
-	color: rgb(243, 200, 26);
-	background-color: black;
-
-}
-
-</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="PasswordLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>340</x>
-         <y>20</y>
-         <width>171</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	padding-left:20px;
-	color: rgb(0,0,0);
-	font: 14pt &quot;Motley Forces&quot;;
-	background-color: rgb(243, 200, 26);
-	border-radius:20px;
-	border:1px solid black;
-
-}
-
-QLineEdit:focus {
-	color: rgb(243, 200, 26);
-	background-color: black;
-
-}
-
-</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="NameLabel">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>71</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border:0px;
-color: black;
-font: 12pt &quot;Bauhaus 93&quot;;
-padding:0px;
-</string>
-       </property>
-       <property name="text">
-        <string>Name :</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="EmailLabel">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>70</y>
-         <width>71</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border:0px;
-color: black;
-font: 12pt &quot;Bauhaus 93&quot;;
-padding:0px;
-</string>
-       </property>
-       <property name="text">
-        <string>Email :</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="Passwordlabel">
-       <property name="geometry">
-        <rect>
-         <x>240</x>
-         <y>20</y>
-         <width>101</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border:0px;
-color: black;
-font: 12pt &quot;Bauhaus 93&quot;;
-padding:0px;
-</string>
-       </property>
-       <property name="text">
-        <string>Password :</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="AgeLabel">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>70</y>
-         <width>61</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border:0px;
-color: black;
-font: 12pt &quot;Bauhaus 93&quot;;
-padding:0px;
-</string>
-       </property>
-       <property name="text">
-        <string>Age :</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="AgeLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>340</x>
-         <y>70</y>
-         <width>171</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	padding-left:20px;
-	color: rgb(0,0,0);
-	font: 14pt &quot;Motley Forces&quot;;
-	background-color: rgb(243, 200, 26);
-	border-radius:20px;
-	border:1px solid black;
-
-}
-
-QLineEdit:focus {
-	color: rgb(243, 200, 26);
-	background-color: black;
-
-}
-
-</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="PhoneLabel">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>120</y>
-         <width>71</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border:0px;
-color: black;
-font: 12pt &quot;Bauhaus 93&quot;;
-padding:0px;
-</string>
-       </property>
-       <property name="text">
-        <string>Phone : </string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="PhoneLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>120</y>
-         <width>151</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	padding-left:20px;
-	color: rgb(0,0,0);
-	font: 14pt &quot;Motley Forces&quot;;
-	background-color: rgb(243, 200, 26);
-	border-radius:20px;
-	border:1px solid black;
-
-}
-
-QLineEdit:focus {
-	color: rgb(243, 200, 26);
-	background-color: black;
-
-}
-
-</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="AddressLabel">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>170</y>
-         <width>101</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border:0px;
-color: black;
-font: 12pt &quot;Bauhaus 93&quot;;
-padding:0px;
-</string>
-       </property>
-       <property name="text">
-        <string>Address : </string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="AddresssLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>170</y>
-         <width>151</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	padding-left:20px;
-	color: rgb(0,0,0);
-	font: 14pt &quot;Motley Forces&quot;;
-	background-color: rgb(243, 200, 26);
-	border-radius:20px;
-	border:1px solid black;
-
-}
-
-QLineEdit:focus {
-	color: rgb(243, 200, 26);
-	background-color: black;
-
-}
-
-</string>
-       </property>
-      </widget>
-      <widget class="QWidget" name="GenderWidget" native="true">
-       <property name="geometry">
-        <rect>
-         <x>230</x>
-         <y>100</y>
-         <width>311</width>
-         <height>111</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border:none;</string>
-       </property>
-       <widget class="QRadioButton" name="MaleBtn">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="SignUp" native="true">
+       <widget class="QLineEdit" name="PhoneLineEdit">
         <property name="geometry">
          <rect>
-          <x>80</x>
+          <x>70</x>
+          <y>20</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+	padding-left:20px;
+	color: rgb(0,0,0);
+	font: 14pt &quot;Motley Forces&quot;;
+	background-color: rgb(243, 200, 26);
+	border-radius:20px;
+	border:1px solid black;
+
+}
+
+QLineEdit:focus {
+	color: rgb(243, 200, 26);
+	background-color: black;
+
+}
+
+</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="NameLineEdit">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>120</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+	padding-left:20px;
+	color: rgb(0,0,0);
+	font: 14pt &quot;Motley Forces&quot;;
+	background-color: rgb(243, 200, 26);
+	border-radius:20px;
+	border:1px solid black;
+
+}
+
+QLineEdit:focus {
+	color: rgb(243, 200, 26);
+	background-color: black;
+
+}
+
+</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="CheckTheUserLabel">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>180</y>
+          <width>201</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>If you have an account , </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="AgeLabel">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>70</y>
+          <width>61</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>Age :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="Passwordlabel">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
           <y>20</y>
           <width>101</width>
           <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">QRadioButton  {
+         <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>Password :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="NameLabel">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>71</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>Name :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="SignUpBtn">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>220</y>
+          <width>151</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton  {
+	font: 14pt &quot;Motley Forces&quot;;
+	color: rgb(0, 0, 0);
+	border-radius:20px;
+	border:1px solid;
+	background-color: rgb(243, 200, 26);
+	border-color:rgb(0, 0, 0);
+}
+QPushButton:hover {
+	color: rgb(243, 200, 26);
+	background-color: black;
+
+}
+
+</string>
+        </property>
+        <property name="text">
+         <string>Sign Up</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="PasswordLineEdit">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>20</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+	padding-left:20px;
+	color: rgb(0,0,0);
+	font: 14pt &quot;Motley Forces&quot;;
+	background-color: rgb(243, 200, 26);
+	border-radius:20px;
+	border:1px solid black;
+
+}
+
+QLineEdit:focus {
+	color: rgb(243, 200, 26);
+	background-color: black;
+
+}
+
+</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="PhoneLabel">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>71</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>Phone :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="AgeLineEdit">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>70</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+	padding-left:20px;
+	color: rgb(0,0,0);
+	font: 14pt &quot;Motley Forces&quot;;
+	background-color: rgb(243, 200, 26);
+	border-radius:20px;
+	border:1px solid black;
+
+}
+
+QLineEdit:focus {
+	color: rgb(243, 200, 26);
+	background-color: black;
+
+}
+
+</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="EmailLabel">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>70</y>
+          <width>71</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>Email :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QWidget" name="GenderWidget" native="true">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>100</y>
+          <width>311</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;</string>
+        </property>
+        <widget class="QRadioButton" name="MaleBtn">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>20</y>
+           <width>101</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QRadioButton  {
 	padding-left:10px;
 	color: rgb(0, 0, 0);
 	font: 12pt &quot;Motley Forces&quot;;
@@ -803,22 +779,22 @@ QRadioButton::indicator:checked {
 }
 
 </string>
-        </property>
-        <property name="text">
-         <string>Male </string>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="FemalBtn">
-        <property name="geometry">
-         <rect>
-          <x>190</x>
-          <y>20</y>
-          <width>101</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QRadioButton  {
+         </property>
+         <property name="text">
+          <string>Male </string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="FemalBtn">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>20</y>
+           <width>101</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QRadioButton  {
 	padding-left:10px;
 	color: rgb(0, 0, 0);
 	font: 12pt &quot;Motley Forces&quot;;
@@ -841,69 +817,75 @@ QRadioButton::indicator:checked {
 }
 
 </string>
-        </property>
-        <property name="text">
-         <string>Female</string>
-        </property>
+         </property>
+         <property name="text">
+          <string>Female</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="GenderLabel">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>81</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+         </property>
+         <property name="text">
+          <string>Gender : </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
        </widget>
-       <widget class="QLabel" name="GenderLabel">
+       <widget class="QLineEdit" name="EmaillineEdit">
         <property name="geometry">
          <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>81</width>
+          <x>70</x>
+          <y>70</y>
+          <width>151</width>
           <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">border:0px;
-color: black;
-font: 12pt &quot;Bauhaus 93&quot;;
-padding:0px;
+         <string notr="true">QLineEdit {
+	padding-left:20px;
+	color: rgb(0,0,0);
+	font: 14pt &quot;Motley Forces&quot;;
+	background-color: rgb(243, 200, 26);
+	border-radius:20px;
+	border:1px solid black;
+
+}
+
+QLineEdit:focus {
+	color: rgb(243, 200, 26);
+	background-color: black;
+
+}
+
 </string>
-        </property>
-        <property name="text">
-         <string>Gender : </string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
        </widget>
-      </widget>
-      <widget class="QLabel" name="CheckTheUserLabel">
-       <property name="geometry">
-        <rect>
-         <x>240</x>
-         <y>180</y>
-         <width>201</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border:0px;
-color: black;
-font: 12pt &quot;Bauhaus 93&quot;;
-padding:0px;
-</string>
-       </property>
-       <property name="text">
-        <string>If you have an account , </string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="ToggleBtn">
-       <property name="geometry">
-        <rect>
-         <x>430</x>
-         <y>180</y>
-         <width>101</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton  {
+       <widget class="QPushButton" name="ToggleBtn">
+        <property name="geometry">
+         <rect>
+          <x>420</x>
+          <y>180</y>
+          <width>101</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton  {
 	color: black;
 	font: 14pt &quot;Motley Forces&quot;;
 	border-radius:20px;
@@ -918,22 +900,105 @@ QPushButton:hover {
 }
 
 </string>
-       </property>
-       <property name="text">
-        <string>Login</string>
-       </property>
+        </property>
+        <property name="text">
+         <string>Login</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="AddresssLineEdit">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>170</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+	padding-left:20px;
+	color: rgb(0,0,0);
+	font: 14pt &quot;Motley Forces&quot;;
+	background-color: rgb(243, 200, 26);
+	border-radius:20px;
+	border:1px solid black;
+
+}
+
+QLineEdit:focus {
+	color: rgb(243, 200, 26);
+	background-color: black;
+
+}
+
+</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="AddressLabel">
+        <property name="geometry">
+         <rect>
+          <x>-10</x>
+          <y>170</y>
+          <width>101</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>Address : </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
       </widget>
-      <widget class="QPushButton" name="SignUpBtn">
-       <property name="geometry">
-        <rect>
-         <x>180</x>
-         <y>220</y>
-         <width>151</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton  {
+      <widget class="QWidget" name="LoginPage">
+       <widget class="QLineEdit" name="EmaillineEditLogin">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>30</y>
+          <width>381</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+	padding-left:20px;
+	color: rgb(0,0,0);
+	font: 14pt &quot;Motley Forces&quot;;
+	background-color: rgb(243, 200, 26);
+	border-radius:20px;
+	border:1px solid black;
+
+}
+
+QLineEdit:focus {
+	color: rgb(243, 200, 26);
+	background-color: black;
+
+}
+
+</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="LoginBtn">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>220</y>
+          <width>151</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton  {
 	font: 14pt &quot;Motley Forces&quot;;
 	color: rgb(0, 0, 0);
 	border-radius:20px;
@@ -948,10 +1013,139 @@ QPushButton:hover {
 }
 
 </string>
-       </property>
-       <property name="text">
-        <string>Sign Up</string>
-       </property>
+        </property>
+        <property name="text">
+         <string>Login</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="CheckTheUserLabelLogin">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>140</y>
+          <width>241</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>If you don't have an account ,</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="PasswordLineEditLogin">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>90</y>
+          <width>381</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+	padding-left:20px;
+	color: rgb(0,0,0);
+	font: 14pt &quot;Motley Forces&quot;;
+	background-color: rgb(243, 200, 26);
+	border-radius:20px;
+	border:1px solid black;
+
+}
+
+QLineEdit:focus {
+	color: rgb(243, 200, 26);
+	background-color: black;
+
+}
+
+</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="toggleBtn_2">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>140</y>
+          <width>101</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton  {
+	color: black;
+	font: 14pt &quot;Motley Forces&quot;;
+	border-radius:20px;
+	background-color: rgb(243, 200, 26);
+	border:1px solid;
+	border-color: black;
+
+}
+QPushButton:hover {
+	background-color: black;
+	color: rgb(243, 200, 26);
+}
+
+</string>
+        </property>
+        <property name="text">
+         <string>SignUp</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="EmailLabelLogin">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>71</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>Email :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="PasswordlabelLogin">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>90</y>
+          <width>101</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: black;
+font: 12pt &quot;Bauhaus 93&quot;;
+padding:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>Password :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
       </widget>
      </widget>
      <zorder>bgp_4</zorder>
@@ -967,7 +1161,7 @@ QPushButton:hover {
      <zorder>bgp_5</zorder>
      <zorder>bgp_3</zorder>
      <zorder>loginWifdget</zorder>
-     <zorder>widget</zorder>
+     <zorder>stackedWidget</zorder>
      <zorder>bgp_7</zorder>
      <zorder>bgp_6</zorder>
     </widget>

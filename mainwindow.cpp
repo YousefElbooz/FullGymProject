@@ -19,7 +19,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btnAddClass, &QPushButton::clicked, this, &MainWindow::onAddClass);
     connect(ui->SignUpBtn, &QPushButton::clicked,this,&MainWindow::onSignUp);
     connect(ui->exitBtn, &QPushButton::clicked, this, &MainWindow::close);
-    ui->FullWidget->setCurrentIndex(1);
+    connect(ui->ToggleBtn, &QPushButton::clicked, this,[=](){ui->stackedWidget->setCurrentIndex(1);});
+    connect(ui->toggleBtn_2, &QPushButton::clicked, this,[=](){ui->stackedWidget->setCurrentIndex(0);});
+    ui->FullWidget->setCurrentIndex(0);
     loadPhotos();
     this->setWindowFlag(Qt::FramelessWindowHint);
     QGraphicsBlurEffect* p_blur = new QGraphicsBlurEffect;
