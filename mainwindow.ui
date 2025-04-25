@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1384</width>
+    <height>917</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QStackedWidget" name="FullWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>5</y>
+      <width>1381</width>
+      <height>887</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(101, 44, 34);
+border:1px solid rgb(185, 125, 124);
+border-radius:20px;</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="Login">
+     <widget class="QLabel" name="bgp">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>30</y>
+        <width>171</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../Downloads/رونالدو.jpeg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>270</y>
+        <width>351</width>
+        <height>301</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../Downloads/ChatGPT Image Apr 15, 2025, 12_44_13 PM.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_9">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>251</width>
+        <height>231</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/486761338_18358780648183487_518183920224791822_n.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_10">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>200</y>
+        <width>171</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/Maldini.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_11">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>570</y>
+        <width>531</width>
+        <height>241</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/93bd66f367106eaa00a77764796b1f77.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_12">
+      <property name="geometry">
+       <rect>
+        <x>770</x>
+        <y>290</y>
+        <width>361</width>
+        <height>311</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/487931916_18458191666073759_5571215937298845863_n.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_13">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>320</y>
+        <width>151</width>
+        <height>261</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/Studio Ghibli aesthetics.jpeg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_14">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>560</y>
+        <width>331</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/487241769_18358780711183487_4467916180267804207_n.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_2">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>270</y>
+        <width>231</width>
+        <height>321</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/SheilYaTweelElOmer.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_3">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>50</y>
+        <width>291</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/487923262_18358780738183487_3064122802807129279_n.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_4">
+      <property name="geometry">
+       <rect>
+        <x>890</x>
+        <y>580</y>
+        <width>391</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/486954623_18458191684073759_6188361622420108090_n.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_5">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>40</y>
+        <width>311</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/487106121_18358780660183487_738216244790693941_n.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_6">
+      <property name="geometry">
+       <rect>
+        <x>1140</x>
+        <y>290</y>
+        <width>231</width>
+        <height>301</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/Mosalah.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="bgp_7">
+      <property name="geometry">
+       <rect>
+        <x>1080</x>
+        <y>10</y>
+        <width>231</width>
+        <height>331</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+color: rgb(0, 0, 0);
+background-color: rgb(0, 0, 0);
+border:5px solid  black;
+border-radius:15px;
+padding:1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>images/487794954_18037488260535615_7174140484398860324_n.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>1320</x>
+        <y>10</y>
+        <width>41</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">padding:0px;
+border:0px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>images/exit.svg</normaloff>images/exit.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QWidget" name="loginWifdget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>220</y>
+        <width>591</width>
+        <height>411</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget {
+	background-color: rgba(255, 255, 255, 200);
+	border-radius:20px;
+	border:10px solid;
+	border-color: rgb(101, 44, 34);
+
+}
+
+</string>
+      </property>
+     </widget>
+     <zorder>bgp_4</zorder>
+     <zorder>bgp_8</zorder>
+     <zorder>bgp_9</zorder>
+     <zorder>bgp_11</zorder>
+     <zorder>bgp_12</zorder>
+     <zorder>bgp_5</zorder>
+     <zorder>bgp_7</zorder>
+     <zorder>bgp_3</zorder>
+     <zorder>bgp_13</zorder>
+     <zorder>bgp_2</zorder>
+     <zorder>bgp</zorder>
+     <zorder>bgp_6</zorder>
+     <zorder>pushButton</zorder>
+     <zorder>bgp_10</zorder>
+     <zorder>bgp_14</zorder>
+     <zorder>loginWifdget</zorder>
+    </widget>
+    <widget class="QWidget" name="mainFunctions">
+     <widget class="QLineEdit" name="ClassId">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>330</y>
+        <width>113</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ClassId</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnAddClass">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>180</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>AddClass</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="assignClass">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>300</y>
+        <width>111</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>assign classs</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="listWidget">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>100</y>
+        <width>351</width>
+        <height>121</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnAddCoach">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>140</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>AddStaff</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnAddMember">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>100</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>AddMember</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="CoachId">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>300</y>
+        <width>113</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CoahID</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
