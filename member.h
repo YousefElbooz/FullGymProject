@@ -3,6 +3,8 @@
 
 #include <QString>
 #include <QVector>
+#include <QString>
+#include <QStack>
 #include "gymclass.h"
 class GymClass;  // Forward declaration
 
@@ -21,6 +23,7 @@ private:
     QString phone;   // New field
     QString address; // New field
     int age;         // New
+    QStack<QString> workout;
     //payment duration
 
 public:
@@ -35,7 +38,7 @@ public:
     void setPhone(const QString& phone);
     void setAddress(const QString& address);
     void setAge(int age);
-
+    void setWorkouts(const QStack<QString>& workout);
     int getId() const;
     QString getName() const;
     QString getPassword() const;
@@ -45,7 +48,7 @@ public:
     QString getPhone() const;
     QString getAddress() const;
     int getAge() const;
-
+    QStack<QString> getWorkouts() const;
 
     /*--------------helper Functions----------*/
     QString toString() const;

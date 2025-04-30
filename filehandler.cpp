@@ -21,7 +21,9 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath) {
     QTextStream in(&file);
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
-        if (line.isEmpty() || line.startsWith("#")) continue;
+        if (line.isEmpty() || line.startsWith("#")){
+
+        };
 
         QStringList parts = line.split(":");
         if (parts.size() == 9) {
