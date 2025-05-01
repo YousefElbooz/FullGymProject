@@ -6,28 +6,35 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1354</width>
-    <height>738</height>
+    <width>1358</width>
+    <height>713</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">border:3px solid rgba(0,0,0,0);
+border-radius:20px;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">padding:0px;</string>
+   </property>
    <widget class="QStackedWidget" name="FullWiedgit">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>0</y>
-      <width>1341</width>
-      <height>721</height>
+      <width>1351</width>
+      <height>711</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="LoginPageStack">
      <widget class="QLabel" name="label">
@@ -35,7 +42,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1341</width>
+        <width>1351</width>
         <height>711</height>
        </rect>
       </property>
@@ -55,7 +62,7 @@
      <widget class="QStackedWidget" name="LoginPageStackedWidget">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>160</x>
         <y>80</y>
         <width>971</width>
         <height>571</height>
@@ -65,7 +72,7 @@
        <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_14">
        <widget class="QWidget" name="widget" native="true">
@@ -300,9 +307,9 @@ padding:0px;</string>
         <property name="geometry">
          <rect>
           <x>160</x>
-          <y>140</y>
+          <y>200</y>
           <width>721</width>
-          <height>401</height>
+          <height>361</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -374,10 +381,10 @@ color: rgb(0, 0, 0);</string>
         <widget class="QPushButton" name="SignUp">
          <property name="geometry">
           <rect>
-           <x>320</x>
-           <y>330</y>
-           <width>81</width>
-           <height>51</height>
+           <x>310</x>
+           <y>290</y>
+           <width>101</width>
+           <height>61</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -456,8 +463,8 @@ color:rgb(0, 0, 0)</string>
         <widget class="QLabel" name="ToggleLabel">
          <property name="geometry">
           <rect>
-           <x>110</x>
-           <y>300</y>
+           <x>40</x>
+           <y>250</y>
            <width>231</width>
            <height>21</height>
           </rect>
@@ -483,8 +490,8 @@ padding:0px;</string>
         <widget class="QPushButton" name="toggleButton_2">
          <property name="geometry">
           <rect>
-           <x>440</x>
-           <y>290</y>
+           <x>260</x>
+           <y>240</y>
            <width>91</width>
            <height>41</height>
           </rect>
@@ -557,8 +564,8 @@ color: rgb(0, 0, 0);</string>
         <widget class="QLabel" name="LabelPhone">
          <property name="geometry">
           <rect>
-           <x>-10</x>
-           <y>220</y>
+           <x>320</x>
+           <y>160</y>
            <width>131</width>
            <height>71</height>
           </rect>
@@ -583,8 +590,8 @@ color:rgb(0, 0, 0)</string>
         <widget class="QLineEdit" name="LineEditPhoneSignUp">
          <property name="geometry">
           <rect>
-           <x>100</x>
-           <y>240</y>
+           <x>480</x>
+           <y>180</y>
            <width>231</width>
            <height>41</height>
           </rect>
@@ -695,53 +702,6 @@ color:rgb(0, 0, 0)</string>
           <string>address :</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="LineEditPaymentDateSign">
-         <property name="geometry">
-          <rect>
-           <x>480</x>
-           <y>180</y>
-           <width>231</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">    padding: 10px;
-    border: 1px solid #ccc;
-background-color:#008FC1;
-font: 12pt &quot;Yeasty Flavors&quot;;
-    border-radius: 10px;
-color: rgb(0, 0, 0);</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-        <widget class="QLabel" name="LabelPaymentDate">
-         <property name="geometry">
-          <rect>
-           <x>320</x>
-           <y>160</y>
-           <width>181</width>
-           <height>71</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <family>Yeasty Flavors</family>
-           <pointsize>12</pointsize>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
-background-color: rgba(255, 255, 255, 0);
-color:rgb(0, 0, 0)</string>
-         </property>
-         <property name="text">
-          <string>Payement Date :</string>
-         </property>
-        </widget>
         <widget class="QWidget" name="widget_21" native="true">
          <property name="geometry">
           <rect>
@@ -800,15 +760,45 @@ background-color:#008FC1;
        </widget>
       </widget>
      </widget>
+     <widget class="QPushButton" name="Exit">
+      <property name="geometry">
+       <rect>
+        <x>1280</x>
+        <y>20</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+background-color:rgb(198, 143, 59);
+padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+border: none;
+border-radius: 25px;
+}
+QPushButton:hover{
+	background-color: rgb(233, 222, 203);
+	border-radius:25px;
+	border:1px solid rgb(198, 143, 59);
+	color: rgb(198, 143, 59);
+	border-color: rgb(198, 143, 59);
+}</string>
+      </property>
+      <property name="text">
+       <string>Exit</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="StaffPageStack">
      <widget class="QWidget" name="widget_2" native="true">
       <property name="geometry">
        <rect>
-        <x>-1</x>
-        <y>-1</y>
+        <x>0</x>
+        <y>0</y>
         <width>1341</width>
-        <height>711</height>
+        <height>701</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -821,7 +811,7 @@ border-raduis:20px;</string>
          <x>9</x>
          <y>9</y>
          <width>281</width>
-         <height>701</height>
+         <height>691</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -1240,17 +1230,17 @@ border-radius:1px</string>
         </property>
        </widget>
       </widget>
-      <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QStackedWidget" name="staffMainStackWidget">
        <property name="geometry">
         <rect>
          <x>290</x>
          <y>10</y>
-         <width>1051</width>
+         <width>1041</width>
          <height>691</height>
         </rect>
        </property>
        <property name="currentIndex">
-        <number>8</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page">
         <widget class="QWidget" name="widget_5" native="true">
@@ -1258,7 +1248,7 @@ border-radius:1px</string>
           <rect>
            <x>-10</x>
            <y>0</y>
-           <width>1071</width>
+           <width>1051</width>
            <height>701</height>
           </rect>
          </property>
@@ -1302,7 +1292,7 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
            <rect>
             <x>760</x>
             <y>70</y>
-            <width>301</width>
+            <width>271</width>
             <height>161</height>
            </rect>
           </property>
@@ -1403,7 +1393,7 @@ font: 300 12pt &quot;Segoe UI&quot;;</string>
            <rect>
             <x>430</x>
             <y>250</y>
-            <width>631</width>
+            <width>601</width>
             <height>211</height>
            </rect>
           </property>
@@ -1687,7 +1677,7 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
             <x>30</x>
             <y>320</y>
             <width>371</width>
-            <height>111</height>
+            <height>141</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -1784,9 +1774,9 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
          <widget class="QWidget" name="widget_39" native="true">
           <property name="geometry">
            <rect>
-            <x>50</x>
+            <x>30</x>
             <y>480</y>
-            <width>851</width>
+            <width>1001</width>
             <height>121</height>
            </rect>
           </property>
@@ -2435,16 +2425,16 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
          <property name="geometry">
           <rect>
            <x>-10</x>
-           <y>0</y>
-           <width>901</width>
-           <height>611</height>
+           <y>-10</y>
+           <width>1051</width>
+           <height>691</height>
           </rect>
          </property>
          <widget class="QLabel" name="label_78">
           <property name="geometry">
            <rect>
             <x>200</x>
-            <y>170</y>
+            <y>160</y>
             <width>291</width>
             <height>101</height>
            </rect>
@@ -2463,9 +2453,9 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
          <property name="geometry">
           <rect>
            <x>-10</x>
-           <y>0</y>
-           <width>901</width>
-           <height>611</height>
+           <y>-10</y>
+           <width>1041</width>
+           <height>691</height>
           </rect>
          </property>
          <widget class="QLabel" name="label_79">
@@ -2577,10 +2567,10 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
      <widget class="QWidget" name="widget_8" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
+        <x>0</x>
+        <y>0</y>
         <width>1341</width>
-        <height>741</height>
+        <height>701</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -2617,7 +2607,7 @@ color: rgba(0, 0, 0, 150);</string>
          <string>Main Menu</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="Dashboardbtn_3">
+       <widget class="QPushButton" name="EnrollClassBtn">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -2659,7 +2649,7 @@ hover background-color: #dcdcdc;
          </size>
         </property>
        </widget>
-       <widget class="QPushButton" name="GymMangbtn_3">
+       <widget class="QPushButton" name="CancelClassBtn">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -2693,7 +2683,7 @@ hover background-color: #dcdcdc;
          </size>
         </property>
        </widget>
-       <widget class="QPushButton" name="TMbtn_3">
+       <widget class="QPushButton" name="AvailableClassesBtn">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -2727,7 +2717,7 @@ hover background-color: #dcdcdc;
          </size>
         </property>
        </widget>
-       <widget class="QPushButton" name="Aubtn_3">
+       <widget class="QPushButton" name="WorkoutBtn">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -2795,7 +2785,7 @@ hover background-color: #dcdcdc;
          </size>
         </property>
        </widget>
-       <widget class="QPushButton" name="Notibtn_3">
+       <widget class="QPushButton" name="NotifiMemberBtn">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -2863,7 +2853,7 @@ hover background-color: #dcdcdc;
          </size>
         </property>
        </widget>
-       <widget class="QPushButton" name="ProfileBtn_3">
+       <widget class="QPushButton" name="MemberProfileBtn">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -2931,7 +2921,7 @@ hover background-color: #dcdcdc;
          </size>
         </property>
        </widget>
-       <widget class="QLabel" name="SettingsMember">
+       <widget class="QLabel" name="MemberSettings">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -2981,7 +2971,7 @@ color: rgba(0, 0, 0, 150);</string>
 border-radius:1px</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="Aubtn_4">
+       <widget class="QPushButton" name="PadekCourtBtn">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -3606,7 +3596,7 @@ hover background-color: #008FC1;</string>
            <rect>
             <x>10</x>
             <y>10</y>
-            <width>281</width>
+            <width>291</width>
             <height>41</height>
            </rect>
           </property>
@@ -3658,7 +3648,7 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
            <string>Class Schedule</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="Dashboard_13">
+         <widget class="QPushButton" name="EnrollClassesBtn">
           <property name="geometry">
            <rect>
             <x>830</x>
@@ -3766,7 +3756,7 @@ font: 11pt &quot;Yeasty Flavors&quot;;
            </property>
           </column>
          </widget>
-         <widget class="QPushButton" name="Dashboard_15">
+         <widget class="QPushButton" name="SortClassesbt">
           <property name="geometry">
            <rect>
             <x>660</x>
@@ -4124,9 +4114,9 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
          <zorder>label_193</zorder>
          <zorder>label_183</zorder>
          <zorder>label_194</zorder>
-         <zorder>Dashboard_13</zorder>
+         <zorder>EnrollClassesBtn</zorder>
          <zorder>tableWidget</zorder>
-         <zorder>Dashboard_15</zorder>
+         <zorder>SortClassesbt</zorder>
          <zorder>lineEdit</zorder>
          <zorder>lineEdit_2</zorder>
          <zorder>lineEdit_3</zorder>
@@ -4307,7 +4297,6 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
     </widget>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

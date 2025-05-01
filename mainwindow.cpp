@@ -12,10 +12,14 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
+    this->setWindowFlag(Qt::FramelessWindowHint);
+    setFixedSize(1350,710);
     staffMap[manger->getId()]= manger;
     ui->setupUi(this);
-    ui->FullWiedgit->setCurrentIndex(1);
+    ui->FullWiedgit->setCurrentIndex(2);
     ui->LoginPageStackedWidget->setCurrentIndex(0);
+    ui->staffMainStackWidget->setCurrentIndex(0);
     setPixmapForWidgets();
     FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt",members);
     FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt",staffMap);
@@ -29,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
             if (mem->getEmail() == usrEmail && mem->getPassword() == usrPassword) {
                 currMember = mem;
                 QMessageBox::information(this, "Success", "You have logged in successfully.");
-                ui->FullWiedgit->setCurrentIndex(1);
+                ui->FullWiedgit->setCurrentIndex(2);
                 loggedIn = true;
                 break;  // Stop checking further
             }
@@ -40,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
                 if(stf->getEmail()==usrEmail&&stf->getPassword()==usrPassword){
                     currStaff = stf;
                     QMessageBox::information(this, "Success", "You have logged in successfully.");
-                    ui->FullWiedgit->setCurrentIndex(3);
+                    ui->FullWiedgit->setCurrentIndex(1);
                     loggedIn = true;
                     break;  // Stop checking further
                 }
@@ -52,10 +56,126 @@ MainWindow::MainWindow(QWidget *parent)
         }
     });
     connect(ui->SignUp,&QPushButton::clicked,this,[=]{
+        QString username = ui->LineEditUserNameSignUp->text();
+        QString email = ui->LineEditEmailSignUp->text();
+        QString password = ui->LineEditPasswordSignUp->text();
+        QString phone = ui->LineEditPhoneSignUp->text();
+        QString ageStr = ui->LineEditAgeSignUp->text();
+        QString address = ui->LineEditAddressSignUp->text();
+        bool isMale = ui->MaleRadio->isChecked();
+        bool isFemale = ui->FemaleRadio->isChecked();
 
+        // Basic validation
+        if (username.isEmpty() || username.length() < 3) {
+            QMessageBox::warning(this, "Validation Error", "Username must be at least 3 characters.");
+            return;
+        }
+
+        QRegularExpression emailRegex(R"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)");
+        if (!emailRegex.match(email).hasMatch()) {
+            QMessageBox::warning(this, "Validation Error", "Please enter a valid email.");
+            return;
+        }
+
+        if (password.length() < 6) {
+            QMessageBox::warning(this, "Validation Error", "Password must be at least 6 characters.");
+            return;
+        }
+
+        if (!phone.contains(QRegularExpression("^[0-9]{10,}$"))) {
+            QMessageBox::warning(this, "Validation Error", "Enter a valid phone number (10+ digits).");
+            return;
+        }
+
+        bool ok;
+        int age = ageStr.toInt(&ok);
+        if (!ok || age < 10 || age > 100) {
+            QMessageBox::warning(this, "Validation Error", "Enter a valid age (10–100).");
+            return;
+        }
+
+        if (!isMale && !isFemale) {
+            QMessageBox::warning(this, "Validation Error", "Please select a gender.");
+            return;
+        }
+        QString gender;
+        if(isMale){
+            gender = "male";
+        }else{
+            gender = "female";
+        }
+        // Passed all validations
+        QMessageBox::information(this, "Success", "Sign-up completed successfully.");
+        Member * m = new Member(username,email,password,gender,false,phone,address,ageStr.toInt());
+        currMember = m;
+        members[m->getId()]=m;
     });
     connect(ui->toggleButton,&QPushButton::clicked,this,[=](){ui->LoginPageStackedWidget->setCurrentIndex(1);});
     connect(ui->toggleButton_2,&QPushButton::clicked,this,[=](){ui->LoginPageStackedWidget->setCurrentIndex(0);});
+    connect(ui->Exit,&QPushButton::clicked,this,&MainWindow::close);
+    QList<QTableWidget*> tablewidgets = {ui->tableWidget,ui->tableWidget_4};
+    for (QTableWidget* tableWidget : tablewidgets) {
+        tableWidget->clearContents();
+        tableWidget->setRowCount(0);
+        tableWidget->setColumnCount(6);
+
+        tableWidget->setHorizontalHeaderLabels(QStringList()
+                                               << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+
+        for (const auto& gc : classesmap) {
+            int row = tableWidget->rowCount();
+            tableWidget->insertRow(row);
+
+            tableWidget->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+            tableWidget->setItem(row, 1, new QTableWidgetItem(gc->getClassName()));
+            tableWidget->setItem(row, 2, new QTableWidgetItem(gc->get.toString("hh:mm AP")));
+            tableWidget->setItem(row, 3, new QTableWidgetItem(gc->getTrainer()));
+            tableWidget->setItem(row, 4, new QTableWidgetItem(gc->getStatus()));
+            tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity()-gc->getEnrolled())));
+        }
+    }
+    connect(ui->SortClassesbt,&QPushButton::clicked,this,[=]{
+        QStringList filters = {
+            ui->lineEdit->text().trimmed(),
+            ui->lineEdit_2->text().trimmed(),
+            ui->lineEdit_3->text().trimmed(),
+            ui->lineEdit_4->text().trimmed(),
+            ui->lineEdit_5->text().trimmed()
+        };
+        ui->tableWidget->clearContents();
+        ui->tableWidget->setRowCount(0);
+
+        auto match = [](const QString& filter, const QString& value) {
+            return filter.isEmpty() || filter.compare("any", Qt::CaseInsensitive) == 0 || filter == value;
+        };
+
+        for (const auto& cls : classesmap) {
+            QStringList classData = {
+                QString::number(cls->getId()),         // 0 - ID
+                cls->getClassName(),                   // 1 - Class Name
+                cls->getTime().toString("hh:mm AP"),   // 2 - Time
+                cls->getTrainer(),                     // 3 - Trainer
+                cls->getStatus(),                      // 4 - Status
+                QString::number(cls->getCapacity())    // 5 - Capacity
+            };
+
+            bool matched = true;
+            for (int i = 0; i < filters.size(); ++i) {
+                if (!match(filters[i], classData[i + 1])) { // skip ID column
+                    matched = false;
+                    break;
+                }
+            }
+
+            if (matched) {
+                int row = tableWidget->rowCount();
+                tableWidget->insertRow(row);
+                for (int col = 0; col < 6; ++col) {
+                    tableWidget->setItem(row, col, new QTableWidgetItem(classData[col]));
+                }
+            }
+        }
+    })
 }
 
 MainWindow::~MainWindow() {
@@ -120,24 +240,35 @@ void MainWindow::setPixmapForWidgets() {
     ui->AdminBtn->setIcon(QIcon(imagePaths[19]));
 
     // Member buttons
-    ui->Dashboardbtn_3->setIcon(QIcon(imagePaths[2]));
-    ui->GymMangbtn_3->setIcon(QIcon(imagePaths[3]));
-    ui->TMbtn_3->setIcon(QIcon(imagePaths[4]));
-    ui->Aubtn_3->setIcon(QIcon(imagePaths[5]));
-    ui->Aubtn_4->setIcon(QIcon(imagePaths[5]));
-    ui->Notibtn_3->setIcon(QIcon(imagePaths[7]));
+    ui->EnrollClassBtn->setIcon(QIcon(imagePaths[2]));
+    ui->CancelClassBtn->setIcon(QIcon(imagePaths[3]));
+    ui->AvailableClassesBtn->setIcon(QIcon(imagePaths[4]));
+    ui->WorkoutBtn->setIcon(QIcon(imagePaths[5]));
+    ui->PadekCourtBtn->setIcon(QIcon(imagePaths[5]));
+    ui->NotifiMemberBtn->setIcon(QIcon(imagePaths[7]));
     ui->Billbtn_3->setIcon(QIcon(imagePaths[8]));
-    ui->ProfileBtn_3->setIcon(QIcon(imagePaths[9]));
+    ui->MemberProfileBtn->setIcon(QIcon(imagePaths[9]));
     ui->LogOutBtn_3->setIcon(QIcon(imagePaths[11]));
     ui->Subscriptionbtn->setIcon(QIcon(imagePaths[29]));
 
     // Optional: set icon size (applies to all buttons)
     QList<QPushButton*> allButtons = {
-        ui->Dashboardbtn, ui->GymMangbtn, ui->TMbtn, ui->Aubtn, ui->Notibtn, ui->Billbtn,
-        ui->ProfileBtn, ui->SettingBtn, ui->LogOutBtn,
-        ui->Dashboardbtn_3, ui->GymMangbtn_3, ui->TMbtn_3, ui->Aubtn_3, ui->Aubtn_4,
-        ui->Notibtn_3, ui->Billbtn_3, ui->ProfileBtn_3, ui->LogOutBtn_3,ui->AdminBtn
+        ui->Dashboardbtn, ui->GymMangbtn, ui->TMbtn, ui->Aubtn,ui->AdminBtn, ui->Notibtn,
+        ui->Billbtn, ui->ProfileBtn, ui->SettingBtn,
+        ui->EnrollClassBtn, ui->CancelClassBtn, ui->AvailableClassesBtn, ui->WorkoutBtn, ui->PadekCourtBtn,
+        ui->Subscriptionbtn ,ui->NotifiMemberBtn,ui->Billbtn_3, ui->MemberProfileBtn,
+        ui->LogOutBtn_3,ui->LogOutBtn
     };
+    // Step 2: Corresponding stacked widget page indexes
+    QList<int> pageIndexes = {
+        0, 1, 2, 3, 4, 5,
+        6, 7, 8,
+        9, 10, 11,12, 13,
+        14, 15, 16, 17,
+        18,18
+    };
+
+    // Step 3: Define styles
     QString defaultStyle = R"(
     QPushButton {
         background-color: transparent;
@@ -151,14 +282,21 @@ void MainWindow::setPixmapForWidgets() {
     }
 )";
 
-    for (QPushButton* btn : allButtons) {
+    // Step 4: Assign styles and connect buttons
+    for (int i = 0; i < allButtons.size(); ++i) {
+        QPushButton* btn = allButtons[i];
+        int index = pageIndexes[i];
+
         btn->setIconSize(QSize(32, 32));
         btn->setStyleSheet(defaultStyle);
+
         connect(btn, &QPushButton::clicked, this, [=]() {
+            // Reset all button styles to default
             for (QPushButton* otherBtn : allButtons) {
                 otherBtn->setStyleSheet(defaultStyle);
             }
 
+            // Set clicked button to active style
             QString activeStyle = QString(R"(
             QPushButton {
                 background-color: transparent;
@@ -171,12 +309,15 @@ void MainWindow::setPixmapForWidgets() {
             QPushButton:hover {
                 background-color: %1;
             }
-            )").arg("#f1c27d");
+        )").arg("#f1c27d");
 
             btn->setStyleSheet(activeStyle);
-            if(btn->objectName()=="LogOutBtn"){
+            if(i<9)
+                ui->staffMainStackWidget->setCurrentIndex(index);
+            else if(i<18)
+                ui->stackedWidget_3->setCurrentIndex(index-9);
+            else
                 ui->FullWiedgit->setCurrentIndex(0);
-            };
         });
     }
 
