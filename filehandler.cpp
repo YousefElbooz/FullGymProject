@@ -10,8 +10,7 @@
 #include "receptionists.h"
 #include "gymclass.h"
 
-QMap<int, Member*> FileHandler::loadMembers(const QString& filePath) {
-    QMap<int, Member*> members;
+QMap<int, Member*> FileHandler::loadMembers(const QString& filePath,QMap<int, Member*>& members) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open member file";
@@ -45,8 +44,7 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath) {
     return members;
 }
 
-QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath) {
-    QMap<int, Staff*> staffMap;
+QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff*>& staffMap) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open staff file";
@@ -59,18 +57,20 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath) {
         if (line.isEmpty()) continue;
 
         QStringList parts = line.split(":");
-        if (parts.size() >= 6) {
+        if (parts.size() >= 8) {
             int id = parts[0].toInt();
             QString name = parts[1];
-            int age = parts[2].toInt();
-            QString address = parts[3];
-            QString phone = parts[4];
+            QString email = parts[2];
+            QString password = parts[3];
+            int age = parts[4].toInt();
+            QString address = parts[5];
+            QString phone = parts[6];
             QString role = parts.last().toLower();
 
             Staff* staff = nullptr;
 
             if (role == "coach") {
-                Coach* coach = new Coach(name, phone, address, age);
+                Coach* coach = new Coach(name,email,password, phone, address, age);
                 while (!in.atEnd()) {
                     QString classLine = in.readLine().trimmed();
                     if (classLine == "---") break;
@@ -89,9 +89,9 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath) {
                 }
                 staff = coach;
             } else if (role == "manager") {
-                staff = new Manger(name, phone, address, age);
+                staff = new Manger(name,email,password, phone, address, age);
             } else if (role == "receptionist") {
-                staff = new Receptionist(name, phone, address, age);
+                staff = new Receptionist(name, email,password,phone, address, age);
             }
 
             if (staff) {
@@ -169,8 +169,7 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
     file.close();
 }
 
-QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath) {
-    QMap<int, GymClass*> gymClasses;
+QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath,QMap<int, GymClass*>& gymClasses) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open gym classes file";

@@ -9,23 +9,60 @@
 #include <algorithm>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent) , manger("Sys", "00", "00", 0)
+    : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    staffMap[manger->getId()]= manger;
     ui->setupUi(this);
-    ui->FullWiedgit->setCurrentIndex(0);
-    ui->stackedWidget_2->setCurrentIndex(0);
+    ui->FullWiedgit->setCurrentIndex(1);
+    ui->LoginPageStackedWidget->setCurrentIndex(0);
     setPixmapForWidgets();
-    FileHandler::loadMembers("C:/Users/Yousef/Desktop/FullGymProject/FullGymProject/users.txt");
-    FileHandler::loadStaff("C:/Users/Yousef/Desktop/FullGymProject/FullGymProject/staff.txt");
-    FileHandler::loadClasses("C:/Users/Yousef/Desktop/FullGymProject/FullGymProject/classes.txt");
+    FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt",members);
+    FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt",staffMap);
+    FileHandler::loadClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt",classesmap);
+    connect(ui->loginbtn, &QPushButton::clicked, this, [=] {
+        QString usrEmail = ui->LineEditEmail->text();
+        QString usrPassword = ui->LineEditPassword->text();
+        bool loggedIn = false;
+
+        for (auto mem : members) {
+            if (mem->getEmail() == usrEmail && mem->getPassword() == usrPassword) {
+                currMember = mem;
+                QMessageBox::information(this, "Success", "You have logged in successfully.");
+                ui->FullWiedgit->setCurrentIndex(1);
+                loggedIn = true;
+                break;  // Stop checking further
+            }
+        }
+
+        if(!loggedIn){
+            for(auto stf: staffMap){
+                if(stf->getEmail()==usrEmail&&stf->getPassword()==usrPassword){
+                    currStaff = stf;
+                    QMessageBox::information(this, "Success", "You have logged in successfully.");
+                    ui->FullWiedgit->setCurrentIndex(3);
+                    loggedIn = true;
+                    break;  // Stop checking further
+                }
+            }
+        }
+
+        if (!loggedIn) {
+            QMessageBox::warning(this, "Invalid Email or Password", "Please re-enter the information correctly.");
+        }
+    });
+    connect(ui->SignUp,&QPushButton::clicked,this,[=]{
+
+    });
+    connect(ui->toggleButton,&QPushButton::clicked,this,[=](){ui->LoginPageStackedWidget->setCurrentIndex(1);});
+    connect(ui->toggleButton_2,&QPushButton::clicked,this,[=](){ui->LoginPageStackedWidget->setCurrentIndex(0);});
 }
 
 MainWindow::~MainWindow() {
     delete ui;
-    FileHandler::saveMembers("C:/Users/Yousef/Desktop/FullGymProject/FullGymProject/users.txt",members);
-    FileHandler::saveStaff("C:/Users/Yousef/Desktop/FullGymProject/FullGymProject/staff.txt",staffMap);
-    FileHandler::saveClasses("C:/Users/Yousef/Desktop/FullGymProject/FullGymProject/classes.txt", classesmap);
+    FileHandler::saveMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt",members);
+    FileHandler::saveStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt",staffMap);
+    FileHandler::saveClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt", classesmap);
     qDeleteAll(members);
     qDeleteAll(staffMap);
     qDeleteAll(classesmap);
@@ -101,10 +138,48 @@ void MainWindow::setPixmapForWidgets() {
         ui->Dashboardbtn_3, ui->GymMangbtn_3, ui->TMbtn_3, ui->Aubtn_3, ui->Aubtn_4,
         ui->Notibtn_3, ui->Billbtn_3, ui->ProfileBtn_3, ui->LogOutBtn_3,ui->AdminBtn
     };
-
-    for (auto* btn : allButtons) {
-        btn->setIconSize(QSize(32, 32)); // Adjust size as needed
+    QString defaultStyle = R"(
+    QPushButton {
+        background-color: transparent;
+        color: black;
+        font: 16pt "Yeasty Flavors";
+        text-align: left;
+        border-radius: 5px;
     }
+    QPushButton:hover {
+        background-color: #dcdcdc;
+    }
+)";
+
+    for (QPushButton* btn : allButtons) {
+        btn->setIconSize(QSize(32, 32));
+        btn->setStyleSheet(defaultStyle);
+        connect(btn, &QPushButton::clicked, this, [=]() {
+            for (QPushButton* otherBtn : allButtons) {
+                otherBtn->setStyleSheet(defaultStyle);
+            }
+
+            QString activeStyle = QString(R"(
+            QPushButton {
+                background-color: transparent;
+                color: black;
+                font: 16pt "Yeasty Flavors";
+                text-align: left;
+                border-radius: 5px;
+                border: 2px solid #f1c27d;
+            }
+            QPushButton:hover {
+                background-color: %1;
+            }
+            )").arg("#f1c27d");
+
+            btn->setStyleSheet(activeStyle);
+            if(btn->objectName()=="LogOutBtn"){
+                ui->FullWiedgit->setCurrentIndex(0);
+            };
+        });
+    }
+
     ui->TrainerNumICon->setPixmap(QPixmap(imagePaths[22]));
     ui->SandClockICon->setPixmap(QPixmap(imagePaths[20]));
     ui->SessionICon->setPixmap(QPixmap(imagePaths[21]));

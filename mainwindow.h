@@ -29,7 +29,9 @@ private:
     QMap<int, Member*> members;
     QMap<int, Staff*> staffMap;
     QMap<int, GymClass*> classesmap;
-    Manger manger;
+    Member* currMember;
+    Manger* manger = new Manger("sys","manger@a7a.com","123456","","",20);
+    Staff * currStaff;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

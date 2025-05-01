@@ -11,7 +11,7 @@ class Coach : public Staff {
 private:
     QVector<GymClass*> classes;
 public:
-    Coach(const QString& name, const QString& phone, const QString& address, int age);
+    Coach(const QString& name,const QString& email,const QString& password, const QString& phone, const QString& address, int age);
     QString getDetails() const override;
     QString toString() const override;
 

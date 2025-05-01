@@ -1,7 +1,7 @@
 #include "manger.h"
 
-Manger::Manger(const QString& name, const QString& phone, const QString& address, int age)
-    : Staff( name, "Manager", phone, address, age) {}
+Manger::Manger(const QString& name,const QString& email,const QString& password, const QString& phone, const QString& address, int age)
+    : Staff( name,email,password, "Manager", phone, address, age) {}
 
 QString Manger::getDetails() const {
     return "Manager: " + name + " (ID: " + QString::number(id) + ")";

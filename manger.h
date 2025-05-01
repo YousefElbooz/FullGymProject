@@ -7,7 +7,7 @@
 
 class Manger : public Staff {
 public:
-    Manger(const QString& name, const QString& phone, const QString& address, int age);
+    Manger(const QString& name,const QString& email,const QString& password, const QString& phone, const QString& address, int age);
     QString getDetails() const override;
     QString toString() const override;
     QString assignClass(Coach* coach,GymClass* gymClass);
