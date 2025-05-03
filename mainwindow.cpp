@@ -1,189 +1,334 @@
+// mainwindow.cpp (complete + organized)
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "filehandler.h"
-#include "coach.h"
-#include <QInputDialog>
+#include "FileHandler.h"
+#include <QPixmap>
 #include <QMessageBox>
-#include <QScreen>
-#include <QGraphicsBlurEffect>
+#include <QFile>
+#include <QMap>
+#include <algorithm>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), manger("Sys", "00", "00", 0) {
-    ui->setupUi(this);
-    loadData();
-    updateUI();
-    connect(ui->assignClass, &QPushButton::clicked, this, &MainWindow::onAssignClass);
-    connect(ui->btnAddMember, &QPushButton::clicked, this, &MainWindow::onAddMember);
-    connect(ui->btnAddCoach, &QPushButton::clicked, this, &MainWindow::onAddStaff);
-    connect(ui->btnAddClass, &QPushButton::clicked, this, &MainWindow::onAddClass);
-    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::close);
-    ui->FullWidget->setCurrentIndex(0);
-    loadPhotos();
-    this->setWindowFlag(Qt::FramelessWindowHint);
-    QGraphicsBlurEffect* p_blur = new QGraphicsBlurEffect;
-    p_blur->setBlurRadius(10);
-    p_blur->setBlurHints(QGraphicsBlurEffect::QualityHint);
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
 
-    ui->loginWifdget->setGraphicsEffect(p_blur);
+    this->setWindowFlag(Qt::FramelessWindowHint);
+    setFixedSize(1350,710);
+    ui->setupUi(this);
+    ui->FullWiedgit->setCurrentIndex(2);
+    ui->LoginPageStackedWidget->setCurrentIndex(0);
+    ui->staffMainStackWidget->setCurrentIndex(0);
+    setPixmapForWidgets();
+    FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt",members);
+    FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt",staffMap);
+    FileHandler::loadClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt",classesmap);
+    connect(ui->loginbtn, &QPushButton::clicked, this, [=] {
+        QString usrEmail = ui->LineEditEmail->text();
+        QString usrPassword = ui->LineEditPassword->text();
+        bool loggedIn = false;
+
+        for (auto mem : members) {
+            if (mem->getEmail() == usrEmail && mem->getPassword() == usrPassword) {
+                currMember = mem;
+                QMessageBox::information(this, "Success", "You have logged in successfully.");
+                ui->FullWiedgit->setCurrentIndex(2);
+                loggedIn = true;
+                break;  // Stop checking further
+            }
+        }
+
+        if(!loggedIn){
+            for(auto stf: staffMap){
+                if(stf->getEmail()==usrEmail&&stf->getPassword()==usrPassword){
+                    currStaff = stf;
+                    QMessageBox::information(this, "Success", "You have logged in successfully.");
+                    ui->FullWiedgit->setCurrentIndex(1);
+                    loggedIn = true;
+                    break;  // Stop checking further
+                }
+            }
+        }
+
+        if (!loggedIn) {
+            QMessageBox::warning(this, "Invalid Email or Password", "Please re-enter the information correctly.");
+        }
+    });
+    connect(ui->SignUp,&QPushButton::clicked,this,[=]{
+        QString username = ui->LineEditUserNameSignUp->text();
+        QString email = ui->LineEditEmailSignUp->text();
+        QString password = ui->LineEditPasswordSignUp->text();
+        QString phone = ui->LineEditPhoneSignUp->text();
+        QString ageStr = ui->LineEditAgeSignUp->text();
+        QString address = ui->LineEditAddressSignUp->text();
+        bool isMale = ui->MaleRadio->isChecked();
+        bool isFemale = ui->FemaleRadio->isChecked();
+
+        // Basic validation
+        if (username.isEmpty() || username.length() < 3) {
+            QMessageBox::warning(this, "Validation Error", "Username must be at least 3 characters.");
+            return;
+        }
+
+        QRegularExpression emailRegex(R"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)");
+        if (!emailRegex.match(email).hasMatch()) {
+            QMessageBox::warning(this, "Validation Error", "Please enter a valid email.");
+            return;
+        }
+
+        if (password.length() < 6) {
+            QMessageBox::warning(this, "Validation Error", "Password must be at least 6 characters.");
+            return;
+        }
+
+        if (!phone.contains(QRegularExpression("^[0-9]{10,}$"))) {
+            QMessageBox::warning(this, "Validation Error", "Enter a valid phone number (10+ digits).");
+            return;
+        }
+
+        bool ok;
+        int age = ageStr.toInt(&ok);
+        if (!ok || age < 10 || age > 100) {
+            QMessageBox::warning(this, "Validation Error", "Enter a valid age (10–100).");
+            return;
+        }
+
+        if (!isMale && !isFemale) {
+            QMessageBox::warning(this, "Validation Error", "Please select a gender.");
+            return;
+        }
+        QString gender;
+        if(isMale){
+            gender = "male";
+        }else{
+            gender = "female";
+        }
+        // Passed all validations
+        QMessageBox::information(this, "Success", "Sign-up completed successfully.");
+        Member * m = new Member(username,email,password,gender,false,phone,address,ageStr.toInt());
+        currMember = m;
+        members[m->getId()]=m;
+    });
+    connect(ui->toggleButton,&QPushButton::clicked,this,[=](){ui->LoginPageStackedWidget->setCurrentIndex(1);});
+    connect(ui->toggleButton_2,&QPushButton::clicked,this,[=](){ui->LoginPageStackedWidget->setCurrentIndex(0);});
+    connect(ui->Exit,&QPushButton::clicked,this,&MainWindow::close);
+    QList<QTableWidget*> tablewidgets = {ui->tableWidget,ui->tableWidget_4};
+    for (QTableWidget* tableWidget : tablewidgets) {
+        tableWidget->clearContents();
+        tableWidget->setRowCount(0);
+        tableWidget->setColumnCount(6);
+
+        tableWidget->setHorizontalHeaderLabels(QStringList()
+                                               << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+
+        for (const auto& gc : classesmap) {
+            int row = tableWidget->rowCount();
+            tableWidget->insertRow(row);
+
+            tableWidget->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+            tableWidget->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+            tableWidget->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+            tableWidget->setItem(row, 3, new QTableWidgetItem(gc->getCoach()->getName()));
+            tableWidget->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
+            tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity()-gc->getEnrolled())));
+        }
+    }
+    connect(ui->SortClassesbt, &QPushButton::clicked, this, [=] {
+        QStringList filters = {
+            ui->lineEdit->text().trimmed(),
+            ui->lineEdit_2->text().trimmed(),
+            ui->lineEdit_3->text().trimmed(),
+            ui->lineEdit_4->text().trimmed(),
+            ui->lineEdit_5->text().trimmed()
+        };
+
+        ui->tableWidget->clearContents();
+        ui->tableWidget->setRowCount(0);
+
+        auto match = [](const QString& filter, const QString& value) {
+            return filter.isEmpty() || filter.compare("any", Qt::CaseInsensitive) == 0 || filter == value;
+        };
+
+        for (const auto& cls : classesmap) {
+            QStringList classData = {
+                QString::number(cls->getId()),                   // 0 - ID
+                cls->getName(),                                  // 1 - Class Name
+                cls->getTime().toString("hh:mm AP"),             // 2 - Time
+                cls->getCoach()->getName(),                      // 3 - Trainer
+                cls->getStatue(),                                // 4 - Status
+                QString::number(cls->getCapacity())              // 5 - Capacity
+            };
+
+            bool matched = true;
+            for (int i = 0; i < filters.size(); ++i) {
+                if (!match(filters[i], classData[i + 1])) { // i+1 to skip ID
+                    matched = false;
+                    break;
+                }
+            }
+
+            if (matched) {
+                int row = ui->tableWidget->rowCount();
+                ui->tableWidget->insertRow(row);
+                for (int col = 0; col < 6; ++col) {
+                    ui->tableWidget->setItem(row, col, new QTableWidgetItem(classData[col]));
+                }
+            }
+        }
+    });
 }
 
 MainWindow::~MainWindow() {
-    FileHandler::saveMembers("C:/Users/Yousef/Documents/FullGymProject/members.txt", members);
-    FileHandler::saveStaff("C:/Users/Yousef/Documents/FullGymProject/staffs.txt", staffMap);
-    FileHandler::saveClasses("C:/Users/Yousef/Documents/FullGymProject/classes.txt", classesmap);
+    delete ui;
+    FileHandler::saveMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt",members);
+    FileHandler::saveStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt",staffMap);
+    FileHandler::saveClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt", classesmap);
     qDeleteAll(members);
     qDeleteAll(staffMap);
     qDeleteAll(classesmap);
-    delete ui;
 }
 
-void MainWindow::showEvent(QShowEvent *event)
-{
-    QMainWindow::showEvent(event);
 
-    // Center the window
-    QScreen *screen = QGuiApplication::primaryScreen();
-    QRect screenGeometry = screen->availableGeometry();
-    int x = (screenGeometry.width() - width()) / 2;
-    int y = (screenGeometry.height() - height()) / 2;
-    move(x, y);
-}
-
-void MainWindow::loadPhotos(){
+void MainWindow::setPixmapForWidgets() {
     QString imagePaths[] = {
-        "C:/Users/Yousef/Documents/FullGymProject/images/رونالدو.jpeg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/SheilYaTweelElOmer.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/487923262_18358780738183487_3064122802807129279_n.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/486954623_18458191684073759_6188361622420108090_n.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/487106121_18358780660183487_738216244790693941_n.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/Mosalah.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/487794954_18037488260535615_7174140484398860324_n.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/ChatGPT Image Apr 15, 2025, 12_44_13 PM.png",
-        "C:/Users/Yousef/Documents/FullGymProject/images/486761338_18358780648183487_518183920224791822_n.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/Maldini.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/93bd66f367106eaa00a77764796b1f77.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/487931916_18458191666073759_5571215937298845863_n.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/Studio Ghibli aesthetics.jpeg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/487241769_18358780711183487_4467916180267804207_n.jpg",
-        "C:/Users/Yousef/Documents/FullGymProject/images/exit.svg"
+        "C:/Users/Yousef/Pictures/newGym.png", // 0 - label image (skip or use elsewhere)
+        "C:/Users/Yousef/Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png", // 1 - logo (still used)
+        "C:/Users/Yousef/Downloads/dashboard-svgrepo-com.svg", // 2
+        "C:/Users/Yousef/Downloads/gym-dumbbell-svgrepo-com.svg", // 3
+        "C:/Users/Yousef/Downloads/group-of-businessmen-svgrepo-com.svg", // 4
+        "C:/Users/Yousef/Downloads/add-user-svgrepo-com.svg", // 5
+        "C:/Users/Yousef/Downloads/user-admin-svgrepo-com.svg", // 6
+        "C:/Users/Yousef/Downloads/notification-bell-1397-svgrepo-com.svg", // 7
+        "C:/Users/Yousef/Downloads/invoice-bill-svgrepo-com.svg", // 8
+        "C:/Users/Yousef/Downloads/profile-round-1342-svgrepo-com.svg", // 9
+        "C:/Users/Yousef/Downloads/setting-4-svgrepo-com.svg", // 10
+        "C:/Users/Yousef/Downloads/logout-svgrepo-com.svg", // 11
+        "C:/Users/Yousef/Downloads/line-chart-up-02-svgrepo-com.svg", // 12
+        "C:/Users/Yousef/Downloads/enter-svgrepo-com.svg", // 13
+        "C:/Users/Yousef/Downloads/cancel-photo-svgrepo-com.svg", // 14
+        "C:/Users/Yousef/Downloads/calendar-event-available-svgrepo-com.svg", // 15
+        "C:/Users/Yousef/Downloads/home-workouts-svgrepo-com.svg", // 16
+        "C:/Users/Yousef/Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg", // 17
+        "C:/Users/Yousef/Downloads/court-playground-svgrepo-com.svg",        // 18
+        "C:/Users/Yousef/Downloads/user-admin-svgrepo-com.svg",     // 19
+        "C:/Users/Yousef/Downloads/sand-clock-svgrepo-com.svg",     // 20
+        "C:/Users/Yousef/Downloads/stretching-svgrepo-com.svg",     //21
+        "C:/Users/Yousef/Downloads/coach-coaching-physical-trainer-svgrepo-com.svg", //22
+        "C:/Users/Yousef/Downloads/money-bag-svgrepo-com.svg",      //23
+        "C:/Users/Yousef/Downloads/line-chart-up-02-svgrepo-com.svg",       //24
+        "C:/Users/Yousef/Downloads/enter-svgrepo-com.svg",                  //25
+        "C:/Users/Yousef/Downloads/cancel-photo-svgrepo-com.svg",           //26
+        "C:/Users/Yousef/Downloads/calendar-event-available-svgrepo-com.svg",   //27
+        "C:/Users/Yousef/Downloads/home-workouts-svgrepo-com.svg",      //28
+        "C:/Users/Yousef/Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg",     //29
+        "C:/Users/Yousef/Downloads/court-playground-svgrepo-com.svg"            //30
     };
 
+    // Logo only (still QLabel)
+    ui->logo->setPixmap(QPixmap(imagePaths[1]));
+    ui->logo_3->setPixmap(QPixmap(imagePaths[1]));
+    ui->label->setPixmap(QPixmap(imagePaths[0]));
+    // Buttons with icons
+    ui->Dashboardbtn->setIcon(QIcon(imagePaths[2]));
+    ui->GymMangbtn->setIcon(QIcon(imagePaths[3]));
+    ui->TMbtn->setIcon(QIcon(imagePaths[4]));
+    ui->Aubtn->setIcon(QIcon(imagePaths[5]));
+    ui->Notibtn->setIcon(QIcon(imagePaths[7]));
+    ui->Billbtn->setIcon(QIcon(imagePaths[8]));
+    ui->ProfileBtn->setIcon(QIcon(imagePaths[9]));
+    ui->SettingBtn->setIcon(QIcon(imagePaths[10]));
+    ui->LogOutBtn->setIcon(QIcon(imagePaths[11]));
+    ui->AdminBtn->setIcon(QIcon(imagePaths[19]));
 
+    // Member buttons
+    ui->EnrollClassBtn->setIcon(QIcon(imagePaths[2]));
+    ui->CancelClassBtn->setIcon(QIcon(imagePaths[3]));
+    ui->AvailableClassesBtn->setIcon(QIcon(imagePaths[4]));
+    ui->WorkoutBtn->setIcon(QIcon(imagePaths[5]));
+    ui->PadekCourtBtn->setIcon(QIcon(imagePaths[5]));
+    ui->NotifiMemberBtn->setIcon(QIcon(imagePaths[7]));
+    ui->Billbtn_3->setIcon(QIcon(imagePaths[8]));
+    ui->MemberProfileBtn->setIcon(QIcon(imagePaths[9]));
+    ui->LogOutBtn_3->setIcon(QIcon(imagePaths[11]));
+    ui->Subscriptionbtn->setIcon(QIcon(imagePaths[29]));
 
+    // Optional: set icon size (applies to all buttons)
+    QList<QPushButton*> allButtons = {
+        ui->Dashboardbtn, ui->GymMangbtn, ui->TMbtn, ui->Aubtn,ui->AdminBtn, ui->Notibtn,
+        ui->Billbtn, ui->ProfileBtn, ui->SettingBtn,
+        ui->EnrollClassBtn, ui->CancelClassBtn, ui->AvailableClassesBtn, ui->WorkoutBtn, ui->PadekCourtBtn,
+        ui->Subscriptionbtn ,ui->NotifiMemberBtn,ui->Billbtn_3, ui->MemberProfileBtn,
+        ui->LogOutBtn_3,ui->LogOutBtn
+    };
+    // Step 2: Corresponding stacked widget page indexes
+    QList<int> pageIndexes = {
+        0, 1, 2, 3, 4, 5,
+        6, 7, 8,
+        9, 10, 11,12, 13,
+        14, 15, 16, 17,
+        18,18
+    };
 
-    ui->bgp->setPixmap(QPixmap(imagePaths[0]));
-    ui->bgp_2->setPixmap(QPixmap(imagePaths[1]));
-    ui->bgp_3->setPixmap(QPixmap(imagePaths[2]));
-    ui->bgp_4->setPixmap(QPixmap(imagePaths[3]));
-    ui->bgp_5->setPixmap(QPixmap(imagePaths[4]));
-    ui->bgp_6->setPixmap(QPixmap(imagePaths[5]));
-    ui->bgp_7->setPixmap(QPixmap(imagePaths[6]));
-    ui->bgp_8->setPixmap(QPixmap(imagePaths[7]));
-    ui->bgp_9->setPixmap(QPixmap(imagePaths[8]));
-    ui->bgp_10->setPixmap(QPixmap(imagePaths[9]));
-    ui->bgp_11->setPixmap(QPixmap(imagePaths[10]));
-    ui->bgp_12->setPixmap(QPixmap(imagePaths[11]));
-    ui->bgp_13->setPixmap(QPixmap(imagePaths[12]));
-    ui->bgp_14->setPixmap(QPixmap(imagePaths[13]));
-    ui->pushButton->setIcon(QIcon(imagePaths[14]));
-
-}
-
-void MainWindow::loadData() {
-    members = FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/members.txt");
-    staffMap = FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/staffs.txt");
-    classesmap = FileHandler::loadClasses("C:/Users/Yousef/Documents/FullGymProject/classes.txt");
-}
-
-void MainWindow::updateUI() {
-    ui->listWidget->clear();
-    for (auto member : members)
-        ui->listWidget->addItem(member->toString());
-    for (auto staff : staffMap)
-        ui->listWidget->addItem(staff->toString());
-    for (auto gymClass : classesmap)
-        ui->listWidget->addItem(gymClass->toString());
-}
-
-void MainWindow::onAssignClass() {
-    int coachId = ui->CoachId->text().toInt();
-    int classId = ui->ClassId->text().toInt();
-
-    if (staffMap.contains(coachId) && classesmap.contains(classId)) {
-        Coach* coach = dynamic_cast<Coach*>(staffMap[coachId]);
-        GymClass* gymClass = classesmap[classId];
-
-        if (coach && gymClass) {
-            coach->addClass(gymClass);
-            gymClass->setCoach(coach);
-            updateUI();
-            QMessageBox::information(this, "Success", "Class assigned successfully.");
-        } else {
-            QMessageBox::warning(this, "Error", "Staff is not a Coach or class is invalid.");
-        }
-    } else {
-        QMessageBox::warning(this, "Error", "Invalid Coach ID or Class ID.");
+    // Step 3: Define styles
+    QString defaultStyle = R"(
+    QPushButton {
+        background-color: transparent;
+        color: black;
+        font: 16pt "Yeasty Flavors";
+        text-align: left;
+        border-radius: 5px;
     }
-}
+    QPushButton:hover {
+        background-color: #dcdcdc;
+    }
+)";
 
-void MainWindow::onAddMember() {
-    QString name = QInputDialog::getText(this, "New Member", "Enter name:");
-    if (name.isEmpty()) return;
-    QString email = QInputDialog::getText(this, "New Member", "Enter email:");
-    if (email.isEmpty()) return;
-    QString gender = QInputDialog::getText(this, "New Member", "Enter gender:");
-    if (gender.isEmpty()) return;
-    bool isVip = QMessageBox::question(this, "VIP?", "Is VIP?", QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes;
-    QString phone = QInputDialog::getText(this, "New Member", "Enter phone number:");
-    if (phone.isEmpty()) return;
-    QString address = QInputDialog::getText(this, "New Member", "Enter address:");
-    if (address.isEmpty()) return;
-    bool ok;
-    int age = QInputDialog::getInt(this, "New Member", "Enter age:", 18, 1, 120, 1, &ok);
-    if (!ok) return;
-    Member* m = new Member(name, email, gender, isVip, phone, address, age);
-    members[m->getId()] = m;
-    updateUI();
-}
+    // Step 4: Assign styles and connect buttons
+    for (int i = 0; i < allButtons.size(); ++i) {
+        QPushButton* btn = allButtons[i];
+        int index = pageIndexes[i];
 
-void MainWindow::onAddStaff() {
-    QString name = QInputDialog::getText(this, "New Staff", "Enter name:");
-    if (name.isEmpty()) return;
-    QString role = QInputDialog::getText(this, "New Staff", "Enter role (e.g., Coach, Manager, Receptionist):");
-    if (role.isEmpty()) return;
-    QString phone = QInputDialog::getText(this, "New Staff", "Enter phone number:");
-    if (phone.isEmpty()) return;
-    QString address = QInputDialog::getText(this, "New Staff", "Enter address:");
-    if (address.isEmpty()) return;
-    bool ok;
-    int age = QInputDialog::getInt(this, "New Staff", "Enter age:", 18, 1, 120, 1, &ok);
-    if (!ok) return;
+        btn->setIconSize(QSize(32, 32));
+        btn->setStyleSheet(defaultStyle);
 
-    Staff* staff = nullptr;
-    if (role.toLower() == "coach") {
-        staff = new Coach(name, phone, address, age);
-    } else if (role.toLower() == "manager") {
-        staff = new Manger(name, phone, address, age);
-    } else if (role.toLower() == "receptionist") {
-        staff = new Receptionist(name, phone, address, age);
+        connect(btn, &QPushButton::clicked, this, [=]() {
+            // Reset all button styles to default
+            for (QPushButton* otherBtn : allButtons) {
+                otherBtn->setStyleSheet(defaultStyle);
+            }
+
+            // Set clicked button to active style
+            QString activeStyle = QString(R"(
+            QPushButton {
+                background-color: transparent;
+                color: black;
+                font: 16pt "Yeasty Flavors";
+                text-align: left;
+                border-radius: 5px;
+                border: 2px solid #f1c27d;
+            }
+            QPushButton:hover {
+                background-color: %1;
+            }
+        )").arg("#f1c27d");
+
+            btn->setStyleSheet(activeStyle);
+            if(i<9)
+                ui->staffMainStackWidget->setCurrentIndex(index);
+            else if(i<18)
+                ui->stackedWidget_3->setCurrentIndex(index-9);
+            else
+                ui->FullWiedgit->setCurrentIndex(0);
+        });
     }
 
-    if (staff) {
-        staffMap[staff->getId()] = staff;
-    }
-    updateUI();
+    ui->TrainerNumICon->setPixmap(QPixmap(imagePaths[22]));
+    ui->SandClockICon->setPixmap(QPixmap(imagePaths[20]));
+    ui->SessionICon->setPixmap(QPixmap(imagePaths[21]));
+    ui->NotificationDashIcon->setPixmap(QPixmap(imagePaths[7]));
+    ui->TotalMemberIcon->setPixmap(QPixmap(imagePaths[9]));
+    ui->CashIcon->setPixmap(QPixmap(imagePaths[22]));
+    ui->Chart->setPixmap(QPixmap(imagePaths[23]));
 }
 
-void MainWindow::onAddClass() {
-    QString className = QInputDialog::getText(this, "New Gym Class", "Enter class name:");
-    if (className.isEmpty()) return;
-    QString classSchedule = QInputDialog::getText(this, "New Gym Class", "Enter class schedule (e.g., 10:00 AM):");
-    if (classSchedule.isEmpty()) return;
-    bool ok;
-    int classCapacity = QInputDialog::getInt(this, "New Gym Class", "Enter class capacity:", 1, 1, 100, 1, &ok);
-    if (!ok) return;
 
-    GymClass* newClass = new GymClass(className, classSchedule, classCapacity);
-    classesmap[newClass->getId()] = newClass;
-    updateUI();
-}

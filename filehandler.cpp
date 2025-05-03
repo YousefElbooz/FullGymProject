@@ -10,8 +10,7 @@
 #include "receptionists.h"
 #include "gymclass.h"
 
-QMap<int, Member*> FileHandler::loadMembers(const QString& filePath) {
-    QMap<int, Member*> members;
+QMap<int, Member*> FileHandler::loadMembers(const QString& filePath,QMap<int, Member*>& members) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open member file";
@@ -21,20 +20,23 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath) {
     QTextStream in(&file);
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
-        if (line.isEmpty() || line.startsWith("#")) continue;
+        if (line.isEmpty() || line.startsWith("#")){
+
+        };
 
         QStringList parts = line.split(":");
-        if (parts.size() == 8) {
+        if (parts.size() == 9) {
             int id = parts[0].toInt();
             QString name = parts[1];
             QString email = parts[2];
-            QString gender = parts[3];
-            bool isVip = (parts[4].toLower() == "true");
-            QString phone = parts[5];
-            QString address = parts[6];
-            int age = parts[7].toInt();
+            QString password = parts[3];
+            QString gender = parts[4];
+            bool isVip = (parts[5].toLower() == "true");
+            QString phone = parts[6];
+            QString address = parts[7];
+            int age = parts[8].toInt();
 
-            Member* m = new Member(name, email, gender, isVip, phone, address, age);
+            Member* m = new Member(name, email,password, gender, isVip, phone, address, age);
             members[id] = m;
         }
     }
@@ -42,8 +44,7 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath) {
     return members;
 }
 
-QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath) {
-    QMap<int, Staff*> staffMap;
+QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff*>& staffMap) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open staff file";
@@ -56,18 +57,20 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath) {
         if (line.isEmpty()) continue;
 
         QStringList parts = line.split(":");
-        if (parts.size() >= 6) {
+        if (parts.size() >= 8) {
             int id = parts[0].toInt();
             QString name = parts[1];
-            int age = parts[2].toInt();
-            QString address = parts[3];
-            QString phone = parts[4];
+            QString email = parts[2];
+            QString password = parts[3];
+            int age = parts[4].toInt();
+            QString address = parts[5];
+            QString phone = parts[6];
             QString role = parts.last().toLower();
 
             Staff* staff = nullptr;
 
             if (role == "coach") {
-                Coach* coach = new Coach(name, phone, address, age);
+                Coach* coach = new Coach(name,email,password, phone, address, age);
                 while (!in.atEnd()) {
                     QString classLine = in.readLine().trimmed();
                     if (classLine == "---") break;
@@ -86,9 +89,9 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath) {
                 }
                 staff = coach;
             } else if (role == "manager") {
-                staff = new Manger(name, phone, address, age);
+                staff = new Manger(name,email,password, phone, address, age);
             } else if (role == "receptionist") {
-                staff = new Receptionist(name, phone, address, age);
+                staff = new Receptionist(name, email,password,phone, address, age);
             }
 
             if (staff) {
@@ -111,7 +114,7 @@ void FileHandler::saveMembers(const QString& filePath, const QMap<int, Member*>&
     QTextStream out(&file);
     for (auto it = members.begin(); it != members.end(); ++it) {
         Member* m = it.value();
-        out << it.key() << ":" << m->getName() << ":" << m->getEmail()
+        out << it.key() << ":" << m->getName() << ":" << m->getEmail()<<":"<< m->getPassword()
             << ":" << m->getGender() << ":" << (m->getIsVip() ? "true" : "false")
             << ":" << m->getPhone() << ":" << m->getAddress() << ":" << m->getAge() << "\n";
     }
@@ -147,7 +150,7 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
             for (GymClass* gymClass : coach->getClasses()) {
                 out << gymClass->getId() << "|"
                     << gymClass->getName() << "|"
-                    << gymClass->getSchedule() << "|"
+                    << gymClass->getStatue() << "|"
                     << (gymClass->getCoach() ? gymClass->getCoach()->getName() : "Unknown") << "|"
                     << "Scheduled\n";
             }
@@ -166,8 +169,7 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
     file.close();
 }
 
-QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath) {
-    QMap<int, GymClass*> gymClasses;
+QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open gym classes file";
@@ -177,28 +179,50 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath) {
     QTextStream in(&file);
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
-        if (line.isEmpty() || line.startsWith("#")) continue;
+        if (line.isEmpty() || line.startsWith("#"))
+            continue;
+
+        // Properly remove "---" suffix if exists
+        if (line.endsWith("---")) {
+            line = line.left(line.length() - 3).trimmed();
+        }
 
         QStringList parts = line.split(",");
-        if (parts.size() >= 4) {
-            int id = parts[0].toInt();
-            QString name = parts[1];
-            QString schedule = parts[2];
-            int capacity = parts[3].toInt();
-
-            GymClass* gymClass = new GymClass(name, schedule, capacity);
-            gymClass->setId(id);
-
-            if (parts.size() >= 5) {
-                QString coachName = parts[4];
-            }
-
-            gymClasses[id] = gymClass;
+        if (parts.size() < 7) {
+            qWarning() << "Malformed class line: " << line;
+            continue;
         }
+
+        bool ok = false;
+        int id = parts[0].toInt(&ok);
+        if (!ok) continue;
+
+        QString name = parts[1];
+        QString timeStr = parts[2];
+        QString status = parts[3];
+        int capacity = parts[4].toInt(&ok);
+        if (!ok) continue;
+
+        int enrolled = parts[5].toInt(&ok);
+        if (!ok) continue;
+
+        QString coachPart = parts[6].trimmed();
+        QString coachName = coachPart.startsWith("Coach: ") ? coachPart.mid(7) : "None";
+
+        GymClass* gymClass = new GymClass(name, timeStr, capacity);
+        gymClass->setId(id);
+        gymClass->setStatue(status);
+        gymClass->setEnrolled(enrolled);
+        // Note: gymClass->setCoach() should be set if coach lookup is supported
+
+        gymClasses[id] = gymClass;
     }
+
     file.close();
     return gymClasses;
 }
+
+
 
 void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*>& gymClasses) {
     QFile file(filePath);
@@ -210,14 +234,14 @@ void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*
     QTextStream out(&file);
     for (auto it = gymClasses.begin(); it != gymClasses.end(); ++it) {
         GymClass* gymClass = it.value();
+        QString coachName = gymClass->getCoach() ? gymClass->getCoach()->getName() : "None";
         out << gymClass->getId() << ","
             << gymClass->getName() << ","
-            << gymClass->getSchedule() << ","
-            << gymClass->getCapacity() << "\n";
-
-        QString coachName = gymClass->getCoach() ? gymClass->getCoach()->getName() : "None";
-        out << "Coach: " << coachName << "\n";
-        out << "---\n";
+            << gymClass->getTime().toString("hh:mm AP") << ","
+            << gymClass->getStatue() << ","
+            << gymClass->getCapacity() <<","
+            << gymClass->getEnrolled() <<","
+            << "Coach: " << coachName <<"---\n";
     }
 
     file.close();

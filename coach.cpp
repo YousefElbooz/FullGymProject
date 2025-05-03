@@ -1,7 +1,7 @@
 #include "coach.h"
 
-Coach::Coach(const QString& name, const QString& phone, const QString& address, int age)
-    : Staff(name, "Coach", phone, address, age) {}
+Coach::Coach(const QString& name,const QString& email,const QString& password, const QString& phone, const QString& address, int age)
+    : Staff(name,email,password ,"Coach", phone, address, age) {}
 
 QString Coach::getDetails() const {
     return "Coach: " + name + " (ID: " + QString::number(id) + ")";

@@ -6,563 +6,4293 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1384</width>
-    <height>917</height>
+    <width>1358</width>
+    <height>713</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">border:3px solid rgba(0,0,0,0);
+border-radius:20px;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QStackedWidget" name="FullWidget">
+   <property name="styleSheet">
+    <string notr="true">padding:0px;</string>
+   </property>
+   <widget class="QStackedWidget" name="FullWiedgit">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>5</y>
-      <width>1381</width>
-      <height>887</height>
+      <y>0</y>
+      <width>1351</width>
+      <height>711</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(101, 44, 34);
-border:1px solid rgb(185, 125, 124);
-border-radius:20px;</string>
+     <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
-    <widget class="QWidget" name="Login">
-     <widget class="QLabel" name="bgp">
+    <widget class="QWidget" name="LoginPageStack">
+     <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>30</y>
-        <width>171</width>
-        <height>251</height>
+        <x>0</x>
+        <y>0</y>
+        <width>1351</width>
+        <height>711</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
+       <string notr="true">border-raduis:20px;</string>
       </property>
       <property name="text">
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../../Downloads/رونالدو.jpeg</pixmap>
+       <pixmap>../../../Pictures/newGym.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="bgp_8">
+     <widget class="QStackedWidget" name="LoginPageStackedWidget">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>270</y>
-        <width>351</width>
-        <height>301</height>
+        <x>160</x>
+        <y>80</y>
+        <width>971</width>
+        <height>571</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">
+       <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="page_14">
+       <widget class="QWidget" name="widget" native="true">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>240</y>
+          <width>341</width>
+          <height>281</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 40px;
+    padding: 20px;</string>
+        </property>
+        <widget class="QLabel" name="LabelSubHead">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>0</y>
+           <width>81</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 20pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+color:rgb(0, 0, 0);
+padding:0px;</string>
+         </property>
+         <property name="text">
+          <string>Login</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="LineEditEmail">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>60</y>
+           <width>231</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    padding: 10px;
+    border: 1px solid #ccc;
+background-color: rgb(198, 143, 59);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border-radius: 10px;
+color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="LineEditPassword">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>120</y>
+           <width>231</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    padding: 10px;
+    border: 1px solid #ccc;
+background-color: rgb(198, 143, 59);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border-radius: 10px;
+color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="loginbtn">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>210</y>
+           <width>81</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+background-color:rgb(198, 143, 59);
+padding: 10px;
 color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>../../Downloads/ChatGPT Image Apr 15, 2025, 12_44_13 PM.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_9">
-      <property name="geometry">
-       <rect>
-        <x>260</x>
-        <y>30</y>
-        <width>251</width>
-        <height>231</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/486761338_18358780648183487_518183920224791822_n.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_10">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>200</y>
-        <width>171</width>
-        <height>221</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/Maldini.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_11">
-      <property name="geometry">
-       <rect>
-        <x>350</x>
-        <y>570</y>
-        <width>531</width>
-        <height>241</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/93bd66f367106eaa00a77764796b1f77.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_12">
-      <property name="geometry">
-       <rect>
-        <x>770</x>
-        <y>290</y>
-        <width>361</width>
-        <height>311</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/487931916_18458191666073759_5571215937298845863_n.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_13">
-      <property name="geometry">
-       <rect>
-        <x>610</x>
-        <y>320</y>
-        <width>151</width>
-        <height>261</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/Studio Ghibli aesthetics.jpeg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_14">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>560</y>
-        <width>331</width>
-        <height>271</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/487241769_18358780711183487_4467916180267804207_n.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_2">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>270</y>
-        <width>231</width>
-        <height>321</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/SheilYaTweelElOmer.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_3">
-      <property name="geometry">
-       <rect>
-        <x>820</x>
-        <y>50</y>
-        <width>291</width>
-        <height>251</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/487923262_18358780738183487_3064122802807129279_n.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_4">
-      <property name="geometry">
-       <rect>
-        <x>890</x>
-        <y>580</y>
-        <width>391</width>
-        <height>271</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/486954623_18458191684073759_6188361622420108090_n.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_5">
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>40</y>
-        <width>311</width>
-        <height>291</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/487106121_18358780660183487_738216244790693941_n.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_6">
-      <property name="geometry">
-       <rect>
-        <x>1140</x>
-        <y>290</y>
-        <width>231</width>
-        <height>301</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/Mosalah.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bgp_7">
-      <property name="geometry">
-       <rect>
-        <x>1080</x>
-        <y>10</y>
-        <width>231</width>
-        <height>331</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-color: rgb(0, 0, 0);
-background-color: rgb(0, 0, 0);
-border:5px solid  black;
-border-radius:15px;
-padding:1px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>images/487794954_18037488260535615_7174140484398860324_n.jpg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton">
-      <property name="geometry">
-       <rect>
-        <x>1320</x>
-        <y>10</y>
-        <width>41</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">padding:0px;
-border:0px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>images/exit.svg</normaloff>images/exit.svg</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>40</width>
-        <height>40</height>
-       </size>
-      </property>
-     </widget>
-     <widget class="QWidget" name="loginWifdget" native="true">
-      <property name="geometry">
-       <rect>
-        <x>390</x>
-        <y>220</y>
-        <width>591</width>
-        <height>411</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QWidget {
-	background-color: rgba(255, 255, 255, 200);
-	border-radius:20px;
-	border:10px solid;
-	border-color: rgb(101, 44, 34);
-
+font: 9pt &quot;Yeasty Flavors&quot;;
+border: none;
+border-radius: 25px;
 }
+QPushButton:hover{
+	background-color: rgb(233, 222, 203);
+	border-radius:25px;
+	border:1px solid rgb(198, 143, 59);
+	color: rgb(198, 143, 59);
+	border-color: rgb(198, 143, 59);
+}</string>
+         </property>
+         <property name="text">
+          <string>Login</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="LabelEmail_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>40</y>
+           <width>81</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+color:rgb(0, 0, 0);
+padding:0px;
+</string>
+         </property>
+         <property name="text">
+          <string>Email :</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="LabelPassword">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>110</y>
+           <width>101</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+color:rgb(0, 0, 0);
+padding:0px;
+</string>
+         </property>
+         <property name="text">
+          <string>Password :</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="toggleLabel">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>180</y>
+           <width>241</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+padding:0px;</string>
+         </property>
+         <property name="text">
+          <string>If you don't have account ,</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="toggleButton">
+         <property name="geometry">
+          <rect>
+           <x>220</x>
+           <y>170</y>
+           <width>91</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(170, 85, 0);
+background-color: rgba(255, 255, 255, 0);
+
+font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+padding:0px;</string>
+         </property>
+         <property name="text">
+          <string>Sign up</string>
+         </property>
+        </widget>
+        <zorder>LabelSubHead</zorder>
+        <zorder>LineEditEmail</zorder>
+        <zorder>LineEditPassword</zorder>
+        <zorder>LabelEmail_2</zorder>
+        <zorder>LabelPassword</zorder>
+        <zorder>toggleLabel</zorder>
+        <zorder>toggleButton</zorder>
+        <zorder>loginbtn</zorder>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_16">
+       <widget class="QWidget" name="widget_20" native="true">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>200</y>
+          <width>721</width>
+          <height>361</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 40px;
+    padding: 20px;</string>
+        </property>
+        <widget class="QLabel" name="LabelSubHeadSignUp">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>-10</y>
+           <width>141</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 20pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+color:rgb(0, 0, 0);
+padding:0px;</string>
+         </property>
+         <property name="text">
+          <string>Sign Up</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="LineEditUserNameSignUp">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>60</y>
+           <width>231</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    padding: 10px;
+    border: 1px solid #ccc;
+background-color:#008FC1;
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border-radius: 10px;
+color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="LineEditEmailSignUp">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>120</y>
+           <width>231</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    padding: 10px;
+    border: 1px solid #ccc;
+background-color:#008FC1;
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border-radius: 10px;
+color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="SignUp">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>290</y>
+           <width>101</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+background-color:#008FC1;
+padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+border: none;
+border-radius: 25px;
+}
+QPushButton:hover{
+	background-color: rgb(233, 222, 203);
+	border-radius:25px;
+	border:1px solid #008FC1;
+	color: #008FC1;
+	border-color: #008FC1;
+}</string>
+         </property>
+         <property name="text">
+          <string>Sign Up</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="LabelUserName_2">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>40</y>
+           <width>131</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+color:rgb(0, 0, 0)</string>
+         </property>
+         <property name="text">
+          <string>UserName :</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="LabelEmail">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>100</y>
+           <width>131</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+color:rgb(0, 0, 0)</string>
+         </property>
+         <property name="text">
+          <string>Email :</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="ToggleLabel">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>250</y>
+           <width>231</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+padding:0px;</string>
+         </property>
+         <property name="text">
+          <string>If you don't have account ,</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="toggleButton_2">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>240</y>
+           <width>91</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: #008FC1;
+background-color: rgba(255, 255, 255, 0);
+padding:5px;
+font: 12pt &quot;Yeasty Flavors&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Login </string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="LabelPasswordSignUp">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>160</y>
+           <width>131</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+color:rgb(0, 0, 0)</string>
+         </property>
+         <property name="text">
+          <string>Password :</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="LineEditPasswordSignUp">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>180</y>
+           <width>231</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    padding: 10px;
+    border: 1px solid #ccc;
+background-color:#008FC1;
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border-radius: 10px;
+color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="LabelPhone">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>160</y>
+           <width>131</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+color:rgb(0, 0, 0)</string>
+         </property>
+         <property name="text">
+          <string>Phone :</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="LineEditPhoneSignUp">
+         <property name="geometry">
+          <rect>
+           <x>480</x>
+           <y>180</y>
+           <width>231</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    padding: 10px;
+    border: 1px solid #ccc;
+background-color:#008FC1;
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border-radius: 10px;
+color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="LineEditAgeSignUp">
+         <property name="geometry">
+          <rect>
+           <x>480</x>
+           <y>60</y>
+           <width>231</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    padding: 10px;
+    border: 1px solid #ccc;
+background-color:#008FC1;
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border-radius: 10px;
+color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="LabelAge">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>40</y>
+           <width>131</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+color:rgb(0, 0, 0)</string>
+         </property>
+         <property name="text">
+          <string>Age :</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="LineEditAddressSignUp">
+         <property name="geometry">
+          <rect>
+           <x>480</x>
+           <y>120</y>
+           <width>231</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    padding: 10px;
+    border: 1px solid #ccc;
+background-color:#008FC1;
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border-radius: 10px;
+color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="LabelAddress">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>100</y>
+           <width>121</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Yeasty Flavors</family>
+           <pointsize>12</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
+background-color: rgba(255, 255, 255, 0);
+color:rgb(0, 0, 0)</string>
+         </property>
+         <property name="text">
+          <string>address :</string>
+         </property>
+        </widget>
+        <widget class="QWidget" name="widget_21" native="true">
+         <property name="geometry">
+          <rect>
+           <x>390</x>
+           <y>220</y>
+           <width>291</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+         </property>
+         <widget class="QRadioButton" name="FemaleRadio">
+          <property name="geometry">
+           <rect>
+            <x>150</x>
+            <y>10</y>
+            <width>131</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">            padding: 10px;
+    border: 1px solid #ccc;
+background-color:#008FC1;
+            font: 12pt &quot;Yeasty Flavors&quot;;
+            border-radius: 20px;
+            color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Female</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="MaleRadio">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>131</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">            padding: 10px;
+    border: 1px solid #ccc;
+background-color:#008FC1;
+            font: 12pt &quot;Yeasty Flavors&quot;;
+            border-radius: 20px;
+            color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Male</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="Exit">
+      <property name="geometry">
+       <rect>
+        <x>1280</x>
+        <y>20</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+background-color:rgb(198, 143, 59);
+padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+border: none;
+border-radius: 25px;
+}
+QPushButton:hover{
+	background-color: rgb(233, 222, 203);
+	border-radius:25px;
+	border:1px solid rgb(198, 143, 59);
+	color: rgb(198, 143, 59);
+	border-color: rgb(198, 143, 59);
+}</string>
+      </property>
+      <property name="text">
+       <string>Exit</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="StaffPageStack">
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1341</width>
+        <height>701</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(249, 234, 205);
+border-raduis:20px;</string>
+      </property>
+      <widget class="QWidget" name="widget_3" native="true">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>9</y>
+         <width>281</width>
+         <height>691</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-right-color: rgb(152, 183, 162);
+border:solid 10px;</string>
+       </property>
+       <widget class="QLabel" name="MainMenuLabel">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>191</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 24pt &quot;Yeasty Flavors&quot;;
+color: rgba(0, 0, 0, 150);</string>
+        </property>
+        <property name="text">
+         <string>Main Menu</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Dashboardbtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>140</y>
+          <width>251</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Yeasty Flavors</family>
+          <pointsize>16</pointsize>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 16pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+            text-align: left;
+}</string>
+        </property>
+        <property name="text">
+         <string>Dashboard</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/dashboard-svgrepo-com.svg</normaloff>../../../Downloads/dashboard-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="autoRepeatDelay">
+         <number>300</number>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="GymMangbtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>190</y>
+          <width>251</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 16pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
 
 </string>
-      </property>
+        </property>
+        <property name="text">
+         <string>Gym Mangment</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/gym-dumbbell-svgrepo-com.svg</normaloff>../../../Downloads/gym-dumbbell-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="TMbtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>240</y>
+          <width>251</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 16pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+text-align:left;
+</string>
+        </property>
+        <property name="text">
+         <string>Trainer Mangment</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/group-of-businessmen-svgrepo-com.svg</normaloff>../../../Downloads/group-of-businessmen-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>33</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Aubtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>290</y>
+          <width>251</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+</string>
+        </property>
+        <property name="text">
+         <string>Add Users</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/add-user-svgrepo-com.svg</normaloff>../../../Downloads/add-user-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="AdminBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>340</y>
+          <width>241</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">            text-align: left;
+background-color: rgb(249, 234, 205);
+
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+</string>
+        </property>
+        <property name="text">
+         <string>Admin</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/user-admin-svgrepo-com.svg</normaloff>../../../Downloads/user-admin-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Notibtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>390</y>
+          <width>241</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Notification</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/notification-bell-1397-svgrepo-com.svg</normaloff>../../../Downloads/notification-bell-1397-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Billbtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>440</y>
+          <width>241</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+</string>
+        </property>
+        <property name="text">
+         <string>Billing</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/invoice-bill-svgrepo-com.svg</normaloff>../../../Downloads/invoice-bill-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="ProfileBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>540</y>
+          <width>241</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+</string>
+        </property>
+        <property name="text">
+         <string>Profile</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/profile-round-1342-svgrepo-com.svg</normaloff>../../../Downloads/profile-round-1342-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="SettingBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>590</y>
+          <width>241</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+</string>
+        </property>
+        <property name="text">
+         <string>Settings</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/setting-4-svgrepo-com.svg</normaloff>../../../Downloads/setting-4-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="LogOutBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>640</y>
+          <width>241</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+</string>
+        </property>
+        <property name="text">
+         <string>Logout</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/logout-svgrepo-com.svg</normaloff>../../../Downloads/logout-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QLabel" name="SettingsLabel">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>500</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgba(0, 0, 0, 150);
+font: 24pt &quot;Yeasty Flavors&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Settings</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="logo">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>-10</y>
+          <width>131</width>
+          <height>111</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../../../Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QWidget" name="widget_7" native="true">
+        <property name="geometry">
+         <rect>
+          <x>270</x>
+          <y>0</y>
+          <width>20</width>
+          <height>701</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(55, 91, 106);
+border-radius:1px</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QStackedWidget" name="staffMainStackWidget">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>10</y>
+         <width>1041</width>
+         <height>691</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>7</number>
+       </property>
+       <widget class="QWidget" name="page">
+        <widget class="QWidget" name="widget_5" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>0</y>
+           <width>1051</width>
+           <height>701</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_6">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>10</y>
+            <width>211</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(55, 91, 106);
+font: 24pt &quot;Yeasty Flavors&quot;;</string>
+          </property>
+          <property name="text">
+           <string>DashBoard</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_22">
+          <property name="geometry">
+           <rect>
+            <x>460</x>
+            <y>320</y>
+            <width>211</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+          </property>
+          <property name="text">
+           <string>EGP 35,200</string>
+          </property>
+         </widget>
+         <widget class="QWidget" name="widget_30" native="true">
+          <property name="geometry">
+           <rect>
+            <x>760</x>
+            <y>70</y>
+            <width>271</width>
+            <height>161</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+    padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #008FC1;</string>
+          </property>
+          <widget class="QLabel" name="label_26">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>10</y>
+             <width>181</width>
+             <height>91</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 24pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Trainer 
+ Available</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="TrainerNumICon">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>20</y>
+             <width>51</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius:10px;
+background-color: rgba(255, 255, 255, 0);
+padding :5px;
+background-color: rgb(249, 234, 205);
+color:rgb(249, 234, 205);</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>../../../Downloads/coach-coaching-physical-trainer-svgrepo-com.svg</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_29">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>80</y>
+             <width>81</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>5/8</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_25">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>90</y>
+             <width>181</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 300 12pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Currently On Duty 
+  view coaches</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="widget_31" native="true">
+          <property name="geometry">
+           <rect>
+            <x>430</x>
+            <y>250</y>
+            <width>601</width>
+            <height>211</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #008FC1;</string>
+          </property>
+          <widget class="QLabel" name="label_21">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>20</y>
+             <width>261</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;
+padding:0px;</string>
+           </property>
+           <property name="text">
+            <string>Revenue Snapshot</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="CashIcon">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>10</y>
+             <width>41</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius:10px;
+background-color: rgba(255, 255, 255, 0);
+background-color: rgb(249, 234, 205);
+color:rgb(249, 234, 205);
+padding:8px;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>../../../Downloads/money-bag-svgrepo-com.svg</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_37">
+           <property name="geometry">
+            <rect>
+             <x>100</x>
+             <y>120</y>
+             <width>401</width>
+             <height>81</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>هنشوف هنعمل chart حقيقي ازاي</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_30">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>100</y>
+             <width>181</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 300 12pt &quot;Segoe UI&quot;;
+padding:0px;</string>
+           </property>
+           <property name="text">
+            <string>This Month</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="widget_32" native="true">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>70</y>
+            <width>371</width>
+            <height>121</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #008FC1;
+</string>
+          </property>
+          <widget class="QLabel" name="label_16">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>60</y>
+             <width>211</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Total Members</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_36">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>0</y>
+             <width>61</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>124</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="TotalMemberIcon">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>10</y>
+             <width>41</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius:10px;
+background-color: rgba(255, 255, 255, 0);
+background-color: rgb(249, 234, 205);
+color:rgb(249, 234, 205);
+padding :5px;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>../../../Downloads/profile-round-1342-svgrepo-com.svg</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="widget_33" native="true">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>200</y>
+            <width>371</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #008FC1;
+</string>
+          </property>
+          <widget class="QLabel" name="label_17">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>10</y>
+             <width>221</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Pending 
+ notivication</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="NotificationDashIcon">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>10</y>
+             <width>41</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius:10px;
+background-color: rgba(255, 255, 255, 0);
+background-color: rgb(249, 234, 205);
+color:rgb(249, 234, 205);
+padding :5px;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>../../../Downloads/notification-bell-1397-svgrepo-com.svg</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_35">
+           <property name="geometry">
+            <rect>
+             <x>60</x>
+             <y>70</y>
+             <width>281</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 300 12pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>new join requests or renewal</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_34">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>50</y>
+             <width>31</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="widget_34" native="true">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>320</y>
+            <width>371</width>
+            <height>141</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #008FC1;
+</string>
+          </property>
+          <widget class="QLabel" name="SandClockICon">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>41</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius:10px;
+background-color: rgba(255, 255, 255, 0);
+background-color: rgb(249, 234, 205);
+color:rgb(249, 234, 205);
+padding :5px;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>../../../Downloads/sand-clock-svgrepo-com.svg</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_27">
+           <property name="geometry">
+            <rect>
+             <x>60</x>
+             <y>20</y>
+             <width>261</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Revenue Snapshot</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_32">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>60</y>
+             <width>181</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 300 12pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Expiring in 7 days</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_33">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>40</y>
+             <width>31</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>9</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="widget_39" native="true">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>480</y>
+            <width>1001</width>
+            <height>121</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #008FC1;
+</string>
+          </property>
+          <widget class="QLabel" name="label_28">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>20</y>
+             <width>241</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Activity Summary</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="Chart">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>10</y>
+             <width>41</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius:10px;
+background-color: rgba(255, 255, 255, 0);
+background-color: rgb(249, 234, 205);
+color:rgb(249, 234, 205);</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>../../../Downloads/line-chart-up-02-svgrepo-com.svg</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_31">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>60</y>
+             <width>181</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 300 12pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>View Callender</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="Dashboard_6">
+           <property name="geometry">
+            <rect>
+             <x>740</x>
+             <y>70</y>
+             <width>91</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>View List</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="widget_40" native="true">
+          <property name="geometry">
+           <rect>
+            <x>430</x>
+            <y>70</y>
+            <width>321</width>
+            <height>161</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #008FC1;
+</string>
+          </property>
+          <widget class="QLabel" name="SessionICon">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>10</y>
+             <width>41</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius:10px;
+background-color: rgba(255, 255, 255, 0);
+background-color: rgb(249, 234, 205);
+color:rgb(249, 234, 205);</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>../../../Downloads/stretching-svgrepo-com.svg</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_23">
+           <property name="geometry">
+            <rect>
+             <x>100</x>
+             <y>10</y>
+             <width>201</width>
+             <height>51</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 24pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>12 Sessions</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_24">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>50</y>
+             <width>181</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 12pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Gym Classes Today</string>
+           </property>
+          </widget>
+         </widget>
+         <zorder>widget_40</zorder>
+         <zorder>widget_39</zorder>
+         <zorder>widget_33</zorder>
+         <zorder>widget_34</zorder>
+         <zorder>widget_32</zorder>
+         <zorder>widget_31</zorder>
+         <zorder>widget_30</zorder>
+         <zorder>label_6</zorder>
+         <zorder>label_22</zorder>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_2">
+        <widget class="QWidget" name="widget_4" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1051</width>
+           <height>691</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_15">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>241</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(55, 91, 106);
+font: 24pt &quot;Yeasty Flavors&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Gym Mangment</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_46">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>190</y>
+            <width>1011</width>
+            <height>491</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+    padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 15px;
+hover background-color: #008FC1;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="Dashboard_14">
+          <property name="geometry">
+           <rect>
+            <x>830</x>
+            <y>200</y>
+            <width>161</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+          </property>
+          <property name="text">
+           <string>Enroll Classes</string>
+          </property>
+         </widget>
+         <widget class="QTableWidget" name="tableWidget_2">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>250</y>
+            <width>951</width>
+            <height>411</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>100</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Yeasty Flavors</family>
+            <pointsize>11</pointsize>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+font: 9pt &quot;Segoe UI&quot;;
+font: 11pt &quot;Yeasty Flavors&quot;;
+</string>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+          </property>
+          <property name="dragEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragDropMode::DragDrop</enum>
+          </property>
+          <property name="textElideMode">
+           <enum>Qt::TextElideMode::ElideMiddle</enum>
+          </property>
+          <property name="gridStyle">
+           <enum>Qt::PenStyle::NoPen</enum>
+          </property>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>155</number>
+          </attribute>
+          <attribute name="verticalHeaderCascadingSectionResizes">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderDefaultSectionSize">
+           <number>25</number>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>Id</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>ClassName</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Time</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Trainer</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Statue</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Capacity</string>
+           </property>
+          </column>
+         </widget>
+         <widget class="QLabel" name="label_195">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>200</y>
+            <width>211</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Class Schedule</string>
+          </property>
+         </widget>
+         <widget class="QWidget" name="widget_35" native="true">
+          <property name="geometry">
+           <rect>
+            <x>410</x>
+            <y>60</y>
+            <width>621</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 15px;
+hover background-color: #008FC1;</string>
+          </property>
+          <widget class="QLabel" name="label_45">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>70</y>
+             <width>261</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 600 13pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>(555) 123-457</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_44">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>261</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 600 13pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>123 Olympus St, Alexandria</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_43">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>211</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Location</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="widget_36" native="true">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>60</y>
+            <width>371</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 15px;
+hover background-color: #008FC1;</string>
+          </property>
+          <widget class="QLabel" name="label_18">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>211</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>OverView</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_19">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>70</y>
+             <width>131</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 600 13pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Gym Classes</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_41">
+           <property name="geometry">
+            <rect>
+             <x>230</x>
+             <y>70</y>
+             <width>131</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 600 13pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Trainers</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_20">
+           <property name="geometry">
+            <rect>
+             <x>130</x>
+             <y>70</y>
+             <width>71</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 600 13pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Capacity</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_40">
+           <property name="geometry">
+            <rect>
+             <x>250</x>
+             <y>30</y>
+             <width>61</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>150</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_38">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>30</y>
+             <width>61</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>12</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_39">
+           <property name="geometry">
+            <rect>
+             <x>140</x>
+             <y>30</y>
+             <width>61</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>180</string>
+           </property>
+          </widget>
+         </widget>
+         <zorder>widget_36</zorder>
+         <zorder>widget_35</zorder>
+         <zorder>label_15</zorder>
+         <zorder>label_46</zorder>
+         <zorder>Dashboard_14</zorder>
+         <zorder>tableWidget_2</zorder>
+         <zorder>label_195</zorder>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_3">
+        <widget class="QWidget" name="widget_6" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1101</width>
+           <height>701</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_8">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Train Mangment</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_5">
+        <widget class="QWidget" name="widget_9" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>0</y>
+           <width>901</width>
+           <height>611</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_72">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Add Users</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_6">
+        <widget class="QWidget" name="widget_10" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>-10</y>
+           <width>1051</width>
+           <height>691</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_78">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>160</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Admin</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_7">
+        <widget class="QWidget" name="widget_11" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>-10</y>
+           <width>1041</width>
+           <height>691</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_79">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Notification</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_11">
+        <widget class="QWidget" name="widget_12" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>0</y>
+           <width>901</width>
+           <height>611</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_80">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Billing</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_12">
+        <widget class="QWidget" name="widget_13" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>0</y>
+           <width>901</width>
+           <height>611</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_81">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Profile</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_13">
+        <widget class="QWidget" name="widget_19" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>901</width>
+           <height>611</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_82">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Settings</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </widget>
      </widget>
-     <zorder>bgp_4</zorder>
-     <zorder>bgp_8</zorder>
-     <zorder>bgp_9</zorder>
-     <zorder>bgp_11</zorder>
-     <zorder>bgp_12</zorder>
-     <zorder>bgp_5</zorder>
-     <zorder>bgp_7</zorder>
-     <zorder>bgp_3</zorder>
-     <zorder>bgp_13</zorder>
-     <zorder>bgp_2</zorder>
-     <zorder>bgp</zorder>
-     <zorder>bgp_6</zorder>
-     <zorder>pushButton</zorder>
-     <zorder>bgp_10</zorder>
-     <zorder>bgp_14</zorder>
-     <zorder>loginWifdget</zorder>
     </widget>
-    <widget class="QWidget" name="mainFunctions">
-     <widget class="QLineEdit" name="ClassId">
+    <widget class="QWidget" name="MemberPageStack">
+     <widget class="QWidget" name="widget_8" native="true">
       <property name="geometry">
        <rect>
-        <x>240</x>
-        <y>330</y>
-        <width>113</width>
-        <height>24</height>
+        <x>0</x>
+        <y>0</y>
+        <width>1341</width>
+        <height>701</height>
        </rect>
       </property>
-      <property name="text">
-       <string>ClassId</string>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(249, 234, 205);
+border-raduis:20px;</string>
       </property>
-     </widget>
-     <widget class="QPushButton" name="btnAddClass">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>180</y>
-        <width>121</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>AddClass</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="assignClass">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>300</y>
-        <width>111</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>assign classs</string>
-      </property>
-     </widget>
-     <widget class="QListWidget" name="listWidget">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>100</y>
-        <width>351</width>
-        <height>121</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnAddCoach">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>140</y>
-        <width>121</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>AddStaff</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnAddMember">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>100</y>
-        <width>121</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>AddMember</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="CoachId">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>300</y>
-        <width>113</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CoahID</string>
-      </property>
+      <widget class="QWidget" name="widget_14" native="true">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>9</y>
+         <width>270</width>
+         <height>700</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-right-color: rgb(152, 183, 162);
+border:solid 10px;</string>
+       </property>
+       <widget class="QLabel" name="MainMenuMember">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>90</y>
+          <width>191</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 24pt &quot;Yeasty Flavors&quot;;
+color: rgba(0, 0, 0, 150);</string>
+        </property>
+        <property name="text">
+         <string>Main Menu</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="EnrollClassBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>140</y>
+          <width>251</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Yeasty Flavors</family>
+          <pointsize>18</pointsize>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Enroll Class</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/enter-svgrepo-com.svg</normaloff>../../../Downloads/enter-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="CancelClassBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>190</y>
+          <width>251</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Cancel Class</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/cancel-photo-svgrepo-com.svg</normaloff>../../../Downloads/cancel-photo-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="AvailableClassesBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>240</y>
+          <width>251</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Available Classes</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/calendar-event-available-svgrepo-com.svg</normaloff>../../../Downloads/calendar-event-available-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="WorkoutBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>290</y>
+          <width>251</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Workout</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/home-workouts-svgrepo-com.svg</normaloff>../../../Downloads/home-workouts-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Subscriptionbtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>390</y>
+          <width>251</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Subscription</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg</normaloff>../../../Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="NotifiMemberBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>440</y>
+          <width>251</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Notification</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/notification-bell-1397-svgrepo-com.svg</normaloff>../../../Downloads/notification-bell-1397-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Billbtn_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>490</y>
+          <width>251</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Billing</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/invoice-bill-svgrepo-com.svg</normaloff>../../../Downloads/invoice-bill-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="MemberProfileBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>590</y>
+          <width>251</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Profile</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/profile-round-1342-svgrepo-com.svg</normaloff>../../../Downloads/profile-round-1342-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="LogOutBtn_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>640</y>
+          <width>251</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Logout</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/logout-svgrepo-com.svg</normaloff>../../../Downloads/logout-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QLabel" name="MemberSettings">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>530</y>
+          <width>181</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 24pt &quot;Yeasty Flavors&quot;;
+color: rgba(0, 0, 0, 150);</string>
+        </property>
+        <property name="text">
+         <string>Settings</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="logo_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>131</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../../../Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QWidget" name="widget_15" native="true">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>0</y>
+          <width>20</width>
+          <height>701</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(55, 91, 106);
+border-radius:1px</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="PadekCourtBtn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>340</y>
+          <width>241</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(249, 234, 205);
+color: rgb(0, 0, 0);
+font: 18pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #dcdcdc;
+            text-align: left;
+
+</string>
+        </property>
+        <property name="text">
+         <string>Padel Court </string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../Downloads/court-playground-svgrepo-com.svg</normaloff>../../../Downloads/court-playground-svgrepo-com.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QStackedWidget" name="stackedWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>10</y>
+         <width>1041</width>
+         <height>691</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>2</number>
+       </property>
+       <widget class="QWidget" name="page_8">
+        <widget class="QWidget" name="widget_16" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1051</width>
+           <height>701</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_196">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>0</y>
+            <width>241</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(55, 91, 106);
+font: 24pt &quot;Yeasty Flavors&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Enroll Class</string>
+          </property>
+         </widget>
+         <widget class="QWidget" name="widget_41" native="true">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>50</y>
+            <width>1031</width>
+            <height>631</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #008FC1;
+</string>
+          </property>
+          <widget class="QLabel" name="label_199">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>20</y>
+             <width>251</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Choose Class</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_11">
+           <property name="geometry">
+            <rect>
+             <x>200</x>
+             <y>70</y>
+             <width>113</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius:20px;
+hover background-color: #008FC1</string>
+           </property>
+           <property name="text">
+            <string>Any</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_12">
+           <property name="geometry">
+            <rect>
+             <x>360</x>
+             <y>70</y>
+             <width>113</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Any</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_13">
+           <property name="geometry">
+            <rect>
+             <x>510</x>
+             <y>70</y>
+             <width>113</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Any</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_14">
+           <property name="geometry">
+            <rect>
+             <x>660</x>
+             <y>70</y>
+             <width>113</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Any</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_15">
+           <property name="geometry">
+            <rect>
+             <x>820</x>
+             <y>70</y>
+             <width>113</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Any</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_198">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>270</y>
+             <width>251</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Enrolled Classes</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_6">
+           <property name="geometry">
+            <rect>
+             <x>200</x>
+             <y>320</y>
+             <width>113</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Any</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_7">
+           <property name="geometry">
+            <rect>
+             <x>360</x>
+             <y>320</y>
+             <width>113</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Any</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_8">
+           <property name="geometry">
+            <rect>
+             <x>510</x>
+             <y>320</y>
+             <width>113</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Any</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_9">
+           <property name="geometry">
+            <rect>
+             <x>670</x>
+             <y>320</y>
+             <width>113</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Any</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_10">
+           <property name="geometry">
+            <rect>
+             <x>810</x>
+             <y>320</y>
+             <width>113</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Any</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="Dashboard_17">
+           <property name="geometry">
+            <rect>
+             <x>830</x>
+             <y>270</y>
+             <width>161</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Sort </string>
+           </property>
+          </widget>
+          <widget class="QTableWidget" name="tableWidget_4">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>120</y>
+             <width>971</width>
+             <height>141</height>
+            </rect>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>100</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Yeasty Flavors</family>
+             <pointsize>11</pointsize>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(55, 91, 106);
+font: 11pt &quot;Yeasty Flavors&quot;;
+color:rgb(249, 234, 205);</string>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+           </property>
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DragDropMode::DragDrop</enum>
+           </property>
+           <property name="textElideMode">
+            <enum>Qt::TextElideMode::ElideMiddle</enum>
+           </property>
+           <property name="gridStyle">
+            <enum>Qt::PenStyle::NoPen</enum>
+           </property>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>155</number>
+           </attribute>
+           <attribute name="verticalHeaderCascadingSectionResizes">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>25</number>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Id</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>ClassName</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Time</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Trainer</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Statue</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Capacity</string>
+            </property>
+           </column>
+          </widget>
+          <widget class="QTableWidget" name="tableWidget_3">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>380</y>
+             <width>951</width>
+             <height>181</height>
+            </rect>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>100</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Yeasty Flavors</family>
+             <pointsize>11</pointsize>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(55, 91, 106);
+font: 9pt &quot;Segoe UI&quot;;
+font: 11pt &quot;Yeasty Flavors&quot;;
+
+color:rgb(249, 234, 205);</string>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+           </property>
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DragDropMode::DragDrop</enum>
+           </property>
+           <property name="textElideMode">
+            <enum>Qt::TextElideMode::ElideNone</enum>
+           </property>
+           <property name="showGrid">
+            <bool>true</bool>
+           </property>
+           <property name="gridStyle">
+            <enum>Qt::PenStyle::DotLine</enum>
+           </property>
+           <property name="sortingEnabled">
+            <bool>false</bool>
+           </property>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>155</number>
+           </attribute>
+           <attribute name="verticalHeaderCascadingSectionResizes">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>25</number>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Id</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>ClassName</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Time</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Trainer</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Statue</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Capacity</string>
+            </property>
+           </column>
+          </widget>
+          <widget class="QPushButton" name="Dashboard_16">
+           <property name="geometry">
+            <rect>
+             <x>830</x>
+             <y>10</y>
+             <width>161</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Request Class</string>
+           </property>
+          </widget>
+         </widget>
+         <zorder>widget_41</zorder>
+         <zorder>label_196</zorder>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_10">
+        <widget class="QWidget" name="widget_18" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-20</x>
+           <y>-10</y>
+           <width>901</width>
+           <height>611</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_224">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Cancel Class</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_9">
+        <widget class="QWidget" name="widget_17" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1041</width>
+           <height>691</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_183">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>291</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(55, 91, 106);
+font: 24pt &quot;Yeasty Flavors&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Available Classes</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_193">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>190</y>
+            <width>1011</width>
+            <height>491</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+    padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 15px;
+hover background-color: #008FC1;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_194">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>200</y>
+            <width>211</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Class Schedule</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="EnrollClassesBtn">
+          <property name="geometry">
+           <rect>
+            <x>830</x>
+            <y>200</y>
+            <width>161</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+          </property>
+          <property name="text">
+           <string>Enroll Classes</string>
+          </property>
+         </widget>
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>300</y>
+            <width>971</width>
+            <height>361</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>100</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Yeasty Flavors</family>
+            <pointsize>11</pointsize>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+font: 11pt &quot;Yeasty Flavors&quot;;
+</string>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContentsOnFirstShow</enum>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+          </property>
+          <property name="dragEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragDropMode::DragDrop</enum>
+          </property>
+          <property name="textElideMode">
+           <enum>Qt::TextElideMode::ElideMiddle</enum>
+          </property>
+          <property name="gridStyle">
+           <enum>Qt::PenStyle::NoPen</enum>
+          </property>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>155</number>
+          </attribute>
+          <attribute name="verticalHeaderCascadingSectionResizes">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderDefaultSectionSize">
+           <number>25</number>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>Id</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>ClassName</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Time</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Trainer</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Statue</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Capacity</string>
+           </property>
+          </column>
+         </widget>
+         <widget class="QPushButton" name="SortClassesbt">
+          <property name="geometry">
+           <rect>
+            <x>660</x>
+            <y>200</y>
+            <width>161</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+          </property>
+          <property name="text">
+           <string>Sort </string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit">
+          <property name="geometry">
+           <rect>
+            <x>220</x>
+            <y>250</y>
+            <width>113</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+          </property>
+          <property name="text">
+           <string>Any</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_2">
+          <property name="geometry">
+           <rect>
+            <x>380</x>
+            <y>250</y>
+            <width>113</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+          </property>
+          <property name="text">
+           <string>Any</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_3">
+          <property name="geometry">
+           <rect>
+            <x>530</x>
+            <y>250</y>
+            <width>113</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+          </property>
+          <property name="text">
+           <string>Any</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_4">
+          <property name="geometry">
+           <rect>
+            <x>690</x>
+            <y>250</y>
+            <width>113</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+          </property>
+          <property name="text">
+           <string>Any</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_5">
+          <property name="geometry">
+           <rect>
+            <x>850</x>
+            <y>250</y>
+            <width>113</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+          </property>
+          <property name="text">
+           <string>Any</string>
+          </property>
+         </widget>
+         <widget class="QWidget" name="widget_42" native="true">
+          <property name="geometry">
+           <rect>
+            <x>480</x>
+            <y>60</y>
+            <width>541</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 15px;
+hover background-color: #008FC1;</string>
+          </property>
+          <widget class="QLabel" name="label_192">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>70</y>
+             <width>261</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 600 13pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>(555) 123-457</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_191">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>40</y>
+             <width>261</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 600 13pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>123 Olympus St, Alexandria</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_190">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>211</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Location</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="widget_43" native="true">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>60</y>
+            <width>451</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 15px;
+hover background-color: #008FC1;</string>
+          </property>
+          <widget class="QLabel" name="label_184">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>70</y>
+             <width>131</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 600 13pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Gym Classes</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_181">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>30</y>
+             <width>61</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>12</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_180">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>10</y>
+             <width>211</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>OverView</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_187">
+           <property name="geometry">
+            <rect>
+             <x>260</x>
+             <y>30</y>
+             <width>61</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>150</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_188">
+           <property name="geometry">
+            <rect>
+             <x>240</x>
+             <y>70</y>
+             <width>131</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 600 13pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Trainers</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_186">
+           <property name="geometry">
+            <rect>
+             <x>140</x>
+             <y>70</y>
+             <width>71</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 600 13pt &quot;Segoe UI&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Capacity</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_185">
+           <property name="geometry">
+            <rect>
+             <x>150</x>
+             <y>30</y>
+             <width>61</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           </property>
+           <property name="text">
+            <string>180</string>
+           </property>
+          </widget>
+         </widget>
+         <zorder>widget_43</zorder>
+         <zorder>widget_42</zorder>
+         <zorder>label_193</zorder>
+         <zorder>label_183</zorder>
+         <zorder>label_194</zorder>
+         <zorder>EnrollClassesBtn</zorder>
+         <zorder>tableWidget</zorder>
+         <zorder>SortClassesbt</zorder>
+         <zorder>lineEdit</zorder>
+         <zorder>lineEdit_2</zorder>
+         <zorder>lineEdit_3</zorder>
+         <zorder>lineEdit_4</zorder>
+         <zorder>lineEdit_5</zorder>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_15">
+        <widget class="QWidget" name="widget_23" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>901</width>
+           <height>611</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_225">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Workout</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_17">
+        <widget class="QWidget" name="widget_24" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1041</width>
+           <height>691</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_226">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>padelcourt</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_18">
+        <widget class="QWidget" name="widget_25" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>-10</y>
+           <width>1051</width>
+           <height>701</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_227">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Subscription</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_19">
+        <widget class="QWidget" name="widget_26" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>0</y>
+           <width>1041</width>
+           <height>691</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_228">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Notification</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_20">
+        <widget class="QWidget" name="widget_27" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>0</y>
+           <width>1051</width>
+           <height>681</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_229">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Billing</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_21">
+        <widget class="QWidget" name="widget_28" native="true">
+         <property name="geometry">
+          <rect>
+           <x>-10</x>
+           <y>0</y>
+           <width>1051</width>
+           <height>691</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="label_231">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>170</y>
+            <width>291</width>
+            <height>101</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Profile</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </widget>
      </widget>
     </widget>
    </widget>

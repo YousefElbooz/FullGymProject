@@ -1,3 +1,1 @@
-2:alaa:19:00000:00000:N/A:N/A:N/A:N/A:coach
-1|gym|10:00|alaa|Scheduled
----
+1:Xmo:0:N/A:N/A:N/A:N/A:N/A:N/A:manager
