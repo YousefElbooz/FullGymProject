@@ -28,9 +28,9 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
-    FileHandler::saveMembers("C:/Users/Yousef/Documents/FullGymProject/members.txt", members);
-    FileHandler::saveStaff("C:/Users/Yousef/Documents/FullGymProject/staffs.txt", staffMap);
-    FileHandler::saveClasses("C:/Users/Yousef/Documents/FullGymProject/classes.txt", classesmap);
+    FileHandler::saveMembers("members.txt", members);
+    FileHandler::saveStaff("staffs.txt", staffMap);
+    FileHandler::saveClasses("classes.txt", classesmap);
     qDeleteAll(members);
     qDeleteAll(staffMap);
     qDeleteAll(classesmap);
@@ -90,9 +90,12 @@ void MainWindow::loadPhotos(){
 }
 
 void MainWindow::loadData() {
-    members = FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/members.txt");
-    staffMap = FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/staffs.txt");
-    classesmap = FileHandler::loadClasses("C:/Users/Yousef/Documents/FullGymProject/classes.txt");
+    members = FileHandler::loadMembers("members.txt");
+    staffMap = FileHandler::loadStaff("staffs.txt");
+    classesmap = FileHandler::loadClasses("classes.txt");
+    /////////////////////////////////////
+
+
 }
 
 void MainWindow::updateUI() {

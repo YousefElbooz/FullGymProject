@@ -191,11 +191,17 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath) {
 
             if (parts.size() >= 5) {
                 QString coachName = parts[4];
+            // if you have such a method
             }
+
+            // ✅ Corrected: load queue members
+            QString queueFile = QString("queuedata_%1.txt").arg(id);
+           FileHandler::loadQueueMembers(queueFile, gymClass->getNormalList(), gymClass->getVIPList());
 
             gymClasses[id] = gymClass;
         }
     }
+
     file.close();
     return gymClasses;
 }
@@ -213,11 +219,78 @@ void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*
         out << gymClass->getId() << ","
             << gymClass->getName() << ","
             << gymClass->getSchedule() << ","
-            << gymClass->getCapacity() << "\n";
+            << gymClass->getCapacity();
 
-        QString coachName = gymClass->getCoach() ? gymClass->getCoach()->getName() : "None";
-        out << "Coach: " << coachName << "\n";
-        out << "---\n";
+        // Optional: Save coach name if available
+        if (gymClass->getCoach()) {
+            out << "," << gymClass->getCoach()->getName();
+        }
+
+        out << "\n";
+
+        // Save queue data to separate file
+        QString queueFile = QString("queuedata_%1.txt").arg(gymClass->getId());
+        saveQueueData(queueFile, gymClass->getNormalList(), gymClass->getVIPList());
+    }
+
+    file.close();
+}
+
+void   FileHandler::loadQueueMembers(const QString& filePath, QQueue<Member*>& normalList, QQueue<Member*>& VIPList) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open queue file: " << filePath;
+        return;
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty() || line.startsWith("#")) continue;
+
+        QStringList parts = line.split(":");
+        if (parts.size() == 8) {
+            QString name = parts[1];
+            QString email = parts[2];
+            QString gender = parts[3];
+            bool isVip = (parts[4].toLower() == "true");
+            QString phone = parts[5];
+            QString address = parts[6];
+            int age = parts[7].toInt();
+
+            Member* member = new Member(name, email, gender, isVip, phone, address, age);
+
+            if (isVip)
+                VIPList.enqueue(member);
+            else
+                normalList.enqueue(member);
+        }
+    }
+
+    file.close();
+}
+
+void FileHandler::saveQueueData(const QString& filePath, const QQueue<Member*>& normalList, const QQueue<Member*>& VIPList) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open queue data file for writing: " << filePath;
+        return;
+    }
+
+    QTextStream out(&file);
+
+    // Save VIP members first
+    for (const Member* m : VIPList) {
+        out << 0 << ":" << m->getName() << ":" << m->getEmail() << ":"
+            << m->getGender() << ":" << (m->getIsVip() ? "true" : "false") << ":"
+            << m->getPhone() << ":" << m->getAddress() << ":" << m->getAge() << "\n";
+    }
+
+    // Then normal members
+    for (const Member* m : normalList) {
+        out << 0 << ":" << m->getName() << ":" << m->getEmail() << ":"
+            << m->getGender() << ":" << (m->getIsVip() ? "true" : "false") << ":"
+            << m->getPhone() << ":" << m->getAddress() << ":" << m->getAge() << "\n";
     }
 
     file.close();

@@ -1,4 +1,7 @@
 #include "gymclass.h"
+#include "member.h"
+#include "coach.h"
+
 int GymClass::lastId =0;
 
 GymClass::GymClass(QString name, QString schedule, int capacity)
@@ -14,6 +17,30 @@ void GymClass::addMember(Member* member) {
         //handle full capacity
     }
 }
+// addTowaitList
+void GymClass::addToWaitList( Member* member) {
+    if(member->getIsVip()){
+         this->VIPList.enqueue(member);
+    }
+    else
+        this->normalList.enqueue(member);
+}
+void GymClass::moveToClass() {
+    if (VIPList.isEmpty() && !normalList.isEmpty()) {
+        this->addMember(this->normalList.head());
+
+        normalList.dequeue(); // Remove from front of queue
+    }
+    else if(!VIPList.isEmpty() ){
+        this->addMember(this->VIPList.head());
+
+        VIPList.dequeue(); // Remove from front of queue
+    }
+    else{     //(normalList isempty & vipList isempty)
+      // make warning that there is no one in waitlists
+    }
+}
+
 
 // Set the coach for the class
 void GymClass::setCoach(Coach* coach) {
@@ -56,4 +83,12 @@ Coach* GymClass::getCoach() const{
 
 int GymClass::getCapacity(){
     return this->capacity;
+}
+//////////////////////////////////////////
+QQueue<Member*>& GymClass::getVIPList() {
+    return this->VIPList;
+}
+
+QQueue<Member*>& GymClass::getNormalList() {
+    return this->normalList;
 }
