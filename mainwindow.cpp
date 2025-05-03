@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setWindowFlag(Qt::FramelessWindowHint);
     setFixedSize(1350,710);
-    staffMap[manger->getId()]= manger;
     ui->setupUi(this);
     ui->FullWiedgit->setCurrentIndex(2);
     ui->LoginPageStackedWidget->setCurrentIndex(0);
@@ -127,14 +126,14 @@ MainWindow::MainWindow(QWidget *parent)
             tableWidget->insertRow(row);
 
             tableWidget->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
-            tableWidget->setItem(row, 1, new QTableWidgetItem(gc->getClassName()));
-            tableWidget->setItem(row, 2, new QTableWidgetItem(gc->get.toString("hh:mm AP")));
-            tableWidget->setItem(row, 3, new QTableWidgetItem(gc->getTrainer()));
-            tableWidget->setItem(row, 4, new QTableWidgetItem(gc->getStatus()));
+            tableWidget->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+            tableWidget->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+            tableWidget->setItem(row, 3, new QTableWidgetItem(gc->getCoach()->getName()));
+            tableWidget->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
             tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity()-gc->getEnrolled())));
         }
     }
-    connect(ui->SortClassesbt,&QPushButton::clicked,this,[=]{
+    connect(ui->SortClassesbt, &QPushButton::clicked, this, [=] {
         QStringList filters = {
             ui->lineEdit->text().trimmed(),
             ui->lineEdit_2->text().trimmed(),
@@ -142,6 +141,7 @@ MainWindow::MainWindow(QWidget *parent)
             ui->lineEdit_4->text().trimmed(),
             ui->lineEdit_5->text().trimmed()
         };
+
         ui->tableWidget->clearContents();
         ui->tableWidget->setRowCount(0);
 
@@ -151,31 +151,31 @@ MainWindow::MainWindow(QWidget *parent)
 
         for (const auto& cls : classesmap) {
             QStringList classData = {
-                QString::number(cls->getId()),         // 0 - ID
-                cls->getClassName(),                   // 1 - Class Name
-                cls->getTime().toString("hh:mm AP"),   // 2 - Time
-                cls->getTrainer(),                     // 3 - Trainer
-                cls->getStatus(),                      // 4 - Status
-                QString::number(cls->getCapacity())    // 5 - Capacity
+                QString::number(cls->getId()),                   // 0 - ID
+                cls->getName(),                                  // 1 - Class Name
+                cls->getTime().toString("hh:mm AP"),             // 2 - Time
+                cls->getCoach()->getName(),                      // 3 - Trainer
+                cls->getStatue(),                                // 4 - Status
+                QString::number(cls->getCapacity())              // 5 - Capacity
             };
 
             bool matched = true;
             for (int i = 0; i < filters.size(); ++i) {
-                if (!match(filters[i], classData[i + 1])) { // skip ID column
+                if (!match(filters[i], classData[i + 1])) { // i+1 to skip ID
                     matched = false;
                     break;
                 }
             }
 
             if (matched) {
-                int row = tableWidget->rowCount();
-                tableWidget->insertRow(row);
+                int row = ui->tableWidget->rowCount();
+                ui->tableWidget->insertRow(row);
                 for (int col = 0; col < 6; ++col) {
-                    tableWidget->setItem(row, col, new QTableWidgetItem(classData[col]));
+                    ui->tableWidget->setItem(row, col, new QTableWidgetItem(classData[col]));
                 }
             }
         }
-    })
+    });
 }
 
 MainWindow::~MainWindow() {
@@ -187,6 +187,7 @@ MainWindow::~MainWindow() {
     qDeleteAll(staffMap);
     qDeleteAll(classesmap);
 }
+
 
 void MainWindow::setPixmapForWidgets() {
     QString imagePaths[] = {

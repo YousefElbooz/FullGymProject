@@ -30,7 +30,6 @@ private:
     QMap<int, Staff*> staffMap;
     QMap<int, GymClass*> classesmap;
     Member* currMember;
-    Manger* manger = new Manger("sys","manger@a7a.com","123456","","",20);
     Staff * currStaff;
     Ui::MainWindow *ui;
 };

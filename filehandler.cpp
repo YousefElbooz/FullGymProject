@@ -150,7 +150,7 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
             for (GymClass* gymClass : coach->getClasses()) {
                 out << gymClass->getId() << "|"
                     << gymClass->getName() << "|"
-                    << gymClass->getSchedule() << "|"
+                    << gymClass->getStatue() << "|"
                     << (gymClass->getCoach() ? gymClass->getCoach()->getName() : "Unknown") << "|"
                     << "Scheduled\n";
             }
@@ -169,7 +169,7 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
     file.close();
 }
 
-QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath,QMap<int, GymClass*>& gymClasses) {
+QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open gym classes file";
@@ -179,28 +179,50 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath,QMap<int, 
     QTextStream in(&file);
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
-        if (line.isEmpty() || line.startsWith("#")) continue;
+        if (line.isEmpty() || line.startsWith("#"))
+            continue;
+
+        // Properly remove "---" suffix if exists
+        if (line.endsWith("---")) {
+            line = line.left(line.length() - 3).trimmed();
+        }
 
         QStringList parts = line.split(",");
-        if (parts.size() >= 4) {
-            int id = parts[0].toInt();
-            QString name = parts[1];
-            QString schedule = parts[2];
-            int capacity = parts[3].toInt();
-
-            GymClass* gymClass = new GymClass(name, schedule, capacity);
-            gymClass->setId(id);
-
-            if (parts.size() >= 5) {
-                QString coachName = parts[4];
-            }
-
-            gymClasses[id] = gymClass;
+        if (parts.size() < 7) {
+            qWarning() << "Malformed class line: " << line;
+            continue;
         }
+
+        bool ok = false;
+        int id = parts[0].toInt(&ok);
+        if (!ok) continue;
+
+        QString name = parts[1];
+        QString timeStr = parts[2];
+        QString status = parts[3];
+        int capacity = parts[4].toInt(&ok);
+        if (!ok) continue;
+
+        int enrolled = parts[5].toInt(&ok);
+        if (!ok) continue;
+
+        QString coachPart = parts[6].trimmed();
+        QString coachName = coachPart.startsWith("Coach: ") ? coachPart.mid(7) : "None";
+
+        GymClass* gymClass = new GymClass(name, timeStr, capacity);
+        gymClass->setId(id);
+        gymClass->setStatue(status);
+        gymClass->setEnrolled(enrolled);
+        // Note: gymClass->setCoach() should be set if coach lookup is supported
+
+        gymClasses[id] = gymClass;
     }
+
     file.close();
     return gymClasses;
 }
+
+
 
 void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*>& gymClasses) {
     QFile file(filePath);
@@ -212,14 +234,14 @@ void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*
     QTextStream out(&file);
     for (auto it = gymClasses.begin(); it != gymClasses.end(); ++it) {
         GymClass* gymClass = it.value();
+        QString coachName = gymClass->getCoach() ? gymClass->getCoach()->getName() : "None";
         out << gymClass->getId() << ","
             << gymClass->getName() << ","
-            << gymClass->getSchedule() << ","
-            << gymClass->getCapacity() << "\n";
-
-        QString coachName = gymClass->getCoach() ? gymClass->getCoach()->getName() : "None";
-        out << "Coach: " << coachName << "\n";
-        out << "---\n";
+            << gymClass->getTime().toString("hh:mm AP") << ","
+            << gymClass->getStatue() << ","
+            << gymClass->getCapacity() <<","
+            << gymClass->getEnrolled() <<","
+            << "Coach: " << coachName <<"---\n";
     }
 
     file.close();
