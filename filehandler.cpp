@@ -10,7 +10,7 @@
 #include "receptionists.h"
 #include "gymclass.h"
 
-QMap<int, Member*> FileHandler::loadMembers(const QString& filePath,QMap<int, Member*>& members) {
+QMap<int, Member*> FileHandler::loadMembers(const QString& filePath, QMap<int, Member*>& members, const QMap<int, GymClass*>& classesmap) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open member file";
@@ -18,12 +18,27 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath,QMap<int, Me
     }
 
     QTextStream in(&file);
+    Member* m = nullptr;
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
-        if (line.isEmpty() || line.startsWith("#")){
-
-        };
-
+        if (line.isEmpty() || line.startsWith("#")) {
+            m = nullptr;
+            continue;
+        }
+        if (line.startsWith("Class: ")) {
+            if (m) {
+                QString className = line.mid(QString("Class: ").length()).trimmed();
+                // Find the class by name in classesmap (now passed as parameter)
+                for (auto gc : classesmap) {
+                    if (gc->getName().compare(className, Qt::CaseInsensitive) == 0) {
+                        m->addClass(gc);
+                        break;
+                    }
+                }
+            }
+            continue;
+        }
+        // Member line
         QStringList parts = line.split(":");
         if (parts.size() == 9) {
             int id = parts[0].toInt();
@@ -35,8 +50,7 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath,QMap<int, Me
             QString phone = parts[6];
             QString address = parts[7];
             int age = parts[8].toInt();
-
-            Member* m = new Member(name, email,password, gender, isVip, phone, address, age);
+            m = new Member(name, email,password, gender, isVip, phone, address, age);
             members[id] = m;
         }
     }
@@ -117,8 +131,12 @@ void FileHandler::saveMembers(const QString& filePath, const QMap<int, Member*>&
         out << it.key() << ":" << m->getName() << ":" << m->getEmail()<<":"<< m->getPassword()
             << ":" << m->getGender() << ":" << (m->getIsVip() ? "true" : "false")
             << ":" << m->getPhone() << ":" << m->getAddress() << ":" << m->getAge() << "\n";
+        // Write enrolled classes
+        for (auto gc : m->getClasses()) {
+            out << "Class: " << gc->getName() << "\n";
+        }
+        out << "\n"; // Blank line after each member
     }
-
     file.close();
 }
 
@@ -169,61 +187,6 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
     file.close();
 }
 
-QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses) {
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open gym classes file";
-        return gymClasses;
-    }
-
-    QTextStream in(&file);
-    while (!in.atEnd()) {
-        QString line = in.readLine().trimmed();
-        if (line.isEmpty() || line.startsWith("#"))
-            continue;
-
-        // Properly remove "---" suffix if exists
-        if (line.endsWith("---")) {
-            line = line.left(line.length() - 3).trimmed();
-        }
-
-        QStringList parts = line.split(",");
-        if (parts.size() < 7) {
-            qWarning() << "Malformed class line: " << line;
-            continue;
-        }
-
-        bool ok = false;
-        int id = parts[0].toInt(&ok);
-        if (!ok) continue;
-
-        QString name = parts[1];
-        QString timeStr = parts[2];
-        QString status = parts[3];
-        int capacity = parts[4].toInt(&ok);
-        if (!ok) continue;
-
-        int enrolled = parts[5].toInt(&ok);
-        if (!ok) continue;
-
-        QString coachPart = parts[6].trimmed();
-        QString coachName = coachPart.startsWith("Coach: ") ? coachPart.mid(7) : "None";
-
-        GymClass* gymClass = new GymClass(name, timeStr, capacity);
-        gymClass->setId(id);
-        gymClass->setStatue(status);
-        gymClass->setEnrolled(enrolled);
-        // Note: gymClass->setCoach() should be set if coach lookup is supported
-
-        gymClasses[id] = gymClass;
-    }
-
-    file.close();
-    return gymClasses;
-}
-
-
-
 void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*>& gymClasses) {
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -239,14 +202,69 @@ void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*
             << gymClass->getName() << ","
             << gymClass->getTime().toString("hh:mm AP") << ","
             << gymClass->getStatue() << ","
-            << gymClass->getCapacity() <<","
-            << gymClass->getEnrolled() <<","
-            << "Coach: " << coachName <<"---\n";
+            << gymClass->getCapacity() << ","
+            << gymClass->getEnrolled() << ","
+            << "Coach: " << coachName << "\n";
+        // Write enrolled members by ID
+        for (auto member : gymClass->getMembers()) {
+            out << "Member: " << member->getId() << "\n";
+        }
+        out << "\n"; // Blank line after each class
     }
-
     file.close();
 }
 
+QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses, const QMap<int, Member*>& members) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open gym classes file";
+        return gymClasses;
+    }
 
-
-
+    QTextStream in(&file);
+    GymClass* gc = nullptr;
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty() || line.startsWith("#")) {
+            gc = nullptr;
+            continue;
+        }
+        if (line.startsWith("Member: ")) {
+            if (gc) {
+                QString memberIdStr = line.mid(QString("Member: ").length()).trimmed();
+                bool ok = false;
+                int memberId = memberIdStr.toInt(&ok);
+                if (ok && members.contains(memberId)) {
+                    gc->addMember(members[memberId]);
+                }
+            }
+            continue;
+        }
+        // Class line
+        QStringList parts = line.split(",");
+        if (parts.size() < 7) {
+            qWarning() << "Malformed class line: " << line;
+            continue;
+        }
+        bool ok = false;
+        int id = parts[0].toInt(&ok);
+        if (!ok) continue;
+        QString name = parts[1];
+        QString timeStr = parts[2];
+        QString status = parts[3];
+        int capacity = parts[4].toInt(&ok);
+        if (!ok) continue;
+        int enrolled = parts[5].toInt(&ok);
+        if (!ok) continue;
+        QString coachPart = parts[6].trimmed();
+        QString coachName = coachPart.startsWith("Coach: ") ? coachPart.mid(7) : "None";
+        gc = new GymClass(name, timeStr, capacity);
+        gc->setId(id);
+        gc->setStatue(status);
+        gc->setEnrolled(enrolled);
+        // Note: gc->setCoach() should be set if coach lookup is supported
+        gymClasses[id] = gc;
+    }
+    file.close();
+    return gymClasses;
+}

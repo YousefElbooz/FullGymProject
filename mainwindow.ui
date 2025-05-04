@@ -53,6 +53,7 @@ border-radius:20px;</string>
        <string/>
       </property>
       <property name="pixmap">
+
        <pixmap resource="resource.qrc">:/img/images/newGym.png</pixmap>
       </property>
       <property name="scaledContents">
@@ -960,6 +961,7 @@ hover background-color: #dcdcdc;
          <string>Gym Mangment</string>
         </property>
         <property name="icon">
+
          <iconset resource="resource.qrc">
           <normaloff>:/icons/images/icons/gymDumble.svg</normaloff>:/icons/images/icons/gymDumble.svg</iconset>
         </property>
@@ -1060,6 +1062,7 @@ hover background-color: #dcdcdc;
          <string>Admin</string>
         </property>
         <property name="icon">
+
          <iconset resource="resource.qrc">
           <normaloff>:/icons/images/icons/user-admin.svg</normaloff>:/icons/images/icons/user-admin.svg</iconset>
         </property>
@@ -1127,6 +1130,7 @@ hover background-color: #dcdcdc;
          <string>Billing</string>
         </property>
         <property name="icon">
+
          <iconset resource="resource.qrc">
           <normaloff>:/icons/images/icons/bill.svg</normaloff>:/icons/images/icons/bill.svg</iconset>
         </property>
@@ -2768,6 +2772,7 @@ hover background-color: #dcdcdc;
          <string>Available Classes</string>
         </property>
         <property name="icon">
+
          <iconset resource="resource.qrc">
           <normaloff>:/icons/images/icons/calendar.svg</normaloff>:/icons/images/icons/calendar.svg</iconset>
         </property>
@@ -2938,6 +2943,7 @@ hover background-color: #dcdcdc;
          <string>Profile</string>
         </property>
         <property name="icon">
+
          <iconset resource="resource.qrc">
           <normaloff>:/icons/images/icons/profile.svg</normaloff>:/icons/images/icons/profile.svg</iconset>
         </property>
@@ -3077,7 +3083,7 @@ hover background-color: #dcdcdc;
         </rect>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page_8">
         <widget class="QWidget" name="widget_16" native="true">
@@ -3089,28 +3095,11 @@ hover background-color: #dcdcdc;
            <height>701</height>
           </rect>
          </property>
-         <widget class="QLabel" name="label_196">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>0</y>
-            <width>241</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(55, 91, 106);
-font: 24pt &quot;Yeasty Flavors&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Enroll Class</string>
-          </property>
-         </widget>
          <widget class="QWidget" name="widget_41" native="true">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>50</y>
+            <x>40</x>
+            <y>30</y>
             <width>1031</width>
             <height>631</height>
            </rect>
@@ -3609,9 +3598,34 @@ hover background-color: #008FC1;</string>
             <string>Request Class</string>
            </property>
           </widget>
+          <widget class="QLineEdit" name="lineEditClassNameRequest">
+           <property name="geometry">
+            <rect>
+             <x>660</x>
+             <y>20</y>
+             <width>151</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 238, 219);
+z-index:55;</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_2">
+           <property name="geometry">
+            <rect>
+             <x>560</x>
+             <y>20</y>
+             <width>101</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Enter Class name: </string>
+           </property>
+          </widget>
          </widget>
-         <zorder>widget_41</zorder>
-         <zorder>label_196</zorder>
         </widget>
        </widget>
        <widget class="QWidget" name="page_10">
