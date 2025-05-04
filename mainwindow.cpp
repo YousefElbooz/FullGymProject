@@ -13,15 +13,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     this->setWindowFlag(Qt::FramelessWindowHint);
-    setFixedSize(1350,710);
+    setFixedSize(1355,720);
+    this->setAttribute(Qt::WA_TranslucentBackground);
     ui->setupUi(this);
-    ui->FullWiedgit->setCurrentIndex(1);
+    ui->FullWiedgit->setCurrentIndex(2);
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
-   FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt", members, classesmap);
-   FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt", staffMap);
-   FileHandler::loadClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt", classesmap, members);
+    FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt", members, classesmap);
+    FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt", staffMap);
+    FileHandler::loadClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt", classesmap, members);
     // Move updateEnrolledClassesTable here so it is in scope for all later code
     auto updateEnrolledClassesTable = [=]() {
         ui->tableWidget_3->clearContents();
@@ -131,11 +132,45 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->toggleButton,&QPushButton::clicked,this,[=](){
         ui->LoginPageStackedWidget->setCurrentIndex(1);
-        ui->label->setPixmap(QPixmap(":/img/images/newpadel.png"));
+        ui->label->setPixmap(QPixmap(":/img/images/newpadelrounded.png"));
+        ui->Exit->setStyleSheet(R"(
+            QPushButton {
+                background-color:#008FC1;
+                padding: 10px;
+                color: rgb(0, 0, 0);
+                font: 9pt "Yeasty Flavors";
+                border: none;
+                border-radius: 25px;
+            }
+            QPushButton:hover{
+                background-color: rgb(233, 222, 203);
+                border-radius:25px;
+                border:1px solid #008FC1;
+                color: #008FC1;
+                border-color:#008FC1;
+            }
+        )");
     });
     connect(ui->toggleButton_2,&QPushButton::clicked,this,[=](){
         ui->LoginPageStackedWidget->setCurrentIndex(0);
-        ui->label->setPixmap(QPixmap(":/img/images/newGym.png"));
+        ui->label->setPixmap(QPixmap(":/img/images/newGymrounded.png"));
+        ui->Exit->setStyleSheet(R"(
+            QPushButton {
+                background-color:rgb(198, 143, 59);
+                padding: 10px;
+                color: rgb(0, 0, 0);
+                font: 9pt "Yeasty Flavors";
+                border: none;
+                border-radius: 25px;
+            }
+            QPushButton:hover{
+                background-color: rgb(233, 222, 203);
+                border-radius:25px;
+                border:1px solid rgb(198, 143, 59);
+                color: rgb(198, 143, 59);
+                border-color: rgb(198, 143, 59);
+            }
+        )");
     });
     connect(ui->Exit,&QPushButton::clicked,this,&MainWindow::close);
     QList<QTableWidget*> tablewidgets = {ui->tableWidget,ui->tableWidget_4,ui->tableWidget_3,ui->tableWidget_2};
@@ -293,7 +328,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::setPixmapForWidgets() {
     QString imagePaths[] = {
-        ":/img/images/newGym.png", // 0 - label image (skip or use elsewhere)
+        ":/img/images/newGymrounded.png", // 0 - label image (skip or use elsewhere)
         ":/img/images/logo.png", // 1 - logo (still used)
         ":/icons/images/icons/dashboard.svg", // 2
         ":/icons/images/icons/gymDumble.svg", // 3
