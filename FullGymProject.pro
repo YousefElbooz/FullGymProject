@@ -41,3 +41,6 @@ DISTFILES += \
     classes.txt \
     members.txt \
     staffs.txt
+
+RESOURCES += \
+    resource.qrc

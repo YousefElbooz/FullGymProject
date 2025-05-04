@@ -124,17 +124,22 @@ MainWindow::MainWindow(QWidget *parent)
         }else{
             gender = "female";
         }
-        // Passed all validations
-        QMessageBox::information(this, "Success", "Sign-up completed successfully.");
         Member * m = new Member(username,email,password,gender,false,phone,address,ageStr.toInt());
         currMember = m;
         members[m->getId()]=m;
+        QMessageBox::information(this, "Success", "Sign-up completed successfully.");
     });
-    connect(ui->toggleButton,&QPushButton::clicked,this,[=](){ui->LoginPageStackedWidget->setCurrentIndex(1);});
-    connect(ui->toggleButton_2,&QPushButton::clicked,this,[=](){ui->LoginPageStackedWidget->setCurrentIndex(0);});
+    connect(ui->toggleButton,&QPushButton::clicked,this,[=](){
+        ui->LoginPageStackedWidget->setCurrentIndex(1);
+        ui->label->setPixmap(QPixmap(":/img/images/newpadel.png"));
+    });
+    connect(ui->toggleButton_2,&QPushButton::clicked,this,[=](){
+        ui->LoginPageStackedWidget->setCurrentIndex(0);
+        ui->label->setPixmap(QPixmap(":/img/images/newGym.png"));
+    });
     connect(ui->Exit,&QPushButton::clicked,this,&MainWindow::close);
-    QList<QTableWidget*> tablewidgets = {ui->tableWidget,ui->tableWidget_4};
-    for (QTableWidget* tableWidget : tablewidgets) {
+    QList<QTableWidget*> tablewidgets = {ui->tableWidget,ui->tableWidget_4,ui->tableWidget_3,ui->tableWidget_2};
+    for (auto tableWidget : tablewidgets) {
         tableWidget->clearContents();
         tableWidget->setRowCount(0);
         tableWidget->setColumnCount(6);
@@ -142,9 +147,13 @@ MainWindow::MainWindow(QWidget *parent)
         tableWidget->setHorizontalHeaderLabels(QStringList()
                                                << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
 
-        for (const auto& gc : classesmap) {
+        for (auto gc : classesmap) {
+            if (!gc) continue; // safety check
+
             int row = tableWidget->rowCount();
             tableWidget->insertRow(row);
+
+            QString trainer = gc->getCoach() ? gc->getCoach()->getName() : "Unassigned";
 
             tableWidget->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
             tableWidget->setItem(row, 1, new QTableWidgetItem(gc->getName()));
@@ -152,10 +161,10 @@ MainWindow::MainWindow(QWidget *parent)
             QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
             tableWidget->setItem(row, 3, new QTableWidgetItem(coachName));
             tableWidget->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
-            tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity()-gc->getEnrolled())));
+            tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
         }
     }
-    connect(ui->SortClassesbt, &QPushButton::clicked, this, [=] {
+    connect(ui->SortClassesbt,&QPushButton::clicked,this,[=]{
         QStringList filters = {
             ui->lineEdit->text().trimmed(),
             ui->lineEdit_2->text().trimmed(),
@@ -163,7 +172,6 @@ MainWindow::MainWindow(QWidget *parent)
             ui->lineEdit_4->text().trimmed(),
             ui->lineEdit_5->text().trimmed()
         };
-
         ui->tableWidget->clearContents();
         ui->tableWidget->setRowCount(0);
 
@@ -171,7 +179,7 @@ MainWindow::MainWindow(QWidget *parent)
             return filter.isEmpty() || filter.compare("any", Qt::CaseInsensitive) == 0 || filter == value;
         };
 
-        for (const auto& cls : classesmap) {
+        for (auto cls : classesmap) {
             QStringList classData = {
                 QString::number(cls->getId()),                   // 0 - ID
                 cls->getName(),                                  // 1 - Class Name
@@ -183,7 +191,7 @@ MainWindow::MainWindow(QWidget *parent)
 
             bool matched = true;
             for (int i = 0; i < filters.size(); ++i) {
-                if (!match(filters[i], classData[i + 1])) { // i+1 to skip ID
+                if (!match(filters[i], classData[i + 1])) { // skip ID column
                     matched = false;
                     break;
                 }
@@ -285,37 +293,37 @@ MainWindow::~MainWindow() {
 
 void MainWindow::setPixmapForWidgets() {
     QString imagePaths[] = {
-        "C:/Users/Yousef/Pictures/newGym.png", // 0 - label image (skip or use elsewhere)
-        "C:/Users/Yousef/Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png", // 1 - logo (still used)
-        "C:/Users/Yousef/Downloads/dashboard-svgrepo-com.svg", // 2
-        "C:/Users/Yousef/Downloads/gym-dumbbell-svgrepo-com.svg", // 3
-        "C:/Users/Yousef/Downloads/group-of-businessmen-svgrepo-com.svg", // 4
-        "C:/Users/Yousef/Downloads/add-user-svgrepo-com.svg", // 5
-        "C:/Users/Yousef/Downloads/user-admin-svgrepo-com.svg", // 6
-        "C:/Users/Yousef/Downloads/notification-bell-1397-svgrepo-com.svg", // 7
-        "C:/Users/Yousef/Downloads/invoice-bill-svgrepo-com.svg", // 8
-        "C:/Users/Yousef/Downloads/profile-round-1342-svgrepo-com.svg", // 9
-        "C:/Users/Yousef/Downloads/setting-4-svgrepo-com.svg", // 10
-        "C:/Users/Yousef/Downloads/logout-svgrepo-com.svg", // 11
-        "C:/Users/Yousef/Downloads/line-chart-up-02-svgrepo-com.svg", // 12
-        "C:/Users/Yousef/Downloads/enter-svgrepo-com.svg", // 13
-        "C:/Users/Yousef/Downloads/cancel-photo-svgrepo-com.svg", // 14
-        "C:/Users/Yousef/Downloads/calendar-event-available-svgrepo-com.svg", // 15
-        "C:/Users/Yousef/Downloads/home-workouts-svgrepo-com.svg", // 16
-        "C:/Users/Yousef/Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg", // 17
-        "C:/Users/Yousef/Downloads/court-playground-svgrepo-com.svg",        // 18
-        "C:/Users/Yousef/Downloads/user-admin-svgrepo-com.svg",     // 19
-        "C:/Users/Yousef/Downloads/sand-clock-svgrepo-com.svg",     // 20
-        "C:/Users/Yousef/Downloads/stretching-svgrepo-com.svg",     //21
-        "C:/Users/Yousef/Downloads/coach-coaching-physical-trainer-svgrepo-com.svg", //22
-        "C:/Users/Yousef/Downloads/money-bag-svgrepo-com.svg",      //23
-        "C:/Users/Yousef/Downloads/line-chart-up-02-svgrepo-com.svg",       //24
-        "C:/Users/Yousef/Downloads/enter-svgrepo-com.svg",                  //25
-        "C:/Users/Yousef/Downloads/cancel-photo-svgrepo-com.svg",           //26
-        "C:/Users/Yousef/Downloads/calendar-event-available-svgrepo-com.svg",   //27
-        "C:/Users/Yousef/Downloads/home-workouts-svgrepo-com.svg",      //28
-        "C:/Users/Yousef/Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg",     //29
-        "C:/Users/Yousef/Downloads/court-playground-svgrepo-com.svg"            //30
+        ":/img/images/newGym.png", // 0 - label image (skip or use elsewhere)
+        ":/img/images/logo.png", // 1 - logo (still used)
+        ":/icons/images/icons/dashboard.svg", // 2
+        ":/icons/images/icons/gymDumble.svg", // 3
+        ":/icons/images/icons/teamMangment.svg", // 4
+        ":/icons/images/icons/add-user.svg", // 5
+        ":/icons/images/icons/user-admin.svg", // 6
+        ":/icons/images/icons/notification.svg", // 7
+        ":/icons/images/icons/bill.svg", // 8
+        ":/icons/images/icons/profile.svg", // 9
+        ":/icons/images/icons/settings.svg", // 10
+        ":/icons/images/icons/logout.svg", // 11
+        ":/icons/images/icons/chart.svg", // 12
+        ":/icons/images/icons/enter.svg", // 13
+        ":/icons/images/icons/cancel.svg", // 14
+        ":/icons/images/icons/calendar.svg", // 15
+        ":/icons/images/icons/home-workouts.svg", // 16
+        ":/icons/images/icons/auto-renew.svg", // 17
+        ":/icons/images/icons/court-playground.svg",        // 18
+        ":/icons/images/icons/user-admin.svg",     // 19
+        ":/icons/images/icons/sand-clock.svg",     // 20
+        ":/icons/images/icons/stretching.svg",     //21
+        ":/icons/images/icons/coach.svg", //22
+        ":/icons/images/icons/money.svg",      //23
+        ":/icons/images/icons/chart.svg",       //24
+        ":/icons/images/icons/enter.svg",                  //25
+        ":/icons/images/icons/cancel.svg",           //26
+        ":/icons/images/icons/calendar.svg",   //27
+        ":/icons/images/icons/home-workouts.svg",      //28
+        ":/icons/images/icons/auto-renew.svg",     //29
+        ":/icons/images/icons/court-playground.svg"            //30
     };
 
     // Logo only (still QLabel)
@@ -336,10 +344,10 @@ void MainWindow::setPixmapForWidgets() {
 
     // Member buttons
     ui->EnrollClassBtn->setIcon(QIcon(imagePaths[2]));
-    ui->CancelClassBtn->setIcon(QIcon(imagePaths[3]));
+    ui->CancelClassBtn->setIcon(QIcon(imagePaths[14]));
     ui->AvailableClassesBtn->setIcon(QIcon(imagePaths[4]));
-    ui->WorkoutBtn->setIcon(QIcon(imagePaths[5]));
-    ui->PadekCourtBtn->setIcon(QIcon(imagePaths[5]));
+    ui->WorkoutBtn->setIcon(QIcon(imagePaths[16]));
+    ui->PadekCourtBtn->setIcon(QIcon(imagePaths[18]));
     ui->NotifiMemberBtn->setIcon(QIcon(imagePaths[7]));
     ui->Billbtn_3->setIcon(QIcon(imagePaths[8]));
     ui->MemberProfileBtn->setIcon(QIcon(imagePaths[9]));
@@ -424,5 +432,4 @@ void MainWindow::setPixmapForWidgets() {
     ui->CashIcon->setPixmap(QPixmap(imagePaths[22]));
     ui->Chart->setPixmap(QPixmap(imagePaths[23]));
 }
-
 
