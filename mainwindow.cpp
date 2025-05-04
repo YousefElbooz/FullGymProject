@@ -191,7 +191,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->Exit,&QPushButton::clicked,this,&MainWindow::close);
 
-    QList<QTableWidget*> tablewidgets = {ui->tableWidget,ui->tableWidget_4,ui->tableWidget_3,ui->tableWidget_2};
+    QList<QTableWidget*> tablewidgets = {ui->tableWidget_4,ui->tableWidget_3,ui->tableWidget_2};
     for (auto tableWidget : tablewidgets) {
         tableWidget->clearContents();
         tableWidget->setRowCount(0);
@@ -218,7 +218,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-    connect(ui->SortClassesbt,&QPushButton::clicked,this,[=]{
+    connect(ui->SortEnrolledClassesBtn,&QPushButton::clicked,this,[=]{
         QStringList filters = {
             ui->lineEdit_6->text().trimmed(),
             ui->lineEdit_7->text().trimmed(),
@@ -227,8 +227,8 @@ MainWindow::MainWindow(QWidget *parent)
             ui->lineEdit_10->text().trimmed()
         };
 
-        ui->tableWidget->clearContents();
-        ui->tableWidget->setRowCount(0);
+        ui->tableWidget_2->clearContents();
+        ui->tableWidget_2->setRowCount(0);
 
         auto match = [](const QString& filter, const QString& value) {
             return filter.isEmpty() || filter.compare("any", Qt::CaseInsensitive) == 0 || filter == value;
@@ -571,7 +571,7 @@ void MainWindow::setPixmapForWidgets() {
             if(i<9)
                 ui->staffMainStackWidget->setCurrentIndex(index);
             else if(i<18)
-                ui->stackedWidget_3->setCurrentIndex(index-9);
+                ui->stackedWidget->setCurrentIndex(index-9);
             else{
                 Animations* pageAnimator = new Animations(this);
                 pageAnimator->setUI(ui->FullWiedgit, ui->label, ui->Exit);
