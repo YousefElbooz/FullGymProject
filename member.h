@@ -62,6 +62,8 @@ public:
         //search by (location, date ,time )
     //cancel padel court
         //Before class within 3 hours
+
+    void removeClass(GymClass* gymClass);
 };
 
 #endif // MEMBER_H

@@ -1,5 +1,6 @@
-1,Yoga,,Open,10,8,Coach: None
+1,Yoga,,Open,10,9,Coach: None
 Member: 2
+Member: 5
 
 2,Spin,,Open,20,18,Coach: None
 

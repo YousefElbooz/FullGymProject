@@ -28,3 +28,6 @@ QString Member::toString() const {
     return QString("ID: %1, Name: %2, Email: %3, Gender: %4, VIP: %5, Phone: %6, Address: %7, Age: %8")
     .arg(id).arg(name).arg(email).arg(gender).arg(isVip ? "Yes" : "No").arg(phone).arg(address).arg(age);
 }
+void Member::removeClass(GymClass* gymClass) {
+    classes.removeOne(gymClass);
+}

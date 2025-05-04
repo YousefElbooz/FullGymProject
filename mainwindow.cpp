@@ -13,8 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     this->setWindowFlag(Qt::FramelessWindowHint);
-    setFixedSize(1350,710);
+    // setFixedSize(1350,710); // Removed to allow resizing
     ui->setupUi(this);
+    this->showMaximized();
     ui->FullWiedgit->setCurrentIndex(0);
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
@@ -133,7 +134,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->toggleButton,&QPushButton::clicked,this,[=](){ui->LoginPageStackedWidget->setCurrentIndex(1);});
     connect(ui->toggleButton_2,&QPushButton::clicked,this,[=](){ui->LoginPageStackedWidget->setCurrentIndex(0);});
     connect(ui->Exit,&QPushButton::clicked,this,&MainWindow::close);
-    QList<QTableWidget*> tablewidgets = {ui->tableWidget,ui->tableWidget_4};
+    QList<QTableWidget*> tablewidgets = {ui->tableWidget_2,ui->tableWidget_4};
     for (QTableWidget* tableWidget : tablewidgets) {
         tableWidget->clearContents();
         tableWidget->setRowCount(0);
@@ -155,17 +156,17 @@ MainWindow::MainWindow(QWidget *parent)
             tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity()-gc->getEnrolled())));
         }
     }
-    connect(ui->SortClassesbt, &QPushButton::clicked, this, [=] {
+    connect(ui->Dashboard_17, &QPushButton::clicked, this, [=] {
         QStringList filters = {
-            ui->lineEdit->text().trimmed(),
-            ui->lineEdit_2->text().trimmed(),
-            ui->lineEdit_3->text().trimmed(),
-            ui->lineEdit_4->text().trimmed(),
-            ui->lineEdit_5->text().trimmed()
+            ui->lineEdit_6->text().trimmed(),
+            ui->lineEdit_7->text().trimmed(),
+            ui->lineEdit_8->text().trimmed(),
+            ui->lineEdit_9->text().trimmed(),
+            ui->lineEdit_10->text().trimmed()
         };
 
-        ui->tableWidget->clearContents();
-        ui->tableWidget->setRowCount(0);
+        ui->tableWidget_2->clearContents();
+        ui->tableWidget_2->setRowCount(0);
 
         auto match = [](const QString& filter, const QString& value) {
             return filter.isEmpty() || filter.compare("any", Qt::CaseInsensitive) == 0 || filter == value;
@@ -190,10 +191,10 @@ MainWindow::MainWindow(QWidget *parent)
             }
 
             if (matched) {
-                int row = ui->tableWidget->rowCount();
-                ui->tableWidget->insertRow(row);
+                int row = ui->tableWidget_2->rowCount();
+                ui->tableWidget_2->insertRow(row);
                 for (int col = 0; col < 6; ++col) {
-                    ui->tableWidget->setItem(row, col, new QTableWidgetItem(classData[col]));
+                    ui->tableWidget_2->setItem(row, col, new QTableWidgetItem(classData[col]));
                 }
             }
         }
@@ -207,6 +208,7 @@ MainWindow::MainWindow(QWidget *parent)
         selectedClassId = ui->tableWidget_2->item(row, 0)->text().toInt();
     });
 
+    ///////////// Enroll button section //////////////
     connect(ui->EnrollClassBtn, &QPushButton::clicked, this, [=]() {
         // Show available classes table
         ui->tableWidget_2->clearContents();
@@ -270,6 +272,102 @@ MainWindow::MainWindow(QWidget *parent)
         // Optionally, clear the input
         ui->lineEditClassNameRequest->clear();
     });
+
+    // Cancel Class logic
+    connect(ui->CancelClassBtn, &QPushButton::clicked, this, [=]() {
+        // Show member's enrolled classes in tableWidget_5
+        ui->tableWidget_5->clearContents();
+        ui->tableWidget_5->setRowCount(0);
+        ui->tableWidget_5->setColumnCount(6);
+        ui->tableWidget_5->setHorizontalHeaderLabels(QStringList()
+            << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+        for (const auto& gc : currMember->getClasses()) {
+            int row = ui->tableWidget_5->rowCount();
+            ui->tableWidget_5->insertRow(row);
+            ui->tableWidget_5->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+            ui->tableWidget_5->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+            ui->tableWidget_5->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+            QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
+            ui->tableWidget_5->setItem(row, 3, new QTableWidgetItem(coachName));
+            ui->tableWidget_5->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
+            ui->tableWidget_5->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
+        }
+    });
+
+    ////////////////Cancel button secton //////////////////
+
+    connect(ui->CancelClassConfirmBtn, &QPushButton::clicked, this, [=]() {
+        QString classIdStr = ui->lineEditCancelClassId->text().trimmed();
+        QString className = ui->lineEditCancelClassName->text().trimmed();
+        if (classIdStr.isEmpty() || className.isEmpty()) {
+            QMessageBox::warning(this, "Input Error", "Please enter both class ID and class name.");
+            return;
+        }
+        bool ok = false;
+        int classId = classIdStr.toInt(&ok);
+        if (!ok) {
+            QMessageBox::warning(this, "Input Error", "Class ID must be a number.");
+            return;
+        }
+        GymClass* foundClass = nullptr;
+        for (auto gc : currMember->getClasses()) {
+            if (gc->getId() == classId && gc->getName().compare(className, Qt::CaseInsensitive) == 0) {
+                foundClass = gc;
+                break;
+            }
+        }
+        if (!foundClass) {
+            QMessageBox::warning(this, "Not Enrolled", "You are not enrolled in this class.");
+            return;
+        }
+        // Remove from member's classes
+        currMember->removeClass(foundClass);
+        foundClass->removeMember(currMember);
+        // Update enrolled count
+        foundClass->setEnrolled(foundClass->getEnrolled() - 1);
+        // Save changes
+        FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
+        FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // Update UI
+        updateEnrolledClassesTable();
+        ui->tableWidget_5->clearContents();
+        ui->tableWidget_5->setRowCount(0);
+        for (const auto& gc : currMember->getClasses()) {
+            int row = ui->tableWidget_5->rowCount();
+            ui->tableWidget_5->insertRow(row);
+            ui->tableWidget_5->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+            ui->tableWidget_5->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+            ui->tableWidget_5->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+            QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
+            ui->tableWidget_5->setItem(row, 3, new QTableWidgetItem(coachName));
+            ui->tableWidget_5->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
+            ui->tableWidget_5->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
+        }
+        QMessageBox::information(this, "Success", "You have successfully canceled the class.");
+        ui->lineEditCancelClassId->clear();
+        ui->lineEditCancelClassName->clear();
+    });
+
+    connect(ui->AvailableClassesBtn, &QPushButton::clicked, this, [=]() {
+        int availableClassesPageIndex = ui->stackedWidget->count() - 1;
+        ui->stackedWidget->setCurrentIndex(availableClassesPageIndex); // Switch to Available Classes page
+        ui->tableWidget_6->clearContents();
+        ui->tableWidget_6->setRowCount(0);
+        ui->tableWidget_6->setColumnCount(6);
+        ui->tableWidget_6->setHorizontalHeaderLabels(QStringList()
+            << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+        for (const auto& gc : classesmap) {
+            int row = ui->tableWidget_6->rowCount();
+            ui->tableWidget_6->insertRow(row);
+            ui->tableWidget_6->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+            ui->tableWidget_6->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+            ui->tableWidget_6->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+            QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
+            ui->tableWidget_6->setItem(row, 3, new QTableWidgetItem(coachName));
+            ui->tableWidget_6->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
+            ui->tableWidget_6->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
+        }
+    });
 }
 
 MainWindow::~MainWindow() {
@@ -285,37 +383,37 @@ MainWindow::~MainWindow() {
 
 void MainWindow::setPixmapForWidgets() {
     QString imagePaths[] = {
-        "C:/Users/Yousef/Pictures/newGym.png", // 0 - label image (skip or use elsewhere)
-        "C:/Users/Yousef/Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png", // 1 - logo (still used)
-        "C:/Users/Yousef/Downloads/dashboard-svgrepo-com.svg", // 2
-        "C:/Users/Yousef/Downloads/gym-dumbbell-svgrepo-com.svg", // 3
-        "C:/Users/Yousef/Downloads/group-of-businessmen-svgrepo-com.svg", // 4
-        "C:/Users/Yousef/Downloads/add-user-svgrepo-com.svg", // 5
-        "C:/Users/Yousef/Downloads/user-admin-svgrepo-com.svg", // 6
-        "C:/Users/Yousef/Downloads/notification-bell-1397-svgrepo-com.svg", // 7
-        "C:/Users/Yousef/Downloads/invoice-bill-svgrepo-com.svg", // 8
-        "C:/Users/Yousef/Downloads/profile-round-1342-svgrepo-com.svg", // 9
-        "C:/Users/Yousef/Downloads/setting-4-svgrepo-com.svg", // 10
-        "C:/Users/Yousef/Downloads/logout-svgrepo-com.svg", // 11
-        "C:/Users/Yousef/Downloads/line-chart-up-02-svgrepo-com.svg", // 12
-        "C:/Users/Yousef/Downloads/enter-svgrepo-com.svg", // 13
-        "C:/Users/Yousef/Downloads/cancel-photo-svgrepo-com.svg", // 14
-        "C:/Users/Yousef/Downloads/calendar-event-available-svgrepo-com.svg", // 15
-        "C:/Users/Yousef/Downloads/home-workouts-svgrepo-com.svg", // 16
-        "C:/Users/Yousef/Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg", // 17
-        "C:/Users/Yousef/Downloads/court-playground-svgrepo-com.svg",        // 18
-        "C:/Users/Yousef/Downloads/user-admin-svgrepo-com.svg",     // 19
-        "C:/Users/Yousef/Downloads/sand-clock-svgrepo-com.svg",     // 20
-        "C:/Users/Yousef/Downloads/stretching-svgrepo-com.svg",     //21
-        "C:/Users/Yousef/Downloads/coach-coaching-physical-trainer-svgrepo-com.svg", //22
-        "C:/Users/Yousef/Downloads/money-bag-svgrepo-com.svg",      //23
-        "C:/Users/Yousef/Downloads/line-chart-up-02-svgrepo-com.svg",       //24
-        "C:/Users/Yousef/Downloads/enter-svgrepo-com.svg",                  //25
-        "C:/Users/Yousef/Downloads/cancel-photo-svgrepo-com.svg",           //26
-        "C:/Users/Yousef/Downloads/calendar-event-available-svgrepo-com.svg",   //27
-        "C:/Users/Yousef/Downloads/home-workouts-svgrepo-com.svg",      //28
-        "C:/Users/Yousef/Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg",     //29
-        "C:/Users/Yousef/Downloads/court-playground-svgrepo-com.svg"            //30
+        "G:/cs_project/FullGymProject/images/new Gym.jpeg", // 0 - label image (skip or use elsewhere)
+        "G:/cs_project/FullGymProject/images/logo.png", // 1 - logo (still used)
+        "G:/cs_project/FullGymProject/images/dashboard.svg", // 2
+        "G:/cs_project/FullGymProject/images/gym-dumbbell.svg", // 3
+        "G:/cs_project/FullGymProject/images/group-of-businessmen.svg", // 4
+        "G:/cs_project/FullGymProject/images/add-user.svg", // 5
+        "G:/cs_project/FullGymProject/images/user-admin.svg", // 6
+        "G:/cs_project/FullGymProject/images/notification-bell.svg", // 7
+        "G:/cs_project/FullGymProject/images/invoice-bill.svg", // 8
+        "G:/cs_project/FullGymProject/images/profile-round.svg", // 9
+        "G:/cs_project/FullGymProject/images/setting.svg", // 10
+        "G:/cs_project/FullGymProject/images/logout.svg", // 11
+        "G:/cs_project/FullGymProject/images/line-chart.svg", // 12
+        "G:/cs_project/FullGymProject/images/enter.svg", // 13
+        "G:/cs_project/FullGymProject/images/cancel-photo.svg", // 14
+        "G:/cs_project/FullGymProject/images/calendar-event.svg", // 15
+        "G:/cs_project/FullGymProject/images/home-workouts.svg", // 16
+        "G:/cs_project/FullGymProject/images/auto-renewal.svg", // 17
+        "G:/cs_project/FullGymProject/images/court-playground.svg", // 18
+        "G:/cs_project/FullGymProject/images/user-admin.svg", // 19
+        "G:/cs_project/FullGymProject/images/sand-clock.svg", // 20
+        "G:/cs_project/FullGymProject/images/stretching.svg", // 21
+        "G:/cs_project/FullGymProject/images/coach.svg", // 22
+        "G:/cs_project/FullGymProject/images/money-bag.svg", // 23
+        "G:/cs_project/FullGymProject/images/line-chart.svg", // 24
+        "G:/cs_project/FullGymProject/images/enter.svg", // 25
+        "G:/cs_project/FullGymProject/images/cancel-photo.svg", // 26
+        "G:/cs_project/FullGymProject/images/calendar-event.svg", // 27
+        "G:/cs_project/FullGymProject/images/home-workouts.svg", // 28
+        "G:/cs_project/FullGymProject/images/auto-renewal.svg", // 29
+        "G:/cs_project/FullGymProject/images/court-playground.svg" // 30
     };
 
     // Logo only (still QLabel)
@@ -410,7 +508,7 @@ void MainWindow::setPixmapForWidgets() {
             if(i<9)
                 ui->staffMainStackWidget->setCurrentIndex(index);
             else if(i<18)
-                ui->stackedWidget_3->setCurrentIndex(index-9);
+                ui->stackedWidget->setCurrentIndex(index-9);
             else
                 ui->FullWiedgit->setCurrentIndex(0);
         });

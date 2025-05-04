@@ -39,6 +39,7 @@ public:
     void setId(int id);
     void setEnrolled(int enrolled);
     int getEnrolled() const;
+    void removeMember(Member* member);
 };
 
 #endif // GYMCLASS_H

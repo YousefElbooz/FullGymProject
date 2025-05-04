@@ -29,3 +29,6 @@ Coach* GymClass::getCoach() const{return coach;}
 int GymClass::getCapacity() {return this->capacity;}
 int GymClass::getEnrolled()const {return this->enrolled;}
 void GymClass::setEnrolled(int enrolled){this->enrolled=enrolled;}
+void GymClass::removeMember(Member* member) {
+    members.removeOne(member);
+}
