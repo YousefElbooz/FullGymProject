@@ -15,13 +15,13 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowFlag(Qt::FramelessWindowHint);
     setFixedSize(1350,710);
     ui->setupUi(this);
-    ui->FullWiedgit->setCurrentIndex(0);
+    ui->FullWiedgit->setCurrentIndex(1);
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
-   FileHandler::loadMembers("G:/cs_project/FullGymProject/members.txt", members, classesmap);
-   FileHandler::loadStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
-   FileHandler::loadClasses("G:/cs_project/FullGymProject/classes.txt", classesmap, members);
+   FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt", members, classesmap);
+   FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt", staffMap);
+   FileHandler::loadClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt", classesmap, members);
     // Move updateEnrolledClassesTable here so it is in scope for all later code
     auto updateEnrolledClassesTable = [=]() {
         ui->tableWidget_3->clearContents();

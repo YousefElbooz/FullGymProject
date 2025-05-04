@@ -250,7 +250,7 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
         int id = parts[0].toInt(&ok);
         if (!ok) continue;
         QString name = parts[1];
-        QString timeStr = parts[2];
+        QTime time = QTime::fromString(parts[2], "hh:mm AP");
         QString status = parts[3];
         int capacity = parts[4].toInt(&ok);
         if (!ok) continue;
@@ -258,9 +258,9 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
         if (!ok) continue;
         QString coachPart = parts[6].trimmed();
         QString coachName = coachPart.startsWith("Coach: ") ? coachPart.mid(7) : "None";
-        gc = new GymClass(name, timeStr, capacity);
+        gc = new GymClass(name, status, capacity);
         gc->setId(id);
-        gc->setStatue(status);
+        gc->setTime(time);
         gc->setEnrolled(enrolled);
         // Note: gc->setCoach() should be set if coach lookup is supported
         gymClasses[id] = gc;
