@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1358</width>
-    <height>713</height>
+    <width>1354</width>
+    <height>725</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">border:3px solid rgba(0,0,0,0);
+   <string notr="true">border:1px solid rgba(0,0,0,0);
 border-radius:20px;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -24,17 +24,18 @@ border-radius:20px;</string>
    <widget class="QStackedWidget" name="FullWiedgit">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>-10</y>
-      <width>1351</width>
-      <height>711</height>
+      <x>0</x>
+      <y>0</y>
+      <width>1361</width>
+      <height>731</height>
+
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="LoginPageStack">
      <widget class="QLabel" name="label">
@@ -47,14 +48,16 @@ border-radius:20px;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-raduis:20px;</string>
+       <string notr="true">border:5px solid black;
+border-radius:25px;
+border-color: rgb(255, 255, 255);
+padding:-2px;</string>
       </property>
       <property name="text">
        <string/>
       </property>
       <property name="pixmap">
-
-       <pixmap resource="resource.qrc">:/img/images/newGym.png</pixmap>
+       <pixmap resource="resource.qrc">:/img/images/newGymrounded.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -70,10 +73,11 @@ border-radius:20px;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+       <string notr="true">background-color: rgba(255, 255, 255, 0);
+</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_14">
        <widget class="QWidget" name="widget" native="true">
@@ -86,7 +90,7 @@ border-radius:20px;</string>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">    background-color: rgba(255, 255, 255, 0.75);
+         <string notr="true">    background-color: rgba(255, 255, 255, 0.65);
     border-radius: 40px;
     padding: 20px;</string>
         </property>
@@ -128,7 +132,7 @@ font: 12pt &quot;Yeasty Flavors&quot;;
 color: rgb(0, 0, 0);
 }  
 QLineEdit:focus{
-	border:3px solid black;
+	border:3px solid white;
 }
 </string>
          </property>
@@ -155,7 +159,7 @@ font: 12pt &quot;Yeasty Flavors&quot;;
 color: rgb(0, 0, 0);
 }  
 QLineEdit:focus{
-	border:3px solid black;
+	border:3px solid white;
 }
 </string>
          </property>
@@ -326,9 +330,10 @@ padding:0px;</string>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">    background-color: rgba(255, 255, 255, 0.75);
+         <string notr="true">    background-color: rgba(255, 255, 255, 0.65);
     border-radius: 40px;
-    padding: 20px;</string>
+    padding: 20px;
+</string>
         </property>
         <widget class="QLabel" name="LabelSubHeadSignUp">
          <property name="geometry">
@@ -368,7 +373,7 @@ font: 12pt &quot;Yeasty Flavors&quot;;
 color: rgb(0, 0, 0);
 }  
 QLineEdit:focus{
-  border:3px solid black;
+  border:3px solid white;
 }
 </string>
          </property>
@@ -395,7 +400,7 @@ font: 12pt &quot;Yeasty Flavors&quot;;
 color: rgb(0, 0, 0);
 }  
 QLineEdit:focus{
-  border:3px solid black;
+  border:3px solid white;
 }
 </string>
          </property>
@@ -589,7 +594,7 @@ font: 12pt &quot;Yeasty Flavors&quot;;
 color: rgb(0, 0, 0);
 }  
 QLineEdit:focus{
-  border:3px solid black;
+  border:3px solid white;
 }
 </string>
          </property>
@@ -643,7 +648,7 @@ font: 12pt &quot;Yeasty Flavors&quot;;
 color: rgb(0, 0, 0);
 }  
 QLineEdit:focus{
-  border:3px solid black;
+  border:3px solid white;
 }
 
 </string>
@@ -671,7 +676,7 @@ font: 12pt &quot;Yeasty Flavors&quot;;
 color: rgb(0, 0, 0);
 }  
 QLineEdit:focus{
-  border:3px solid black;
+  border:3px solid white;
 }
 </string>
          </property>
@@ -725,7 +730,7 @@ font: 12pt &quot;Yeasty Flavors&quot;;
 color: rgb(0, 0, 0);
 }  
 QLineEdit:focus{
-  border:3px solid black;
+  border:3px solid white;
 }
 </string>
          </property>
@@ -855,13 +860,14 @@ QPushButton:hover{
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1341</width>
+        <width>1351</width>
         <height>701</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(249, 234, 205);
-border-raduis:20px;</string>
+border-raduis:20px;
+border </string>
       </property>
       <widget class="QWidget" name="widget_3" native="true">
        <property name="geometry">
@@ -961,7 +967,6 @@ hover background-color: #dcdcdc;
          <string>Gym Mangment</string>
         </property>
         <property name="icon">
-
          <iconset resource="resource.qrc">
           <normaloff>:/icons/images/icons/gymDumble.svg</normaloff>:/icons/images/icons/gymDumble.svg</iconset>
         </property>
@@ -977,7 +982,7 @@ hover background-color: #dcdcdc;
          <rect>
           <x>10</x>
           <y>240</y>
-          <width>251</width>
+          <width>261</width>
           <height>40</height>
          </rect>
         </property>
@@ -1062,7 +1067,6 @@ hover background-color: #dcdcdc;
          <string>Admin</string>
         </property>
         <property name="icon">
-
          <iconset resource="resource.qrc">
           <normaloff>:/icons/images/icons/user-admin.svg</normaloff>:/icons/images/icons/user-admin.svg</iconset>
         </property>
@@ -1130,7 +1134,6 @@ hover background-color: #dcdcdc;
          <string>Billing</string>
         </property>
         <property name="icon">
-
          <iconset resource="resource.qrc">
           <normaloff>:/icons/images/icons/bill.svg</normaloff>:/icons/images/icons/bill.svg</iconset>
         </property>
@@ -1300,20 +1303,20 @@ border-radius:1px</string>
          <x>290</x>
          <y>10</y>
          <width>1041</width>
-         <height>691</height>
+         <height>661</height>
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>8</number>
        </property>
        <widget class="QWidget" name="page">
         <widget class="QWidget" name="widget_5" native="true">
          <property name="geometry">
           <rect>
-           <x>-10</x>
-           <y>0</y>
-           <width>1051</width>
-           <height>701</height>
+           <x>-20</x>
+           <y>-10</y>
+           <width>1041</width>
+           <height>621</height>
           </rect>
          </property>
          <widget class="QLabel" name="label_6">
@@ -2639,16 +2642,15 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(249, 234, 205);
-border-raduis:20px;</string>
+       <string notr="true">background-color: rgb(249, 234, 205);</string>
       </property>
       <widget class="QWidget" name="widget_14" native="true">
        <property name="geometry">
         <rect>
-         <x>70</x>
-         <y>0</y>
-         <width>291</width>
-         <height>700</height>
+         <x>10</x>
+         <y>9</y>
+         <width>281</width>
+         <height>681</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -2677,7 +2679,7 @@ color: rgba(0, 0, 0, 150);</string>
          <rect>
           <x>10</x>
           <y>140</y>
-          <width>251</width>
+          <width>241</width>
           <height>40</height>
          </rect>
         </property>
@@ -2694,7 +2696,7 @@ color: rgba(0, 0, 0, 150);</string>
 color: rgb(0, 0, 0);
 font: 18pt &quot;Yeasty Flavors&quot;;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
 hover background-color: #dcdcdc;
             text-align: left;
 
@@ -2719,7 +2721,7 @@ hover background-color: #dcdcdc;
          <rect>
           <x>10</x>
           <y>190</y>
-          <width>251</width>
+          <width>241</width>
           <height>40</height>
          </rect>
         </property>
@@ -2728,7 +2730,7 @@ hover background-color: #dcdcdc;
 color: rgb(0, 0, 0);
 font: 18pt &quot;Yeasty Flavors&quot;;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
 hover background-color: #dcdcdc;
             text-align: left;
 
@@ -2753,7 +2755,7 @@ hover background-color: #dcdcdc;
          <rect>
           <x>10</x>
           <y>240</y>
-          <width>251</width>
+          <width>261</width>
           <height>40</height>
          </rect>
         </property>
@@ -2772,7 +2774,6 @@ hover background-color: #dcdcdc;
          <string>Available Classes</string>
         </property>
         <property name="icon">
-
          <iconset resource="resource.qrc">
           <normaloff>:/icons/images/icons/calendar.svg</normaloff>:/icons/images/icons/calendar.svg</iconset>
         </property>
@@ -2788,8 +2789,8 @@ hover background-color: #dcdcdc;
          <rect>
           <x>10</x>
           <y>290</y>
-          <width>251</width>
-          <height>36</height>
+          <width>241</width>
+          <height>40</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2797,7 +2798,7 @@ hover background-color: #dcdcdc;
 color: rgb(0, 0, 0);
 font: 18pt &quot;Yeasty Flavors&quot;;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
 hover background-color: #dcdcdc;
             text-align: left;
 
@@ -2822,8 +2823,8 @@ hover background-color: #dcdcdc;
          <rect>
           <x>10</x>
           <y>390</y>
-          <width>251</width>
-          <height>36</height>
+          <width>241</width>
+          <height>40</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2831,7 +2832,7 @@ hover background-color: #dcdcdc;
 color: rgb(0, 0, 0);
 font: 18pt &quot;Yeasty Flavors&quot;;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
 hover background-color: #dcdcdc;
             text-align: left;
 
@@ -2856,8 +2857,8 @@ hover background-color: #dcdcdc;
          <rect>
           <x>10</x>
           <y>440</y>
-          <width>251</width>
-          <height>36</height>
+          <width>241</width>
+          <height>40</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2865,7 +2866,7 @@ hover background-color: #dcdcdc;
 color: rgb(0, 0, 0);
 font: 18pt &quot;Yeasty Flavors&quot;;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
 hover background-color: #dcdcdc;
             text-align: left;
 
@@ -2890,8 +2891,8 @@ hover background-color: #dcdcdc;
          <rect>
           <x>10</x>
           <y>490</y>
-          <width>251</width>
-          <height>36</height>
+          <width>241</width>
+          <height>40</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2899,7 +2900,7 @@ hover background-color: #dcdcdc;
 color: rgb(0, 0, 0);
 font: 18pt &quot;Yeasty Flavors&quot;;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
 hover background-color: #dcdcdc;
             text-align: left;
 
@@ -2924,8 +2925,8 @@ hover background-color: #dcdcdc;
          <rect>
           <x>10</x>
           <y>590</y>
-          <width>251</width>
-          <height>36</height>
+          <width>241</width>
+          <height>40</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2933,7 +2934,7 @@ hover background-color: #dcdcdc;
 color: rgb(0, 0, 0);
 font: 18pt &quot;Yeasty Flavors&quot;;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
 hover background-color: #dcdcdc;
             text-align: left;
 
@@ -2943,7 +2944,6 @@ hover background-color: #dcdcdc;
          <string>Profile</string>
         </property>
         <property name="icon">
-
          <iconset resource="resource.qrc">
           <normaloff>:/icons/images/icons/profile.svg</normaloff>:/icons/images/icons/profile.svg</iconset>
         </property>
@@ -2959,8 +2959,8 @@ hover background-color: #dcdcdc;
          <rect>
           <x>10</x>
           <y>640</y>
-          <width>251</width>
-          <height>36</height>
+          <width>241</width>
+          <height>40</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3027,7 +3027,7 @@ color: rgba(0, 0, 0, 150);</string>
        <widget class="QWidget" name="widget_15" native="true">
         <property name="geometry">
          <rect>
-          <x>260</x>
+          <x>270</x>
           <y>0</y>
           <width>20</width>
           <height>701</height>
@@ -3044,7 +3044,7 @@ border-radius:1px</string>
           <x>10</x>
           <y>340</y>
           <width>241</width>
-          <height>36</height>
+          <height>40</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3052,7 +3052,7 @@ border-radius:1px</string>
 color: rgb(0, 0, 0);
 font: 18pt &quot;Yeasty Flavors&quot;;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
 hover background-color: #dcdcdc;
             text-align: left;
 
@@ -3076,10 +3076,10 @@ hover background-color: #dcdcdc;
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="geometry">
         <rect>
-         <x>350</x>
-         <y>30</y>
-         <width>1061</width>
-         <height>601</height>
+         <x>300</x>
+         <y>10</y>
+         <width>1041</width>
+         <height>691</height>
         </rect>
        </property>
        <property name="currentIndex">
@@ -3090,17 +3090,17 @@ hover background-color: #dcdcdc;
          <property name="geometry">
           <rect>
            <x>-10</x>
-           <y>10</y>
+           <y>0</y>
            <width>1061</width>
-           <height>691</height>
+           <height>701</height>
           </rect>
          </property>
          <widget class="QWidget" name="widget_41" native="true">
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>0</y>
-            <width>1051</width>
+            <y>30</y>
+            <width>1021</width>
             <height>631</height>
            </rect>
           </property>
@@ -3380,7 +3380,7 @@ hover background-color: #008FC1;</string>
             <string>Any</string>
            </property>
           </widget>
-          <widget class="QPushButton" name="Dashboard_17">
+          <widget class="QPushButton" name="SortEnrolledClassesBtn">
            <property name="geometry">
             <rect>
              <x>790</x>
@@ -3576,7 +3576,7 @@ color:rgb(249, 234, 205);</string>
             </property>
            </column>
           </widget>
-          <widget class="QPushButton" name="Dashboard_16">
+          <widget class="QPushButton" name="requestClassbtn">
            <property name="geometry">
             <rect>
              <x>810</x>
@@ -3601,28 +3601,24 @@ hover background-color: #008FC1;</string>
           <widget class="QLineEdit" name="lineEditClassNameRequest">
            <property name="geometry">
             <rect>
-             <x>640</x>
-             <y>20</y>
-             <width>151</width>
-             <height>31</height>
+             <x>660</x>
+             <y>10</y>
+             <width>161</width>
+             <height>41</height>
             </rect>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 238, 219);
-z-index:55;</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_2">
-           <property name="geometry">
-            <rect>
-             <x>530</x>
-             <y>20</y>
-             <width>101</width>
-             <height>31</height>
-            </rect>
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
            </property>
            <property name="text">
-            <string>Enter Class name: </string>
+            <string>ClassNameRequst</string>
            </property>
           </widget>
          </widget>
