@@ -49,6 +49,7 @@ public:
     QString getAddress() const;
     int getAge() const;
     QStack<QString> getWorkouts() const;
+    QVector<GymClass*> getClasses() const { return classes; }
 
     /*--------------helper Functions----------*/
     QString toString() const;
