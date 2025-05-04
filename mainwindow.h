@@ -4,6 +4,17 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QPixmap>
+#include <QMessageBox>
+#include <QFile>
+#include <QMap>
+#include <QPropertyAnimation>
+#include <QParallelAnimationGroup>
+#include <QGraphicsOpacityEffect>
+#include <QPropertyAnimation>
+#include <QParallelAnimationGroup>
+#include <QStackedWidget>
+#include <QWidget>
 #include "member.h"
 #include "manger.h"
 #include "staff.h"

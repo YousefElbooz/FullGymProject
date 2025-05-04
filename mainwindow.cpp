@@ -2,21 +2,23 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "FileHandler.h"
-#include <QPixmap>
-#include <QMessageBox>
-#include <QFile>
-#include <QMap>
+#include "animations.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
     this->setWindowFlag(Qt::FramelessWindowHint);
     setFixedSize(1355,720);
     this->setAttribute(Qt::WA_TranslucentBackground);
     ui->setupUi(this);
-    ui->FullWiedgit->setCurrentIndex(2);
+
+    Animations* animations = new Animations(this);
+    animations->setUI(ui->LoginPageStackedWidget, ui->label, ui->Exit);
+    Animations* pageAnimator = new Animations(this);
+    pageAnimator->setUI(ui->FullWiedgit, ui->label, ui->Exit);
+
+    ui->FullWiedgit->setCurrentIndex(1);
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
@@ -54,7 +56,22 @@ MainWindow::MainWindow(QWidget *parent)
                 currMember = mem;
                 updateEnrolledClassesTable();
                 QMessageBox::information(this, "Success", "You have logged in successfully.");
-                ui->FullWiedgit->setCurrentIndex(2);
+                QString newImagePath = ":/img/images/member-background.png"; // Change to your target background if needed
+                QString newExitStyle = R"(
+                        QPushButton {
+                            background-color: #008FC1;
+                            color: white;
+                            border-radius: 10px;
+                            padding: 6px 12px;
+                            font: bold 10pt "Yeasty Flavors";
+                        }
+                    )";
+                pageAnimator->animatedSwitchAdvanced(
+                    ui->FullWiedgit->currentIndex(), // from LoginPageStack
+                    2, // to MemberPageStack index
+                    newImagePath,
+                    newExitStyle
+                    );
                 loggedIn = true;
                 break;  // Stop checking further
             }
@@ -65,7 +82,6 @@ MainWindow::MainWindow(QWidget *parent)
                 if(stf->getEmail()==usrEmail&&stf->getPassword()==usrPassword){
                     currStaff = stf;
                     QMessageBox::information(this, "Success", "You have logged in successfully.");
-                    ui->FullWiedgit->setCurrentIndex(1);
                     loggedIn = true;
                     break;  // Stop checking further
                 }
@@ -130,47 +146,47 @@ MainWindow::MainWindow(QWidget *parent)
         members[m->getId()]=m;
         QMessageBox::information(this, "Success", "Sign-up completed successfully.");
     });
-    connect(ui->toggleButton,&QPushButton::clicked,this,[=](){
-        ui->LoginPageStackedWidget->setCurrentIndex(1);
-        ui->label->setPixmap(QPixmap(":/img/images/newpadelrounded.png"));
-        ui->Exit->setStyleSheet(R"(
-            QPushButton {
-                background-color:#008FC1;
-                padding: 10px;
-                color: rgb(0, 0, 0);
-                font: 9pt "Yeasty Flavors";
-                border: none;
-                border-radius: 25px;
-            }
-            QPushButton:hover{
-                background-color: rgb(233, 222, 203);
-                border-radius:25px;
-                border:1px solid #008FC1;
-                color: #008FC1;
-                border-color:#008FC1;
-            }
-        )");
+
+    connect(ui->toggleButton, &QPushButton::clicked, this, [=]() {
+        QString newStyle = R"(
+        QPushButton {
+            background-color:#008FC1;
+            padding: 10px;
+            color: rgb(0, 0, 0);
+            font: 9pt "Yeasty Flavors";
+            border: none;
+            border-radius: 25px;
+        }
+        QPushButton:hover{
+            background-color: rgb(233, 222, 203);
+            border-radius:25px;
+            border:1px solid #008FC1;
+            color: #008FC1;
+            border-color:#008FC1;
+        }
+    )";
+        animations->animatedSwitchAdvanced(0, 1, ":/img/images/newpadelrounded.png", newStyle);
     });
-    connect(ui->toggleButton_2,&QPushButton::clicked,this,[=](){
-        ui->LoginPageStackedWidget->setCurrentIndex(0);
-        ui->label->setPixmap(QPixmap(":/img/images/newGymrounded.png"));
-        ui->Exit->setStyleSheet(R"(
-            QPushButton {
-                background-color:rgb(198, 143, 59);
-                padding: 10px;
-                color: rgb(0, 0, 0);
-                font: 9pt "Yeasty Flavors";
-                border: none;
-                border-radius: 25px;
-            }
-            QPushButton:hover{
-                background-color: rgb(233, 222, 203);
-                border-radius:25px;
-                border:1px solid rgb(198, 143, 59);
-                color: rgb(198, 143, 59);
-                border-color: rgb(198, 143, 59);
-            }
-        )");
+
+    connect(ui->toggleButton_2, &QPushButton::clicked, this, [=]() {
+        QString newStyle = R"(
+        QPushButton {
+            background-color:rgb(198, 143, 59);
+            padding: 10px;
+            color: rgb(0, 0, 0);
+            font: 9pt "Yeasty Flavors";
+            border: none;
+            border-radius: 25px;
+        }
+        QPushButton:hover{
+            background-color: rgb(233, 222, 203);
+            border-radius:25px;
+            border:1px solid rgb(198, 143, 59);
+            color: rgb(198, 143, 59);
+            border-color: rgb(198, 143, 59);
+        }
+    )";
+        animations->animatedSwitchAdvanced(1, 0, ":/img/images/newGymrounded.png", newStyle);
     });
     connect(ui->Exit,&QPushButton::clicked,this,&MainWindow::close);
     QList<QTableWidget*> tablewidgets = {ui->tableWidget,ui->tableWidget_4,ui->tableWidget_3,ui->tableWidget_2};
@@ -276,7 +292,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     // Connect the Request Class button to perform enrollment
-    connect(ui->Dashboard_16, &QPushButton::clicked, this, [=]() {
+    connect(ui->requestClassbtn, &QPushButton::clicked, this, [=]() {
         QString requestedClassName = ui->lineEditClassNameRequest->text().trimmed();
         if (requestedClassName.isEmpty()) {
             QMessageBox::warning(this, "No Class Name", "Please enter a class name to request.");
@@ -310,7 +326,6 @@ MainWindow::MainWindow(QWidget *parent)
         updateEnrolledClassesTable();
         QMessageBox::information(this, "Success", "Successfully enrolled in " + selectedClass->getName());
 
-        // Optionally, clear the input
         ui->lineEditClassNameRequest->clear();
     });
 }
@@ -411,12 +426,15 @@ void MainWindow::setPixmapForWidgets() {
     QPushButton {
         background-color: transparent;
         color: black;
-        font: 16pt "Yeasty Flavors";
+        font: 12pt "Yeasty Flavors";
         text-align: left;
         border-radius: 5px;
+        padding-left:10px;
     }
     QPushButton:hover {
-        background-color: #dcdcdc;
+
+        border-radius: 5px;
+        border: 2px solid #f1c27d;
     }
 )";
 
@@ -437,12 +455,11 @@ void MainWindow::setPixmapForWidgets() {
             // Set clicked button to active style
             QString activeStyle = QString(R"(
             QPushButton {
-                background-color: transparent;
                 color: black;
-                font: 16pt "Yeasty Flavors";
+                font: 18pt "Yeasty Flavors";
                 text-align: left;
-                border-radius: 5px;
-                border: 2px solid #f1c27d;
+                background-color: #f1c27d;
+                padding-left:10px;
             }
             QPushButton:hover {
                 background-color: %1;
@@ -454,8 +471,24 @@ void MainWindow::setPixmapForWidgets() {
                 ui->staffMainStackWidget->setCurrentIndex(index);
             else if(i<18)
                 ui->stackedWidget_3->setCurrentIndex(index-9);
-            else
-                ui->FullWiedgit->setCurrentIndex(0);
+            else{
+                Animations* pageAnimator = new Animations(this);
+                pageAnimator->setUI(ui->FullWiedgit, ui->label, ui->Exit);
+                pageAnimator->animatedSwitchAdvanced(
+                    ui->FullWiedgit->currentIndex(),
+                    0,
+                    ":/img/images/newGymrounded.png",
+                    R"(
+                QPushButton {
+                    background-color: rgb(198, 143, 59);
+                    color: black;
+                    border-radius: 10px;
+                    font: bold 10pt "Yeasty Flavors";
+                    padding: 6px 12px;
+                }
+                )");
+                ui->LogOutBtn_3->setStyleSheet(defaultStyle);
+            }
         });
     }
 
@@ -467,4 +500,5 @@ void MainWindow::setPixmapForWidgets() {
     ui->CashIcon->setPixmap(QPixmap(imagePaths[22]));
     ui->Chart->setPixmap(QPixmap(imagePaths[23]));
 }
+
 
