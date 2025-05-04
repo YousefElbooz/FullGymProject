@@ -24,7 +24,6 @@ public:
     ~MainWindow();
 
 private slots:
-
 private:
     QMap<int, Member*> members;
     QMap<int, Staff*> staffMap;

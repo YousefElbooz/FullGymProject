@@ -34,7 +34,7 @@ border-radius:20px;</string>
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="LoginPageStack">
      <widget class="QLabel" name="label">
@@ -53,7 +53,8 @@ border-radius:20px;</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../../Pictures/newGym.png</pixmap>
+
+       <pixmap resource="resource.qrc">:/img/images/newGym.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -72,14 +73,14 @@ border-radius:20px;</string>
        <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_14">
        <widget class="QWidget" name="widget" native="true">
         <property name="geometry">
          <rect>
-          <x>340</x>
-          <y>240</y>
+          <x>360</x>
+          <y>200</y>
           <width>341</width>
           <height>281</height>
          </rect>
@@ -118,12 +119,18 @@ padding:0px;</string>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">    padding: 10px;
+          <string notr="true">QLineEdit{
+  padding: 10px;
     border: 1px solid #ccc;
 background-color: rgb(198, 143, 59);
 font: 12pt &quot;Yeasty Flavors&quot;;
-    border-radius: 10px;
-color: rgb(0, 0, 0);</string>
+    border-radius: 15px;
+color: rgb(0, 0, 0);
+}  
+QLineEdit:focus{
+	border:3px solid black;
+}
+</string>
          </property>
          <property name="text">
           <string/>
@@ -139,12 +146,18 @@ color: rgb(0, 0, 0);</string>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">    padding: 10px;
+          <string notr="true">QLineEdit{
+  padding: 10px;
     border: 1px solid #ccc;
 background-color: rgb(198, 143, 59);
 font: 12pt &quot;Yeasty Flavors&quot;;
-    border-radius: 10px;
-color: rgb(0, 0, 0);</string>
+    border-radius: 15px;
+color: rgb(0, 0, 0);
+}  
+QLineEdit:focus{
+	border:3px solid black;
+}
+</string>
          </property>
          <property name="text">
           <string/>
@@ -307,7 +320,7 @@ padding:0px;</string>
         <property name="geometry">
          <rect>
           <x>160</x>
-          <y>200</y>
+          <y>160</y>
           <width>721</width>
           <height>361</height>
          </rect>
@@ -341,17 +354,23 @@ padding:0px;</string>
           <rect>
            <x>100</x>
            <y>60</y>
-           <width>231</width>
+           <width>281</width>
            <height>41</height>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">    padding: 10px;
+          <string notr="true">QLineEdit{
+  padding: 10px;
     border: 1px solid #ccc;
+	border-radius:15px;
 background-color:#008FC1;
 font: 12pt &quot;Yeasty Flavors&quot;;
-    border-radius: 10px;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+}  
+QLineEdit:focus{
+  border:3px solid black;
+}
+</string>
          </property>
          <property name="text">
           <string/>
@@ -362,17 +381,23 @@ color: rgb(0, 0, 0);</string>
           <rect>
            <x>100</x>
            <y>120</y>
-           <width>231</width>
+           <width>281</width>
            <height>41</height>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">    padding: 10px;
+          <string notr="true">QLineEdit{
+  padding: 10px;
     border: 1px solid #ccc;
+	border-radius:15px;
 background-color:#008FC1;
 font: 12pt &quot;Yeasty Flavors&quot;;
-    border-radius: 10px;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+}  
+QLineEdit:focus{
+  border:3px solid black;
+}
+</string>
          </property>
          <property name="text">
           <string/>
@@ -411,9 +436,9 @@ QPushButton:hover{
         <widget class="QLabel" name="LabelUserName_2">
          <property name="geometry">
           <rect>
-           <x>-10</x>
+           <x>0</x>
            <y>40</y>
-           <width>131</width>
+           <width>101</width>
            <height>71</height>
           </rect>
          </property>
@@ -428,7 +453,9 @@ QPushButton:hover{
          <property name="styleSheet">
           <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
 background-color: rgba(255, 255, 255, 0);
-color:rgb(0, 0, 0)</string>
+color:rgb(0, 0, 0);
+padding:0px;
+</string>
          </property>
          <property name="text">
           <string>UserName :</string>
@@ -437,9 +464,9 @@ color:rgb(0, 0, 0)</string>
         <widget class="QLabel" name="LabelEmail">
          <property name="geometry">
           <rect>
-           <x>-10</x>
+           <x>0</x>
            <y>100</y>
-           <width>131</width>
+           <width>61</width>
            <height>71</height>
           </rect>
          </property>
@@ -454,7 +481,8 @@ color:rgb(0, 0, 0)</string>
          <property name="styleSheet">
           <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
 background-color: rgba(255, 255, 255, 0);
-color:rgb(0, 0, 0)</string>
+color:rgb(0, 0, 0);
+padding:0px;</string>
          </property>
          <property name="text">
           <string>Email :</string>
@@ -490,9 +518,9 @@ padding:0px;</string>
         <widget class="QPushButton" name="toggleButton_2">
          <property name="geometry">
           <rect>
-           <x>260</x>
+           <x>270</x>
            <y>240</y>
-           <width>91</width>
+           <width>51</width>
            <height>41</height>
           </rect>
          </property>
@@ -508,7 +536,8 @@ padding:0px;</string>
           <string notr="true">color: #008FC1;
 background-color: rgba(255, 255, 255, 0);
 padding:5px;
-font: 12pt &quot;Yeasty Flavors&quot;;</string>
+font: 12pt &quot;Yeasty Flavors&quot;;;
+padding:0px;</string>
          </property>
          <property name="text">
           <string>Login </string>
@@ -517,9 +546,9 @@ font: 12pt &quot;Yeasty Flavors&quot;;</string>
         <widget class="QLabel" name="LabelPasswordSignUp">
          <property name="geometry">
           <rect>
-           <x>-10</x>
+           <x>0</x>
            <y>160</y>
-           <width>131</width>
+           <width>101</width>
            <height>71</height>
           </rect>
          </property>
@@ -534,7 +563,8 @@ font: 12pt &quot;Yeasty Flavors&quot;;</string>
          <property name="styleSheet">
           <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
 background-color: rgba(255, 255, 255, 0);
-color:rgb(0, 0, 0)</string>
+color:rgb(0, 0, 0);
+padding:0px;</string>
          </property>
          <property name="text">
           <string>Password :</string>
@@ -545,17 +575,23 @@ color:rgb(0, 0, 0)</string>
           <rect>
            <x>100</x>
            <y>180</y>
-           <width>231</width>
+           <width>281</width>
            <height>41</height>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">    padding: 10px;
+          <string notr="true">QLineEdit{
+  padding: 10px;
     border: 1px solid #ccc;
+	border-radius:15px;
 background-color:#008FC1;
 font: 12pt &quot;Yeasty Flavors&quot;;
-    border-radius: 10px;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+}  
+QLineEdit:focus{
+  border:3px solid black;
+}
+</string>
          </property>
          <property name="text">
           <string/>
@@ -564,10 +600,10 @@ color: rgb(0, 0, 0);</string>
         <widget class="QLabel" name="LabelPhone">
          <property name="geometry">
           <rect>
-           <x>320</x>
-           <y>160</y>
-           <width>131</width>
-           <height>71</height>
+           <x>400</x>
+           <y>180</y>
+           <width>71</width>
+           <height>31</height>
           </rect>
          </property>
          <property name="font">
@@ -581,7 +617,8 @@ color: rgb(0, 0, 0);</string>
          <property name="styleSheet">
           <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
 background-color: rgba(255, 255, 255, 0);
-color:rgb(0, 0, 0)</string>
+color:rgb(0, 0, 0);
+padding:0px;</string>
          </property>
          <property name="text">
           <string>Phone :</string>
@@ -597,12 +634,19 @@ color:rgb(0, 0, 0)</string>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">    padding: 10px;
+          <string notr="true">QLineEdit{
+  padding: 10px;
     border: 1px solid #ccc;
+	border-radius:15px;
 background-color:#008FC1;
 font: 12pt &quot;Yeasty Flavors&quot;;
-    border-radius: 10px;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+}  
+QLineEdit:focus{
+  border:3px solid black;
+}
+
+</string>
          </property>
          <property name="text">
           <string/>
@@ -618,12 +662,18 @@ color: rgb(0, 0, 0);</string>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">    padding: 10px;
+          <string notr="true">QLineEdit{
+  padding: 10px;
     border: 1px solid #ccc;
+	border-radius:15px;
 background-color:#008FC1;
 font: 12pt &quot;Yeasty Flavors&quot;;
-    border-radius: 10px;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+}  
+QLineEdit:focus{
+  border:3px solid black;
+}
+</string>
          </property>
          <property name="text">
           <string/>
@@ -632,9 +682,9 @@ color: rgb(0, 0, 0);</string>
         <widget class="QLabel" name="LabelAge">
          <property name="geometry">
           <rect>
-           <x>320</x>
+           <x>400</x>
            <y>40</y>
-           <width>131</width>
+           <width>51</width>
            <height>71</height>
           </rect>
          </property>
@@ -649,7 +699,8 @@ color: rgb(0, 0, 0);</string>
          <property name="styleSheet">
           <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
 background-color: rgba(255, 255, 255, 0);
-color:rgb(0, 0, 0)</string>
+color:rgb(0, 0, 0);
+padding:0px;</string>
          </property>
          <property name="text">
           <string>Age :</string>
@@ -665,12 +716,18 @@ color:rgb(0, 0, 0)</string>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">    padding: 10px;
+          <string notr="true">QLineEdit{
+  padding: 10px;
     border: 1px solid #ccc;
+	border-radius:15px;
 background-color:#008FC1;
 font: 12pt &quot;Yeasty Flavors&quot;;
-    border-radius: 10px;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+}  
+QLineEdit:focus{
+  border:3px solid black;
+}
+</string>
          </property>
          <property name="text">
           <string/>
@@ -679,9 +736,9 @@ color: rgb(0, 0, 0);</string>
         <widget class="QLabel" name="LabelAddress">
          <property name="geometry">
           <rect>
-           <x>320</x>
+           <x>400</x>
            <y>100</y>
-           <width>121</width>
+           <width>81</width>
            <height>71</height>
           </rect>
          </property>
@@ -696,7 +753,8 @@ color: rgb(0, 0, 0);</string>
          <property name="styleSheet">
           <string notr="true">font: 12pt &quot;Yeasty Flavors&quot;;
 background-color: rgba(255, 255, 255, 0);
-color:rgb(0, 0, 0)</string>
+color:rgb(0, 0, 0);
+padding:0px;</string>
          </property>
          <property name="text">
           <string>address :</string>
@@ -865,8 +923,8 @@ font: 16pt &quot;Yeasty Flavors&quot;;
          <string>Dashboard</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/dashboard-svgrepo-com.svg</normaloff>../../Downloads/dashboard-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/dashboard.svg</normaloff>:/icons/images/icons/dashboard.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -903,8 +961,9 @@ hover background-color: #dcdcdc;
          <string>Gym Mangment</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/gym-dumbbell-svgrepo-com.svg</normaloff>../../Downloads/gym-dumbbell-svgrepo-com.svg</iconset>
+
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/gymDumble.svg</normaloff>:/icons/images/icons/gymDumble.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -936,8 +995,8 @@ text-align:left;
          <string>Trainer Mangment</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/group-of-businessmen-svgrepo-com.svg</normaloff>../../Downloads/group-of-businessmen-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/teamMangment.svg</normaloff>:/icons/images/icons/teamMangment.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -969,8 +1028,8 @@ hover background-color: #dcdcdc;
          <string>Add Users</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/add-user-svgrepo-com.svg</normaloff>../../Downloads/add-user-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/add-user.svg</normaloff>:/icons/images/icons/add-user.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1003,8 +1062,9 @@ hover background-color: #dcdcdc;
          <string>Admin</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/user-admin-svgrepo-com.svg</normaloff>../../Downloads/user-admin-svgrepo-com.svg</iconset>
+
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/user-admin.svg</normaloff>:/icons/images/icons/user-admin.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1037,8 +1097,8 @@ hover background-color: #dcdcdc;
          <string>Notification</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/notification-bell-1397-svgrepo-com.svg</normaloff>../../Downloads/notification-bell-1397-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/notification.svg</normaloff>:/icons/images/icons/notification.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1070,8 +1130,9 @@ hover background-color: #dcdcdc;
          <string>Billing</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/invoice-bill-svgrepo-com.svg</normaloff>../../Downloads/invoice-bill-svgrepo-com.svg</iconset>
+
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/bill.svg</normaloff>:/icons/images/icons/bill.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1103,8 +1164,8 @@ hover background-color: #dcdcdc;
          <string>Profile</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/profile-round-1342-svgrepo-com.svg</normaloff>../../Downloads/profile-round-1342-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/profile.svg</normaloff>:/icons/images/icons/profile.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1136,8 +1197,8 @@ hover background-color: #dcdcdc;
          <string>Settings</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/setting-4-svgrepo-com.svg</normaloff>../../Downloads/setting-4-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/settings.svg</normaloff>:/icons/images/icons/settings.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1169,8 +1230,8 @@ hover background-color: #dcdcdc;
          <string>Logout</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/logout-svgrepo-com.svg</normaloff>../../Downloads/logout-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/logout.svg</normaloff>:/icons/images/icons/logout.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1205,11 +1266,14 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
           <height>111</height>
          </rect>
         </property>
+        <property name="lineWidth">
+         <number>-4</number>
+        </property>
         <property name="text">
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../../Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png</pixmap>
+         <pixmap resource="resource.qrc">:/img/images/logo.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -1344,7 +1408,7 @@ color:rgb(249, 234, 205);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../Downloads/coach-coaching-physical-trainer-svgrepo-com.svg</pixmap>
+            <pixmap resource="resource.qrc">:/icons/images/icons/coach.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1444,7 +1508,7 @@ padding:8px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../Downloads/money-bag-svgrepo-com.svg</pixmap>
+            <pixmap resource="resource.qrc">:/icons/images/icons/chart.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1563,7 +1627,7 @@ padding :5px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../Downloads/profile-round-1342-svgrepo-com.svg</pixmap>
+            <pixmap resource="resource.qrc">:/icons/images/icons/profile.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1628,7 +1692,7 @@ padding :5px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../Downloads/notification-bell-1397-svgrepo-com.svg</pixmap>
+            <pixmap resource="resource.qrc">:/icons/images/icons/notification.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1710,7 +1774,7 @@ padding :5px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../Downloads/sand-clock-svgrepo-com.svg</pixmap>
+            <pixmap resource="resource.qrc">:/icons/images/icons/sand-clock.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1827,7 +1891,7 @@ color:rgb(249, 234, 205);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../Downloads/line-chart-up-02-svgrepo-com.svg</pixmap>
+            <pixmap resource="resource.qrc">:/icons/images/icons/calendar.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1906,13 +1970,14 @@ hover background-color: #008FC1;
             <string notr="true">border-radius:10px;
 background-color: rgba(255, 255, 255, 0);
 background-color: rgb(249, 234, 205);
-color:rgb(249, 234, 205);</string>
+color:rgb(249, 234, 205);
+padding:3px;</string>
            </property>
            <property name="text">
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../Downloads/stretching-svgrepo-com.svg</pixmap>
+            <pixmap resource="resource.qrc">:/icons/images/icons/stretching.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -2639,8 +2704,8 @@ hover background-color: #dcdcdc;
          <string>Enroll Class</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/enter-svgrepo-com.svg</normaloff>../../Downloads/enter-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/enter.svg</normaloff>:/icons/images/icons/enter.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2673,8 +2738,8 @@ hover background-color: #dcdcdc;
          <string>Cancel Class</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/cancel-photo-svgrepo-com.svg</normaloff>../../Downloads/cancel-photo-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/cancel.svg</normaloff>:/icons/images/icons/cancel.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2707,8 +2772,9 @@ hover background-color: #dcdcdc;
          <string>Available Classes</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/calendar-event-available-svgrepo-com.svg</normaloff>../../Downloads/calendar-event-available-svgrepo-com.svg</iconset>
+
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/calendar.svg</normaloff>:/icons/images/icons/calendar.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2741,8 +2807,8 @@ hover background-color: #dcdcdc;
          <string>Workout</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/home-workouts-svgrepo-com.svg</normaloff>../../Downloads/home-workouts-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/home-workouts.svg</normaloff>:/icons/images/icons/home-workouts.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2775,8 +2841,8 @@ hover background-color: #dcdcdc;
          <string>Subscription</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg</normaloff>../../Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/auto-renew.svg</normaloff>:/icons/images/icons/auto-renew.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2809,8 +2875,8 @@ hover background-color: #dcdcdc;
          <string>Notification</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/notification-bell-1397-svgrepo-com.svg</normaloff>../../Downloads/notification-bell-1397-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/notification.svg</normaloff>:/icons/images/icons/notification.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2843,8 +2909,8 @@ hover background-color: #dcdcdc;
          <string>Billing</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/invoice-bill-svgrepo-com.svg</normaloff>../../Downloads/invoice-bill-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/bill.svg</normaloff>:/icons/images/icons/bill.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2877,8 +2943,9 @@ hover background-color: #dcdcdc;
          <string>Profile</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/profile-round-1342-svgrepo-com.svg</normaloff>../../Downloads/profile-round-1342-svgrepo-com.svg</iconset>
+
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/profile.svg</normaloff>:/icons/images/icons/profile.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2911,8 +2978,8 @@ hover background-color: #dcdcdc;
          <string>Logout</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/logout-svgrepo-com.svg</normaloff>../../Downloads/logout-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/logout.svg</normaloff>:/icons/images/icons/logout.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2951,7 +3018,7 @@ color: rgba(0, 0, 0, 150);</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../../Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png</pixmap>
+         <pixmap resource="resource.qrc">:/img/images/logo.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -2995,8 +3062,8 @@ hover background-color: #dcdcdc;
          <string>Padel Court </string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>../../Downloads/court-playground-svgrepo-com.svg</normaloff>../../Downloads/court-playground-svgrepo-com.svg</iconset>
+         <iconset resource="resource.qrc">
+          <normaloff>:/icons/images/icons/court-playground.svg</normaloff>:/icons/images/icons/court-playground.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -3869,6 +3936,8 @@ QTableWidget::item {
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
