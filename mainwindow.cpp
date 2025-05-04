@@ -13,9 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     this->setWindowFlag(Qt::FramelessWindowHint);
-    setFixedSize(1350,710);
+    // setFixedSize(1350,710); // Removed to allow resizing
     ui->setupUi(this);
-    ui->FullWiedgit->setCurrentIndex(1);
+
+    this->showMaximized();
+    ui->FullWiedgit->setCurrentIndex(0);
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
@@ -138,6 +140,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->label->setPixmap(QPixmap(":/img/images/newGym.png"));
     });
     connect(ui->Exit,&QPushButton::clicked,this,&MainWindow::close);
+
     QList<QTableWidget*> tablewidgets = {ui->tableWidget,ui->tableWidget_4,ui->tableWidget_3,ui->tableWidget_2};
     for (auto tableWidget : tablewidgets) {
         tableWidget->clearContents();
@@ -164,14 +167,16 @@ MainWindow::MainWindow(QWidget *parent)
             tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
         }
     }
+
     connect(ui->SortClassesbt,&QPushButton::clicked,this,[=]{
         QStringList filters = {
-            ui->lineEdit->text().trimmed(),
-            ui->lineEdit_2->text().trimmed(),
-            ui->lineEdit_3->text().trimmed(),
-            ui->lineEdit_4->text().trimmed(),
-            ui->lineEdit_5->text().trimmed()
+            ui->lineEdit_6->text().trimmed(),
+            ui->lineEdit_7->text().trimmed(),
+            ui->lineEdit_8->text().trimmed(),
+            ui->lineEdit_9->text().trimmed(),
+            ui->lineEdit_10->text().trimmed()
         };
+
         ui->tableWidget->clearContents();
         ui->tableWidget->setRowCount(0);
 
@@ -198,10 +203,10 @@ MainWindow::MainWindow(QWidget *parent)
             }
 
             if (matched) {
-                int row = ui->tableWidget->rowCount();
-                ui->tableWidget->insertRow(row);
+                int row = ui->tableWidget_2->rowCount();
+                ui->tableWidget_2->insertRow(row);
                 for (int col = 0; col < 6; ++col) {
-                    ui->tableWidget->setItem(row, col, new QTableWidgetItem(classData[col]));
+                    ui->tableWidget_2->setItem(row, col, new QTableWidgetItem(classData[col]));
                 }
             }
         }
@@ -215,6 +220,7 @@ MainWindow::MainWindow(QWidget *parent)
         selectedClassId = ui->tableWidget_2->item(row, 0)->text().toInt();
     });
 
+    ///////////// Enroll button section //////////////
     connect(ui->EnrollClassBtn, &QPushButton::clicked, this, [=]() {
         // Show available classes table
         ui->tableWidget_2->clearContents();
@@ -277,6 +283,102 @@ MainWindow::MainWindow(QWidget *parent)
 
         // Optionally, clear the input
         ui->lineEditClassNameRequest->clear();
+    });
+
+    // Cancel Class logic
+    connect(ui->CancelClassBtn, &QPushButton::clicked, this, [=]() {
+        // Show member's enrolled classes in tableWidget_5
+        ui->tableWidget_5->clearContents();
+        ui->tableWidget_5->setRowCount(0);
+        ui->tableWidget_5->setColumnCount(6);
+        ui->tableWidget_5->setHorizontalHeaderLabels(QStringList()
+            << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+        for (const auto& gc : currMember->getClasses()) {
+            int row = ui->tableWidget_5->rowCount();
+            ui->tableWidget_5->insertRow(row);
+            ui->tableWidget_5->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+            ui->tableWidget_5->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+            ui->tableWidget_5->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+            QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
+            ui->tableWidget_5->setItem(row, 3, new QTableWidgetItem(coachName));
+            ui->tableWidget_5->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
+            ui->tableWidget_5->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
+        }
+    });
+
+    ////////////////Cancel button secton //////////////////
+
+    connect(ui->CancelClassConfirmBtn, &QPushButton::clicked, this, [=]() {
+        QString classIdStr = ui->lineEditCancelClassId->text().trimmed();
+        QString className = ui->lineEditCancelClassName->text().trimmed();
+        if (classIdStr.isEmpty() || className.isEmpty()) {
+            QMessageBox::warning(this, "Input Error", "Please enter both class ID and class name.");
+            return;
+        }
+        bool ok = false;
+        int classId = classIdStr.toInt(&ok);
+        if (!ok) {
+            QMessageBox::warning(this, "Input Error", "Class ID must be a number.");
+            return;
+        }
+        GymClass* foundClass = nullptr;
+        for (auto gc : currMember->getClasses()) {
+            if (gc->getId() == classId && gc->getName().compare(className, Qt::CaseInsensitive) == 0) {
+                foundClass = gc;
+                break;
+            }
+        }
+        if (!foundClass) {
+            QMessageBox::warning(this, "Not Enrolled", "You are not enrolled in this class.");
+            return;
+        }
+        // Remove from member's classes
+        currMember->removeClass(foundClass);
+        foundClass->removeMember(currMember);
+        // Update enrolled count
+        foundClass->setEnrolled(foundClass->getEnrolled() - 1);
+        // Save changes
+        FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
+        FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // Update UI
+        updateEnrolledClassesTable();
+        ui->tableWidget_5->clearContents();
+        ui->tableWidget_5->setRowCount(0);
+        for (const auto& gc : currMember->getClasses()) {
+            int row = ui->tableWidget_5->rowCount();
+            ui->tableWidget_5->insertRow(row);
+            ui->tableWidget_5->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+            ui->tableWidget_5->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+            ui->tableWidget_5->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+            QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
+            ui->tableWidget_5->setItem(row, 3, new QTableWidgetItem(coachName));
+            ui->tableWidget_5->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
+            ui->tableWidget_5->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
+        }
+        QMessageBox::information(this, "Success", "You have successfully canceled the class.");
+        ui->lineEditCancelClassId->clear();
+        ui->lineEditCancelClassName->clear();
+    });
+
+    connect(ui->AvailableClassesBtn, &QPushButton::clicked, this, [=]() {
+        int availableClassesPageIndex = ui->stackedWidget->count() - 1;
+        ui->stackedWidget->setCurrentIndex(availableClassesPageIndex); // Switch to Available Classes page
+        ui->tableWidget_6->clearContents();
+        ui->tableWidget_6->setRowCount(0);
+        ui->tableWidget_6->setColumnCount(6);
+        ui->tableWidget_6->setHorizontalHeaderLabels(QStringList()
+            << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+        for (const auto& gc : classesmap) {
+            int row = ui->tableWidget_6->rowCount();
+            ui->tableWidget_6->insertRow(row);
+            ui->tableWidget_6->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+            ui->tableWidget_6->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+            ui->tableWidget_6->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+            QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
+            ui->tableWidget_6->setItem(row, 3, new QTableWidgetItem(coachName));
+            ui->tableWidget_6->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
+            ui->tableWidget_6->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
+        }
     });
 }
 
@@ -418,7 +520,7 @@ void MainWindow::setPixmapForWidgets() {
             if(i<9)
                 ui->staffMainStackWidget->setCurrentIndex(index);
             else if(i<18)
-                ui->stackedWidget_3->setCurrentIndex(index-9);
+                ui->stackedWidget->setCurrentIndex(index-9);
             else
                 ui->FullWiedgit->setCurrentIndex(0);
         });
