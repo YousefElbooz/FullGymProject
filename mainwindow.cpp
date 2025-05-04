@@ -6,7 +6,6 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QMap>
-#include <algorithm>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,13 +15,34 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowFlag(Qt::FramelessWindowHint);
     setFixedSize(1350,710);
     ui->setupUi(this);
-    ui->FullWiedgit->setCurrentIndex(2);
+    ui->FullWiedgit->setCurrentIndex(0);
     ui->LoginPageStackedWidget->setCurrentIndex(0);
-    ui->staffMainStackWidget->setCurrentIndex(0);
+    ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
-    FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt",members);
-    FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt",staffMap);
-    FileHandler::loadClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt",classesmap);
+   FileHandler::loadMembers("G:/cs_project/FullGymProject/members.txt", members, classesmap);
+   FileHandler::loadStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
+   FileHandler::loadClasses("G:/cs_project/FullGymProject/classes.txt", classesmap, members);
+    // Move updateEnrolledClassesTable here so it is in scope for all later code
+    auto updateEnrolledClassesTable = [=]() {
+        ui->tableWidget_3->clearContents();
+        ui->tableWidget_3->setRowCount(0);
+        ui->tableWidget_3->setColumnCount(6);
+        ui->tableWidget_3->setHorizontalHeaderLabels(QStringList()
+            << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+
+        for (const auto& gc : currMember->getClasses()) {
+            int row = ui->tableWidget_3->rowCount();
+            ui->tableWidget_3->insertRow(row);
+
+            ui->tableWidget_3->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+            ui->tableWidget_3->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+            ui->tableWidget_3->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+            QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
+            ui->tableWidget_3->setItem(row, 3, new QTableWidgetItem(coachName));
+            ui->tableWidget_3->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
+            ui->tableWidget_3->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
+        }
+    };
     connect(ui->loginbtn, &QPushButton::clicked, this, [=] {
         QString usrEmail = ui->LineEditEmail->text();
         QString usrPassword = ui->LineEditPassword->text();
@@ -31,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
         for (auto mem : members) {
             if (mem->getEmail() == usrEmail && mem->getPassword() == usrPassword) {
                 currMember = mem;
+                updateEnrolledClassesTable();
                 QMessageBox::information(this, "Success", "You have logged in successfully.");
                 ui->FullWiedgit->setCurrentIndex(2);
                 loggedIn = true;
@@ -128,7 +149,8 @@ MainWindow::MainWindow(QWidget *parent)
             tableWidget->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
             tableWidget->setItem(row, 1, new QTableWidgetItem(gc->getName()));
             tableWidget->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
-            tableWidget->setItem(row, 3, new QTableWidgetItem(gc->getCoach()->getName()));
+            QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
+            tableWidget->setItem(row, 3, new QTableWidgetItem(coachName));
             tableWidget->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
             tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity()-gc->getEnrolled())));
         }
@@ -154,7 +176,7 @@ MainWindow::MainWindow(QWidget *parent)
                 QString::number(cls->getId()),                   // 0 - ID
                 cls->getName(),                                  // 1 - Class Name
                 cls->getTime().toString("hh:mm AP"),             // 2 - Time
-                cls->getCoach()->getName(),                      // 3 - Trainer
+                cls->getCoach() ? cls->getCoach()->getName() : "Unknown", // 3 - Trainer
                 cls->getStatue(),                                // 4 - Status
                 QString::number(cls->getCapacity())              // 5 - Capacity
             };
@@ -176,13 +198,85 @@ MainWindow::MainWindow(QWidget *parent)
             }
         }
     });
+
+    // Variable to store the selected class ID
+    int selectedClassId = -1;
+
+    // Connect cell click ONCE (after UI setup)
+    connect(ui->tableWidget_2, &QTableWidget::cellClicked, this, [=, &selectedClassId](int row, int column) {
+        selectedClassId = ui->tableWidget_2->item(row, 0)->text().toInt();
+    });
+
+    connect(ui->EnrollClassBtn, &QPushButton::clicked, this, [=]() {
+        // Show available classes table
+        ui->tableWidget_2->clearContents();
+        ui->tableWidget_2->setRowCount(0);
+        ui->tableWidget_2->setColumnCount(6);
+        ui->tableWidget_2->setHorizontalHeaderLabels(QStringList()
+            << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+
+        // Populate available classes
+        for (const auto& gc : classesmap) {
+            if (gc->getEnrolled() < gc->getCapacity() && 
+                !currMember->getClasses().contains(gc)) {
+                int row = ui->tableWidget_2->rowCount();
+                ui->tableWidget_2->insertRow(row);
+                ui->tableWidget_2->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+                ui->tableWidget_2->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+                ui->tableWidget_2->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+                QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
+                ui->tableWidget_2->setItem(row, 3, new QTableWidgetItem(coachName));
+                ui->tableWidget_2->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
+                ui->tableWidget_2->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
+            }
+        }
+    });
+
+    // Connect the Request Class button to perform enrollment
+    connect(ui->Dashboard_16, &QPushButton::clicked, this, [=]() {
+        QString requestedClassName = ui->lineEditClassNameRequest->text().trimmed();
+        if (requestedClassName.isEmpty()) {
+            QMessageBox::warning(this, "No Class Name", "Please enter a class name to request.");
+            return;
+        }
+
+        GymClass* selectedClass = nullptr;
+        for (const auto& gc : classesmap) {
+            if (gc->getName().compare(requestedClassName, Qt::CaseInsensitive) == 0) {
+                selectedClass = gc;
+                break;
+            }
+        }
+
+        if (!selectedClass) {
+            QMessageBox::warning(this, "Class Not Found", "No class found with that name.");
+            return;
+        }
+
+        if (selectedClass->getEnrolled() >= selectedClass->getCapacity()) {
+            QMessageBox::warning(this, "Cannot Enroll", "Class is full.");
+            return;
+        }
+        if (currMember->getClasses().contains(selectedClass)) {
+            QMessageBox::warning(this, "Cannot Enroll", "You are already enrolled in this class.");
+            return;
+        }
+
+        selectedClass->addMember(currMember);
+        selectedClass->setEnrolled(selectedClass->getEnrolled() + 1);
+        updateEnrolledClassesTable();
+        QMessageBox::information(this, "Success", "Successfully enrolled in " + selectedClass->getName());
+
+        // Optionally, clear the input
+        ui->lineEditClassNameRequest->clear();
+    });
 }
 
 MainWindow::~MainWindow() {
     delete ui;
-    FileHandler::saveMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt",members);
-    FileHandler::saveStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt",staffMap);
-    FileHandler::saveClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt", classesmap);
+    FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
+    FileHandler::saveStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
+    FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
     qDeleteAll(members);
     qDeleteAll(staffMap);
     qDeleteAll(classesmap);

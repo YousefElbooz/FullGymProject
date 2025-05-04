@@ -53,7 +53,7 @@ border-radius:20px;</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../../../Pictures/newGym.png</pixmap>
+       <pixmap>../../Pictures/newGym.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -866,7 +866,7 @@ font: 16pt &quot;Yeasty Flavors&quot;;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/dashboard-svgrepo-com.svg</normaloff>../../../Downloads/dashboard-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/dashboard-svgrepo-com.svg</normaloff>../../Downloads/dashboard-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -904,7 +904,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/gym-dumbbell-svgrepo-com.svg</normaloff>../../../Downloads/gym-dumbbell-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/gym-dumbbell-svgrepo-com.svg</normaloff>../../Downloads/gym-dumbbell-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -937,7 +937,7 @@ text-align:left;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/group-of-businessmen-svgrepo-com.svg</normaloff>../../../Downloads/group-of-businessmen-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/group-of-businessmen-svgrepo-com.svg</normaloff>../../Downloads/group-of-businessmen-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -970,7 +970,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/add-user-svgrepo-com.svg</normaloff>../../../Downloads/add-user-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/add-user-svgrepo-com.svg</normaloff>../../Downloads/add-user-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1004,7 +1004,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/user-admin-svgrepo-com.svg</normaloff>../../../Downloads/user-admin-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/user-admin-svgrepo-com.svg</normaloff>../../Downloads/user-admin-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1038,7 +1038,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/notification-bell-1397-svgrepo-com.svg</normaloff>../../../Downloads/notification-bell-1397-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/notification-bell-1397-svgrepo-com.svg</normaloff>../../Downloads/notification-bell-1397-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1071,7 +1071,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/invoice-bill-svgrepo-com.svg</normaloff>../../../Downloads/invoice-bill-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/invoice-bill-svgrepo-com.svg</normaloff>../../Downloads/invoice-bill-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1104,7 +1104,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/profile-round-1342-svgrepo-com.svg</normaloff>../../../Downloads/profile-round-1342-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/profile-round-1342-svgrepo-com.svg</normaloff>../../Downloads/profile-round-1342-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1137,7 +1137,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/setting-4-svgrepo-com.svg</normaloff>../../../Downloads/setting-4-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/setting-4-svgrepo-com.svg</normaloff>../../Downloads/setting-4-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1170,7 +1170,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/logout-svgrepo-com.svg</normaloff>../../../Downloads/logout-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/logout-svgrepo-com.svg</normaloff>../../Downloads/logout-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1209,7 +1209,7 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../../../Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png</pixmap>
+         <pixmap>../../Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -1344,7 +1344,7 @@ color:rgb(249, 234, 205);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../../Downloads/coach-coaching-physical-trainer-svgrepo-com.svg</pixmap>
+            <pixmap>../../Downloads/coach-coaching-physical-trainer-svgrepo-com.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1444,7 +1444,7 @@ padding:8px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../../Downloads/money-bag-svgrepo-com.svg</pixmap>
+            <pixmap>../../Downloads/money-bag-svgrepo-com.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1563,7 +1563,7 @@ padding :5px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../../Downloads/profile-round-1342-svgrepo-com.svg</pixmap>
+            <pixmap>../../Downloads/profile-round-1342-svgrepo-com.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1628,7 +1628,7 @@ padding :5px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../../Downloads/notification-bell-1397-svgrepo-com.svg</pixmap>
+            <pixmap>../../Downloads/notification-bell-1397-svgrepo-com.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1710,7 +1710,7 @@ padding :5px;</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../../Downloads/sand-clock-svgrepo-com.svg</pixmap>
+            <pixmap>../../Downloads/sand-clock-svgrepo-com.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1827,7 +1827,7 @@ color:rgb(249, 234, 205);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../../Downloads/line-chart-up-02-svgrepo-com.svg</pixmap>
+            <pixmap>../../Downloads/line-chart-up-02-svgrepo-com.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1912,7 +1912,7 @@ color:rgb(249, 234, 205);</string>
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>../../../Downloads/stretching-svgrepo-com.svg</pixmap>
+            <pixmap>../../Downloads/stretching-svgrepo-com.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -2640,7 +2640,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/enter-svgrepo-com.svg</normaloff>../../../Downloads/enter-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/enter-svgrepo-com.svg</normaloff>../../Downloads/enter-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2674,7 +2674,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/cancel-photo-svgrepo-com.svg</normaloff>../../../Downloads/cancel-photo-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/cancel-photo-svgrepo-com.svg</normaloff>../../Downloads/cancel-photo-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2708,7 +2708,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/calendar-event-available-svgrepo-com.svg</normaloff>../../../Downloads/calendar-event-available-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/calendar-event-available-svgrepo-com.svg</normaloff>../../Downloads/calendar-event-available-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2742,7 +2742,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/home-workouts-svgrepo-com.svg</normaloff>../../../Downloads/home-workouts-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/home-workouts-svgrepo-com.svg</normaloff>../../Downloads/home-workouts-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2776,7 +2776,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg</normaloff>../../../Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg</normaloff>../../Downloads/auto-renewal-2-circle-fill-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2810,7 +2810,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/notification-bell-1397-svgrepo-com.svg</normaloff>../../../Downloads/notification-bell-1397-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/notification-bell-1397-svgrepo-com.svg</normaloff>../../Downloads/notification-bell-1397-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2844,7 +2844,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/invoice-bill-svgrepo-com.svg</normaloff>../../../Downloads/invoice-bill-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/invoice-bill-svgrepo-com.svg</normaloff>../../Downloads/invoice-bill-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2878,7 +2878,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/profile-round-1342-svgrepo-com.svg</normaloff>../../../Downloads/profile-round-1342-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/profile-round-1342-svgrepo-com.svg</normaloff>../../Downloads/profile-round-1342-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2912,7 +2912,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/logout-svgrepo-com.svg</normaloff>../../../Downloads/logout-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/logout-svgrepo-com.svg</normaloff>../../Downloads/logout-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2951,7 +2951,7 @@ color: rgba(0, 0, 0, 150);</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../../../Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png</pixmap>
+         <pixmap>../../Downloads/ChatGPT Image Apr 15, 2025, 10_53_31 PM.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -2996,7 +2996,7 @@ hover background-color: #dcdcdc;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../Downloads/court-playground-svgrepo-com.svg</normaloff>../../../Downloads/court-playground-svgrepo-com.svg</iconset>
+          <normaloff>../../Downloads/court-playground-svgrepo-com.svg</normaloff>../../Downloads/court-playground-svgrepo-com.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -3016,7 +3016,7 @@ hover background-color: #dcdcdc;
         </rect>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page_8">
         <widget class="QWidget" name="widget_16" native="true">
@@ -3028,28 +3028,11 @@ hover background-color: #dcdcdc;
            <height>701</height>
           </rect>
          </property>
-         <widget class="QLabel" name="label_196">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>0</y>
-            <width>241</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(55, 91, 106);
-font: 24pt &quot;Yeasty Flavors&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Enroll Class</string>
-          </property>
-         </widget>
          <widget class="QWidget" name="widget_41" native="true">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>50</y>
+            <x>40</x>
+            <y>30</y>
             <width>1031</width>
             <height>631</height>
            </rect>
@@ -3548,9 +3531,34 @@ hover background-color: #008FC1;</string>
             <string>Request Class</string>
            </property>
           </widget>
+          <widget class="QLineEdit" name="lineEditClassNameRequest">
+           <property name="geometry">
+            <rect>
+             <x>660</x>
+             <y>20</y>
+             <width>151</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 238, 219);
+z-index:55;</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_2">
+           <property name="geometry">
+            <rect>
+             <x>560</x>
+             <y>20</y>
+             <width>101</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Enter Class name: </string>
+           </property>
+          </widget>
          </widget>
-         <zorder>widget_41</zorder>
-         <zorder>label_196</zorder>
         </widget>
        </widget>
        <widget class="QWidget" name="page_10">

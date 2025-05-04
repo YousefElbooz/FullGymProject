@@ -9,7 +9,7 @@ Member::Member(const QString& name, const QString& email, const QString &passwor
     : id(++lastId),name(name), email(email),password(password), gender(gender), isVip(isVip), phone(phone), address(address), age(age) {}
 
 void Member::setName(const QString& newName) {name = newName;}
-void Member::addClass(GymClass* gymClass) {classes.push_back(gymClass);gymClass->getMembers().append(this);}
+void Member::addClass(GymClass* gymClass) {classes.push_back(gymClass);}
 void Member::setEmail(const QString& newEmail) {email = newEmail;}
 void Member::setGender(const QString& newGender) {gender = newGender;}
 void Member::setIsVip(bool vipStatus) {isVip = vipStatus;}

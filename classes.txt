@@ -1,10 +1,24 @@
-1,Yoga,,Active,25,15,Coach: None---
-2,Spinning,,Active,20,10,Coach: None---
-3,Boxing,,Inactive,15,7,Coach: None---
-4,Pilates,,Active,18,12,Coach: None---
-5,Zumba,,Active,22,20,Coach: None---
-6,Crossfit,,Inactive,30,25,Coach: None---
-7,Aerobics,,Active,20,16,Coach: None---
-8,HIIT,,Active,25,18,Coach: None---
-9,Strength,,Active,28,26,Coach: None---
-10,Cardio,,Inactive,24,22,Coach: None---
+1,Yoga,,Open,10,8,Coach: None
+Member: 2
+
+2,Spin,,Open,20,18,Coach: None
+
+3,HIIT,,Open,12,11,Coach: None
+
+4,Pilates,,Open,10,8,Coach: None
+
+5,CrossFit,,Open,10,7,Coach: None
+Member: 2
+
+6,Zumba,,Open,25,20,Coach: None
+
+7,Boxing,,Open,8,6,Coach: None
+
+8,TRX,,Open,12,6,Coach: None
+Member: 2
+
+9,Barre,,Open,10,3,Coach: None
+
+10,Powerlifting,,Open,6,3,Coach: None
+Member: 2
+
