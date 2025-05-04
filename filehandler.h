@@ -13,6 +13,7 @@
 #include "manger.h"
 #include "receptionists.h"
 #include "gymclass.h"
+#include <QTableWidget>
 
 
 // Forward declarations
