@@ -281,6 +281,53 @@ MainWindow::MainWindow(QWidget *parent)
         ui->tableWidget_5->setColumnCount(6);
         ui->tableWidget_5->setHorizontalHeaderLabels(QStringList()
             << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+        
+        // Set table styling to match enrolled window
+        ui->tableWidget_5->setStyleSheet(R"(
+            QTableWidget {
+                background-color: white;
+                alternate-background-color: #f6f6f6;
+                gridline-color: #d3d3d3;
+                border: 1px solid #d3d3d3;
+                border-radius: 5px;
+            }
+            QTableWidget::item {
+                padding: 5px;
+                border-bottom: 1px solid #d3d3d3;
+            }
+            QHeaderView::section {
+                background-color: #f1c27d;
+                color: black;
+                padding: 5px;
+                border: 1px solid #d3d3d3;
+                font-weight: bold;
+            }
+            QTableWidget::item:selected {
+                background-color: #f1c27d;
+                color: black;
+            }
+        )");
+        
+        // Set column widths
+        ui->tableWidget_5->setColumnWidth(0, 50);  // ID
+        ui->tableWidget_5->setColumnWidth(1, 200); // Class Name
+        ui->tableWidget_5->setColumnWidth(2, 100); // Time
+        ui->tableWidget_5->setColumnWidth(3, 150); // Trainer
+        ui->tableWidget_5->setColumnWidth(4, 100); // Status
+        ui->tableWidget_5->setColumnWidth(5, 100); // Capacity
+        
+        // Enable alternating row colors
+        ui->tableWidget_5->setAlternatingRowColors(true);
+        
+        // Make the table read-only
+        ui->tableWidget_5->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        
+        // Enable selection of entire rows
+        ui->tableWidget_5->setSelectionBehavior(QAbstractItemView::SelectRows);
+        
+        // Enable sorting
+        ui->tableWidget_5->setSortingEnabled(true);
+
         for (const auto& gc : currMember->getClasses()) {
             int row = ui->tableWidget_5->rowCount();
             ui->tableWidget_5->insertRow(row);
