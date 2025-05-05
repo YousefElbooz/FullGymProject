@@ -1,25 +1,26 @@
-1,Yoga,,Open,10,8,Coach: None
+1,Yoga,10:00 AM,Open,10,8,Coach: None
 Member: 2
 
-2,Spin,,Open,20,18,Coach: None
+2,Spin,02:00 PM,Open,20,18,Coach: None
 
-3,HIIT,,Open,12,11,Coach: None
+3,HIIT,02:00 PM,Open,12,11,Coach: None
 
-4,Pilates,,Open,10,8,Coach: None
+4,Pilates,02:00 PM,Open,10,8,Coach: None
 
-5,CrossFit,,Open,10,7,Coach: None
+5,CrossFit,02:00 PM,Open,10,7,Coach: None
 Member: 2
 
-6,Zumba,,Open,25,20,Coach: None
+6,Zumba,02:00 PM,Open,25,20,Coach: None
 
-7,Boxing,,Open,8,6,Coach: None
+7,Boxing,02:00 PM,Open,8,6,Coach: None
 
-8,TRX,,Open,12,6,Coach: None
+8,TRX,02:00 PM,Open,12,6,Coach: None
 Member: 2
 
-9,Barre,,Open,10,3,Coach: None
+9,Barre,02:00 PM,Open,10,3,Coach: None
 
-10,Powerlifting,,Open,6,4,Coach: None
+
+10,Powerlifting,02:00 PM,Open,6,3,Coach: None
 Member: 2
 Member: 5
 
