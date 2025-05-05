@@ -1,6 +1,5 @@
-1,Yoga,,Open,10,9,Coach: None
+1,Yoga,,Open,10,8,Coach: None
 Member: 2
-Member: 5
 
 2,Spin,,Open,20,18,Coach: None
 
@@ -20,6 +19,7 @@ Member: 2
 
 9,Barre,,Open,10,3,Coach: None
 
-10,Powerlifting,,Open,6,3,Coach: None
+10,Powerlifting,,Open,6,4,Coach: None
 Member: 2
+Member: 5
 

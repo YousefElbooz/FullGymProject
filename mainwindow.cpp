@@ -385,35 +385,35 @@ void MainWindow::setPixmapForWidgets() {
     QString imagePaths[] = {
         "G:/cs_project/FullGymProject/images/new Gym.jpeg", // 0 - label image (skip or use elsewhere)
         "G:/cs_project/FullGymProject/images/logo.png", // 1 - logo (still used)
-        "G:/cs_project/FullGymProject/images/dashboard.svg", // 2
-        "G:/cs_project/FullGymProject/images/gym-dumbbell.svg", // 3
-        "G:/cs_project/FullGymProject/images/group-of-businessmen.svg", // 4
-        "G:/cs_project/FullGymProject/images/add-user.svg", // 5
-        "G:/cs_project/FullGymProject/images/user-admin.svg", // 6
-        "G:/cs_project/FullGymProject/images/notification-bell.svg", // 7
-        "G:/cs_project/FullGymProject/images/invoice-bill.svg", // 8
-        "G:/cs_project/FullGymProject/images/profile-round.svg", // 9
-        "G:/cs_project/FullGymProject/images/setting.svg", // 10
-        "G:/cs_project/FullGymProject/images/logout.svg", // 11
-        "G:/cs_project/FullGymProject/images/line-chart.svg", // 12
-        "G:/cs_project/FullGymProject/images/enter.svg", // 13
-        "G:/cs_project/FullGymProject/images/cancel-photo.svg", // 14
-        "G:/cs_project/FullGymProject/images/calendar-event.svg", // 15
-        "G:/cs_project/FullGymProject/images/home-workouts.svg", // 16
-        "G:/cs_project/FullGymProject/images/auto-renewal.svg", // 17
-        "G:/cs_project/FullGymProject/images/court-playground.svg", // 18
-        "G:/cs_project/FullGymProject/images/user-admin.svg", // 19
-        "G:/cs_project/FullGymProject/images/sand-clock.svg", // 20
-        "G:/cs_project/FullGymProject/images/stretching.svg", // 21
-        "G:/cs_project/FullGymProject/images/coach.svg", // 22
-        "G:/cs_project/FullGymProject/images/money-bag.svg", // 23
-        "G:/cs_project/FullGymProject/images/line-chart.svg", // 24
-        "G:/cs_project/FullGymProject/images/enter.svg", // 25
-        "G:/cs_project/FullGymProject/images/cancel-photo.svg", // 26
-        "G:/cs_project/FullGymProject/images/calendar-event.svg", // 27
-        "G:/cs_project/FullGymProject/images/home-workouts.svg", // 28
-        "G:/cs_project/FullGymProject/images/auto-renewal.svg", // 29
-        "G:/cs_project/FullGymProject/images/court-playground.svg" // 30
+        "G:/cs_project/FullGymProject/images/icons/dashboard.svg", // 2
+        "G:/cs_project/FullGymProject/images/icons/gym-dumbbell.svg", // 3
+        "G:/cs_project/FullGymProject/images/icons/group-of-businessmen.svg", // 4
+        "G:/cs_project/FullGymProject/images/icons/add-user.svg", // 5
+        "G:/cs_project/FullGymProject/images/icons/user-admin.svg", // 6
+        "G:/cs_project/FullGymProject/images/icons/notification-bell.svg", // 7
+        "G:/cs_project/FullGymProject/images/icons/invoice-bill.svg", // 8
+        "G:/cs_project/FullGymProject/images/icons/profile-round.svg", // 9
+        "G:/cs_project/FullGymProject/images/icons/setting.svg", // 10
+        "G:/cs_project/FullGymProject/images/icons/logout.svg", // 11
+        "G:/cs_project/FullGymProject/images/icons/line-chart.svg", // 12
+        "G:/cs_project/FullGymProject/images/icons/enter.svg", // 13
+        "G:/cs_project/FullGymProject/images/icons/cancel-photo.svg", // 14
+        "G:/cs_project/FullGymProject/images/icons/calendar-event.svg", // 15
+        "G:/cs_project/FullGymProject/images/icons/home-workouts.svg", // 16
+        "G:/cs_project/FullGymProject/images/icons/auto-renewal.svg", // 17
+        "G:/cs_project/FullGymProject/images/icons/court-playground.svg", // 18
+        "G:/cs_project/FullGymProject/images/icons/user-admin.svg", // 19
+        "G:/cs_project/FullGymProject/images/icons/sand-clock.svg", // 20
+        "G:/cs_project/FullGymProject/images/icons/stretching.svg", // 21
+        "G:/cs_project/FullGymProject/images/icons/coach.svg", // 22
+        "G:/cs_project/FullGymProject/images/icons/money-bag.svg", // 23
+        "G:/cs_project/FullGymProject/images/icons/line-chart.svg", // 24
+        "G:/cs_project/FullGymProject/images/icons/enter.svg", // 25
+        "G:/cs_project/FullGymProject/images/icons/cancel-photo.svg", // 26
+        "G:/cs_project/FullGymProject/images/icons/calendar-event.svg", // 27
+        "G:/cs_project/FullGymProject/images/icons/home-workouts.svg", // 28
+        "G:/cs_project/FullGymProject/images/icons/auto-renewal.svg", // 29
+        "G:/cs_project/FullGymProject/images/icons/court-playground.svg" // 30
     };
 
     // Logo only (still QLabel)

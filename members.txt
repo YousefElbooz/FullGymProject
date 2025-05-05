@@ -11,5 +11,5 @@ Class: Powerlifting
 4:Ali:Ali@gmail.com:01218972:male:false:01098676433:Cairo NaserCity:20
 
 5:Bosela:Boseal@gmail.com:123456:male:false:01062116844:El7lmea:20
-Class: Yoga
+Class: Powerlifting
 
