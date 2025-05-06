@@ -27,7 +27,7 @@ public:
     // Load functions
     static QMap<int, Member*> loadMembers(const QString& filePath, QMap<int, Member*>& members, const QMap<int, GymClass*>& classesmap);
     static QMap<int, Staff*> loadStaff(const QString& filePath,QMap<int, Staff*>& staffMap);
-    static QMap<int, GymClass*> loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses, const QMap<int, Member*>& members);
+    static QMap<int, GymClass*> loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses, const QMap<int, Member*>& members, const QMap<int, Staff*>& staffMap);
 
     // Save functions
     static void saveMembers(const QString& filePath, const QMap<int, Member*>& members);

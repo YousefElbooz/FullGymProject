@@ -71,7 +71,6 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff
         if (line.isEmpty()) continue;
 
         QStringList parts = line.split(":");
-        // Expecting: id:name:email:password:age:address:phone:N/A:N/A:N/A:N/A:role
         if (parts.size() >= 8) {
             int id = parts[0].toInt();
             QString name = parts[1];
@@ -161,7 +160,7 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
             << s->getAge() << ":"
             << s->getAddress() << ":"
             << s->getPhone() << ":"
-             << role << "\n";
+            << role << "\n";
 
         // For coaches, write their classes after the staff line
         if (role == "coach") {
@@ -208,7 +207,7 @@ void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*
     file.close();
 }
 
-QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses, const QMap<int, Member*>& members) {
+QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses, const QMap<int, Member*>& members, const QMap<int, Staff*>& staffMap) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open gym classes file";
@@ -252,11 +251,26 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
         if (!ok) continue;
         QString coachPart = parts[6].trimmed();
         QString coachName = coachPart.startsWith("Coach: ") ? coachPart.mid(7) : "None";
+        
         gc = new GymClass(name, status, capacity);
         gc->setId(id);
         gc->setTime(time);
         gc->setEnrolled(enrolled);
-        // Note: gc->setCoach() should be set if coach lookup is supported
+        
+        // Find and set the coach if one exists
+        if (coachName != "None") {
+            for (auto staff : staffMap) {
+                if (staff->getName() == coachName && staff->getRole().toLower() == "coach") {
+                    Coach* coach = dynamic_cast<Coach*>(staff);
+                    if (coach) {
+                        gc->setCoach(coach);
+                        coach->addClass(gc);
+                        break;
+                    }
+                }
+            }
+        }
+        
         gymClasses[id] = gc;
     }
     file.close();

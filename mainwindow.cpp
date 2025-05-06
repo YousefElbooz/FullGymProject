@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     FileHandler::loadMembers("G:/cs_project/FullGymProject/members.txt", members, classesmap);
     ui->label_36->setText(QString::number(members.size()));
     FileHandler::loadStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
-    FileHandler::loadClasses("G:/cs_project/FullGymProject/classes.txt", classesmap, members);
+    FileHandler::loadClasses("G:/cs_project/FullGymProject/classes.txt", classesmap, members, staffMap);
     ui->label_38->setText(QString::number(classesmap.size()));
     // int totalCapacity = 0;
     // for (const auto& gc : classesmap) {
@@ -581,6 +581,122 @@ MainWindow::MainWindow(QWidget *parent)
         ui->comboBox->setCurrentIndex(0);
     });
     
+    
+    connect(ui->TMbtn, &QPushButton::clicked, this, [=]() {
+        // Only allow access if current staff is a manager
+        Manger* manager = dynamic_cast<Manger*>(currStaff);
+        if (!manager) {
+            QMessageBox::warning(this, "Access Denied", "Only managers can access trainer management.");
+            return;
+        }
+
+        // Show trainer management page
+        ui->staffMainStackWidget->setCurrentIndex(2);  // Index of page_3
+
+        // Show all available classes in the table
+        ui->tableWidget_14->clearContents();
+        ui->tableWidget_14->setRowCount(0);
+
+        // Display all classes from the existing classesmap
+        for (const auto& gc : classesmap) {
+            int row = ui->tableWidget_14->rowCount();
+            ui->tableWidget_14->insertRow(row);
+            ui->tableWidget_14->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
+            ui->tableWidget_14->setItem(row, 1, new QTableWidgetItem(gc->getName()));
+            ui->tableWidget_14->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
+            // Get coach name if assigned
+            QString coachName = "Not Assigned";
+            if (gc->getCoach()) {
+                coachName = gc->getCoach()->getName();
+            }
+            ui->tableWidget_14->setItem(row, 3, new QTableWidgetItem(coachName));
+            ui->tableWidget_14->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
+            ui->tableWidget_14->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity())));
+        }
+        // --- Add coaches table population here ---
+        ui->tableWidget_15->clearContents();
+        ui->tableWidget_15->setRowCount(0);
+        ui->tableWidget_15->setColumnCount(7);
+        ui->tableWidget_15->setHorizontalHeaderLabels(QStringList()
+            << "ID" << "Name" << "Email" << "Phone" << "Address" << "Age" << "Assigned Classes");
+        for (auto staff : staffMap) {
+            if (staff->getRole().toLower() == "coach") {
+                Coach* coach = dynamic_cast<Coach*>(staff);
+                if (!coach) continue;
+                int row = ui->tableWidget_15->rowCount();
+                ui->tableWidget_15->insertRow(row);
+                ui->tableWidget_15->setItem(row, 0, new QTableWidgetItem(QString::number(coach->getId())));
+                ui->tableWidget_15->setItem(row, 1, new QTableWidgetItem(coach->getName()));
+                ui->tableWidget_15->setItem(row, 2, new QTableWidgetItem(coach->getEmail()));
+                ui->tableWidget_15->setItem(row, 3, new QTableWidgetItem(coach->getPhone()));
+                ui->tableWidget_15->setItem(row, 4, new QTableWidgetItem(coach->getAddress()));
+                ui->tableWidget_15->setItem(row, 5, new QTableWidgetItem(QString::number(coach->getAge())));
+                // Assigned classes as comma-separated names
+                QStringList classNames;
+                for (auto gc : coach->getClasses()) {
+                    classNames << gc->getName();
+                }
+                ui->tableWidget_15->setItem(row, 6, new QTableWidgetItem(classNames.join(", ")));
+            }
+        }
+    });
+
+    // Handle assign class button click
+    connect(ui->assignClassBtn, &QPushButton::clicked, this, [=]() {
+        // Get input values
+        QString classIdStr = ui->lineEditClassId->text();
+        QString coachIdStr = ui->lineEditCoachId->text();
+
+        // Validate inputs
+        bool ok;
+        int classId = classIdStr.toInt(&ok);
+        if (!ok) {
+            QMessageBox::warning(this, "Invalid Input", "Please enter a valid class ID.");
+            return;
+        }
+
+        int coachId = coachIdStr.toInt(&ok);
+        if (!ok) {
+            QMessageBox::warning(this, "Invalid Input", "Please enter a valid coach ID.");
+            return;
+        }
+
+        // Find the class and coach
+        if (!classesmap.contains(classId)) {
+            QMessageBox::warning(this, "Class Not Found", "The specified class ID does not exist.");
+            return;
+        }
+
+        if (!staffMap.contains(coachId)) {
+            QMessageBox::warning(this, "Coach Not Found", "The specified coach ID does not exist.");
+            return;
+        }
+
+        GymClass* gymClass = classesmap[classId];
+        Staff* staff = staffMap[coachId];
+
+        // Verify the staff member is a coach
+        if (staff->getRole().toLower() != "coach") {
+            QMessageBox::warning(this, "Invalid Role", "The specified staff member is not a coach.");
+            return;
+        }
+
+        Coach* coach = dynamic_cast<Coach*>(staff);
+        if (!coach) {
+            QMessageBox::warning(this, "Error", "Failed to cast staff to coach.");
+            return;
+        }
+
+        // Assign the class to the coach
+        coach->addClass(gymClass);
+        gymClass->setCoach(coach);
+
+        // Save changes
+        FileHandler::saveStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
+        FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+
+        QMessageBox::information(this, "Success", "Class assigned successfully!");
+    });
 }
 
 MainWindow::~MainWindow() {

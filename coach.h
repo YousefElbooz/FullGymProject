@@ -15,6 +15,7 @@ public:
     QString getDetails() const override;
     QString toString() const override;
 
+    // Adds a class to the coach only if not already present (prevents duplicates)
     void addClass(GymClass* gymClass);
     QVector<GymClass*> getClasses();
 
