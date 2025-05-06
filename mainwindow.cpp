@@ -23,9 +23,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
-    FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt", members, classesmap);
-    FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt", staffMap);
-    FileHandler::loadClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt", classesmap, members);
+    FileHandler::loadMembers("G:/cs_project/FullGymProject/members.txt", members, classesmap);
+    ui->label_36->setText(QString::number(members.size()));
+    FileHandler::loadStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
+    FileHandler::loadClasses("G:/cs_project/FullGymProject/classes.txt", classesmap, members);
+    ui->label_38->setText(QString::number(classesmap.size()));
+    // int totalCapacity = 0;
+    // for (const auto& gc : classesmap) {
+    //     totalCapacity += gc->getCapacity();
+    // }
+    // ui->label_40->setText(QString::number(totalCapacity));
     // Move updateEnrolledClassesTable here so it is in scope for all later code
     auto updateEnrolledClassesTable = [=]() {
         ui->tableWidget_3->clearContents();
@@ -83,6 +90,22 @@ MainWindow::MainWindow(QWidget *parent)
                 if(stf->getEmail()==usrEmail&&stf->getPassword()==usrPassword){
                     currStaff = stf;
                     QMessageBox::information(this, "Success", "You have logged in successfully.");
+                    QString newImagePath = ":/img/images/member-background.png"; // Change to your target background if needed
+                    QString newExitStyle = R"(
+                            QPushButton {
+                                background-color: #008FC1;
+                                color: white;
+                                border-radius: 10px;
+                                padding: 6px 12px;
+                                font: bold 10pt "Yeasty Flavors";
+                            }
+                        )";
+                    pageAnimator->animatedSwitchAdvanced(
+                        ui->FullWiedgit->currentIndex(), // from LoginPageStack
+                        1, // to StaffPageStack index
+                        newImagePath,
+                        newExitStyle
+                        );
                     loggedIn = true;
                     break;  // Stop checking further
                 }
@@ -191,7 +214,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->Exit,&QPushButton::clicked,this,&MainWindow::close);
 
-    QList<QTableWidget*> tablewidgets = {ui->tableWidget,ui->tableWidget_4,ui->tableWidget_3,ui->tableWidget_2};
+    QList<QTableWidget*> tablewidgets = {ui->tableWidget_2,ui->tableWidget_4,ui->tableWidget_3};
     for (auto tableWidget : tablewidgets) {
         tableWidget->clearContents();
         tableWidget->setRowCount(0);
@@ -218,7 +241,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-    connect(ui->SortClassesbt,&QPushButton::clicked,this,[=]{
+    connect(ui->SortEnrolledClassesBtn,&QPushButton::clicked,this,[=]{
         QStringList filters = {
             ui->lineEdit_6->text().trimmed(),
             ui->lineEdit_7->text().trimmed(),
@@ -227,8 +250,8 @@ MainWindow::MainWindow(QWidget *parent)
             ui->lineEdit_10->text().trimmed()
         };
 
-        ui->tableWidget->clearContents();
-        ui->tableWidget->setRowCount(0);
+        ui->tableWidget_2->clearContents();
+        ui->tableWidget_2->setRowCount(0);
 
         auto match = [](const QString& filter, const QString& value) {
             return filter.isEmpty() || filter.compare("any", Qt::CaseInsensitive) == 0 || filter == value;
@@ -476,6 +499,88 @@ MainWindow::MainWindow(QWidget *parent)
             ui->tableWidget_6->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
         }
     });
+
+    /////////////// --- Add Users Button Logic ---/////////////////
+    connect(ui->addUserBtn, &QPushButton::clicked, this, [=]() {
+        QString name = ui->lineEditName->text().trimmed();
+        QString email = ui->lineEditEmail->text().trimmed();
+        QString password = ui->lineEditPassword->text().trimmed();
+        QString ageStr = ui->lineEditAge->text().trimmed();
+        QString phone = ui->lineEditPhone->text().trimmed();
+        QString address = ui->lineEditAddress->text().trimmed();
+        QString role = ui->comboBox->currentText().trimmed().toLower();
+
+        // Basic validation
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || ageStr.isEmpty() || phone.isEmpty() || address.isEmpty() || role.isEmpty()) {
+            QMessageBox::warning(this, "Validation Error", "Please fill in all fields.");
+            return;
+        }
+        bool ok = false;
+        int age = ageStr.toInt(&ok);
+        if (!ok || age < 16 || age > 100) {
+            QMessageBox::warning(this, "Validation Error", "Enter a valid age (16–100).\n");
+            return;
+        }
+        if (role == "manager") {
+            QMessageBox::warning(this, "Not Available", "Adding a manager is not available.");
+            return;
+        }
+        if (role == "member") {
+            // Append to members.txt
+            QFile file("G:/cs_project/FullGymProject/members.txt");
+            if (file.open(QIODevice::Append | QIODevice::Text)) {
+                QTextStream out(&file);
+                int newId = members.size() + 1;
+                out << newId << ":" << name << ":" << email << ":" << password << ":male:false:" << phone << ":" << address << ":" << ageStr << "\n";
+                file.close();
+                // --- ADD TO IN-MEMORY MAP ---
+                Member* m = new Member(name, email, password, "male", false, phone, address, age);
+                members[newId] = m;
+                QMessageBox::information(this, "Success", "Member added successfully.");
+            } else {
+                QMessageBox::warning(this, "File Error", "Could not open members.txt for writing.");
+            }
+            ui->lineEditName->clear();
+            ui->lineEditEmail->clear();
+            ui->lineEditPassword->clear();
+            ui->lineEditAge->clear();
+            ui->lineEditPhone->clear();
+            ui->lineEditAddress->clear();
+            ui->comboBox->setCurrentIndex(0);
+            return;
+        }
+        
+        QFile file("G:/cs_project/FullGymProject/staffs.txt");
+        if (file.open(QIODevice::Append | QIODevice::Text)) {
+            QTextStream out(&file);
+            int newId = staffMap.size() + 1;
+            out << newId << ":" << name << ":" << email << ":" << password << ":" << ageStr << ":" << address << ":" << phone << ":" << role << "\n";
+            file.close();
+            // --- ADD TO IN-MEMORY MAP ---
+            Staff* s = nullptr;
+            if (role == "coach") {
+                s = new Coach(name, email, password, phone, address, age);
+            } else if (role == "receptionis" || role == "receptionist") {
+                s = new Receptionist(name, email, password, phone, address, age);
+            }
+            if (s) {
+                staffMap[newId] = s;
+                QMessageBox::information(this, "Success", "Staff added successfully.");
+            } else {
+                QMessageBox::warning(this, "Role Error", "Unknown staff role.");
+            }
+        } else {
+            QMessageBox::warning(this, "File Error", "Could not open staffs.txt for writing.");
+        }
+        ui->lineEditName->clear();
+        ui->lineEditEmail->clear();
+        ui->lineEditPassword->clear();
+        ui->lineEditAge->clear();
+        ui->lineEditPhone->clear();
+        ui->lineEditAddress->clear();
+        ui->comboBox->setCurrentIndex(0);
+    });
+    
 }
 
 MainWindow::~MainWindow() {
@@ -618,7 +723,7 @@ void MainWindow::setPixmapForWidgets() {
             if(i<9)
                 ui->staffMainStackWidget->setCurrentIndex(index);
             else if(i<18)
-                ui->stackedWidget_3->setCurrentIndex(index-9);
+                ui->stackedWidget->setCurrentIndex(index-9);
             else{
                 Animations* pageAnimator = new Animations(this);
                 pageAnimator->setUI(ui->FullWiedgit, ui->label, ui->Exit);

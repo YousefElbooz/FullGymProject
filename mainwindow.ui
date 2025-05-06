@@ -28,14 +28,13 @@ border-radius:20px;</string>
       <y>0</y>
       <width>1361</width>
       <height>731</height>
-
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="LoginPageStack">
      <widget class="QLabel" name="label">
@@ -860,7 +859,7 @@ QPushButton:hover{
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1351</width>
+        <width>1371</width>
         <height>701</height>
        </rect>
       </property>
@@ -1307,7 +1306,7 @@ border-radius:1px</string>
         </rect>
        </property>
        <property name="currentIndex">
-        <number>8</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page">
         <widget class="QWidget" name="widget_5" native="true">
@@ -2083,28 +2082,6 @@ hover background-color: #008FC1;</string>
            <string/>
           </property>
          </widget>
-         <widget class="QPushButton" name="Dashboard_14">
-          <property name="geometry">
-           <rect>
-            <x>830</x>
-            <y>200</y>
-            <width>161</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(249, 234, 205);
-    padding: 10px;
-color: rgb(0, 0, 0);
-font: 9pt &quot;Yeasty Flavors&quot;;
-    border: none;
-    border-radius: 20px;
-hover background-color: #008FC1;</string>
-          </property>
-          <property name="text">
-           <string>Enroll Classes</string>
-          </property>
-         </widget>
          <widget class="QTableWidget" name="tableWidget_2">
           <property name="geometry">
            <rect>
@@ -2427,7 +2404,6 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
          <zorder>widget_35</zorder>
          <zorder>label_15</zorder>
          <zorder>label_46</zorder>
-         <zorder>Dashboard_14</zorder>
          <zorder>tableWidget_2</zorder>
          <zorder>label_195</zorder>
         </widget>
@@ -2461,30 +2437,192 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
         </widget>
        </widget>
        <widget class="QWidget" name="page_5">
-        <widget class="QWidget" name="widget_9" native="true">
+        <widget class="QWidget" name="AddUserPage" native="true">
          <property name="geometry">
           <rect>
-           <x>-10</x>
+           <x>0</x>
            <y>0</y>
-           <width>901</width>
+           <width>841</width>
            <height>611</height>
           </rect>
          </property>
-         <widget class="QLabel" name="label_72">
+         <property name="styleSheet">
+          <string notr="true">background-color: #f5e9c6;</string>
+         </property>
+         <widget class="QFrame" name="addUserPanel">
           <property name="geometry">
            <rect>
-            <x>200</x>
-            <y>170</y>
-            <width>291</width>
-            <height>101</height>
+            <x>10</x>
+            <y>20</y>
+            <width>760</width>
+            <height>500</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: rgb(0, 0, 0);</string>
+           <string notr="true">background-color: #3a546b; border-radius: 20px;</string>
           </property>
-          <property name="text">
-           <string>Add Users</string>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
           </property>
+          <widget class="QLabel" name="label_72">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>20</y>
+             <width>400</width>
+             <height>60</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: #fffbe7; font-family: 'Comic Sans MS', 'Comic Sans', cursive; font-size: 32px; font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Add Users</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEditName">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>100</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your name</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEditEmail">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>150</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your email</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEditPassword">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>200</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::EchoMode::Password</enum>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your password</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEditAge">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>250</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your age</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEditPhone">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>300</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your phone</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEditAddress">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>350</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your address</string>
+           </property>
+          </widget>
+          <widget class="QComboBox" name="comboBox">
+           <property name="geometry">
+            <rect>
+             <x>300</x>
+             <y>100</y>
+             <width>180</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>coach</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>receptionis</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>member</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QPushButton" name="addUserBtn">
+           <property name="geometry">
+            <rect>
+             <x>300</x>
+             <y>200</y>
+             <width>120</width>
+             <height>40</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: #f5e9c6; color: #3a546b; border-radius: 15px; font-size: 18px; font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Add User</string>
+           </property>
+          </widget>
          </widget>
         </widget>
        </widget>

@@ -11,5 +11,13 @@ Class: Powerlifting
 4:Ali:Ali@gmail.com:01218972:male:false:01098676433:Cairo NaserCity:20
 
 5:Bosela:Boseal@gmail.com:123456:male:false:01062116844:El7lmea:20
-Class: Powerlifting
+Class: HIIT
+
+6:Gemmy:Gemmy@gmail.com:123456:male:false:01062116844:Ainshams:23
+
+7:Messi:Messi@gmail.com:102345:male:false:01062116844:Argntina:38
+Class: Pilates
+Class: Yoga
+
+8:Elbooz:Elbooz@gamil.com:123456:male:false:01062116844:Nasr city:20
 
