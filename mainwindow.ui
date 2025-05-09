@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1354</width>
-    <height>725</height>
+    <width>1400</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -3364,10 +3364,10 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
      <widget class="QWidget" name="widget_8" native="true">
       <property name="geometry">
        <rect>
-        <x>-70</x>
-        <y>-10</y>
-        <width>1461</width>
-        <height>741</height>
+        <x>0</x>
+        <y>0</y>
+        <width>1381</width>
+        <height>711</height>
        </rect>
       </property>
       <property name="styleSheet">
