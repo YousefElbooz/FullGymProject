@@ -1306,7 +1306,7 @@ border-radius:1px</string>
         </rect>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="page">
         <widget class="QWidget" name="widget_5" native="true">
@@ -2917,21 +2917,331 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
            <height>691</height>
           </rect>
          </property>
-         <widget class="QLabel" name="label_78">
+         <widget class="QFrame" name="MemberPanel_2">
           <property name="geometry">
            <rect>
-            <x>200</x>
-            <y>160</y>
-            <width>291</width>
-            <height>101</height>
+            <x>30</x>
+            <y>20</y>
+            <width>481</width>
+            <height>500</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: rgb(0, 0, 0);</string>
+           <string notr="true">background-color: #3a546b; border-radius: 20px;</string>
           </property>
-          <property name="text">
-           <string>Admin</string>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
           </property>
+          <widget class="QLabel" name="label_75">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>20</y>
+             <width>400</width>
+             <height>60</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: #fffbe7; font-family: 'Comic Sans MS', 'Comic Sans', cursive; font-size: 32px; font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Member Managment</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="MemberName_2">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>100</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your name</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="MemberEmail_2">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>150</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your email</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="MemberPassword_2">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>200</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::EchoMode::Password</enum>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your password</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="MememberAge_2">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>250</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your age</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="MemberPhone_2">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>300</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your phone</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="MemberAddress_2">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>350</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter your address</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="addMemberBtn_2">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>100</y>
+             <width>120</width>
+             <height>40</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: #f5e9c6; color: #3a546b; border-radius: 15px; font-size: 18px; font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Add Member</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="RemoveMemberBtn_3">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>160</y>
+             <width>161</width>
+             <height>40</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: #f5e9c6; color: #3a546b; border-radius: 15px; font-size: 18px; font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Remove Member</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="radioButton">
+           <property name="geometry">
+            <rect>
+             <x>350</x>
+             <y>230</y>
+             <width>91</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Male</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="radioButton_2">
+           <property name="geometry">
+            <rect>
+             <x>350</x>
+             <y>270</y>
+             <width>91</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>female</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QFrame" name="ClassPanel_3">
+          <property name="geometry">
+           <rect>
+            <x>540</x>
+            <y>20</y>
+            <width>481</width>
+            <height>311</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: #3a546b; border-radius: 20px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <widget class="QLabel" name="label_76">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>20</y>
+             <width>400</width>
+             <height>60</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: #fffbe7; font-family: 'Comic Sans MS', 'Comic Sans', cursive; font-size: 32px; font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Class Managment</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="ClassName_3">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>100</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Enter Class name</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="ClassID_30">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>150</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::EchoMode::Normal</enum>
+           </property>
+           <property name="placeholderText">
+            <string>Enter Class ID</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="addClassBtn_3">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>100</y>
+             <width>120</width>
+             <height>40</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: #f5e9c6; color: #3a546b; border-radius: 15px; font-size: 18px; font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Add Class</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="RemoveClassBtn_4">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>160</y>
+             <width>161</width>
+             <height>40</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: #f5e9c6; color: #3a546b; border-radius: 15px; font-size: 18px; font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Remove Class</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="Class_capacity_31">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>200</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::EchoMode::Password</enum>
+           </property>
+           <property name="placeholderText">
+            <string>Enter Class capacity</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="Class_Time_32">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>250</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::EchoMode::Normal</enum>
+           </property>
+           <property name="placeholderText">
+            <string>Enter time </string>
+           </property>
+          </widget>
          </widget>
         </widget>
        </widget>

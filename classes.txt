@@ -1,22 +1,5 @@
-1,Yoga,10:00 AM,Open,10,8,Coach: None
+1,Yoga,02:00 AM,Open,10,1,Coach: Elbooz
+Member: 7
 
-2,Spin,02:00 PM,Open,20,18,Coach: None
-
-3,HIIT,02:00 PM,Open,12,12,Coach: None
-
-4,Pilates,02:00 PM,Open,10,10,Coach: Medo
-Member: 2
-
-5,CrossFit,02:00 PM,Open,10,7,Coach: Elbooz
-
-6,Zumba,02:00 PM,Open,25,21,Coach: None
-
-7,Boxing,02:00 PM,Open,8,6,Coach: Medo
-
-8,TRX,02:00 PM,Open,12,6,Coach: Gemmy
-
-9,Barre,02:00 PM,Open,10,3,Coach: None
-
-10,Powerlifting,02:00 PM,Open,6,3,Coach: Gemmy
-Member: 5
+2,Boxing,03:00 AM,Open,20,0,Coach: Medo
 

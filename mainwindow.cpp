@@ -697,6 +697,62 @@ MainWindow::MainWindow(QWidget *parent)
 
         QMessageBox::information(this, "Success", "Class assigned successfully!");
     });
+
+    // Connect member management buttons
+    connect(ui->addMemberBtn_2, &QPushButton::clicked, this, &MainWindow::addMember);
+    connect(ui->RemoveMemberBtn_3, &QPushButton::clicked, this, &MainWindow::removeMember);
+
+    // Connect class management buttons
+    connect(ui->addClassBtn_3, &QPushButton::clicked, this, &MainWindow::addClass);
+    connect(ui->RemoveClassBtn_4, &QPushButton::clicked, this, &MainWindow::removeClass);
+
+    // Setup members table
+    ui->tableWidget_15->setColumnCount(3);
+    ui->tableWidget_15->setHorizontalHeaderLabels(QStringList() << "ID" << "Name" << "Age");
+    ui->tableWidget_15->setStyleSheet(R"(
+        QTableWidget {
+            background-color: white;
+            alternate-background-color: #f6f6f6;
+            gridline-color: #d3d3d3;
+            border: 1px solid #d3d3d3;
+            border-radius: 5px;
+        }
+        QTableWidget::item {
+            padding: 5px;
+            border-bottom: 1px solid #d3d3d3;
+        }
+        QHeaderView::section {
+            background-color: #f1c27d;
+            color: black;
+            padding: 5px;
+            border: 1px solid #d3d3d3;
+            font-weight: bold;
+        }
+        QTableWidget::item:selected {
+            background-color: #f1c27d;
+            color: black;
+        }
+    )");
+    
+    // Set column widths
+    ui->tableWidget_15->setColumnWidth(0, 50);  // ID
+    ui->tableWidget_15->setColumnWidth(1, 200); // Name
+    ui->tableWidget_15->setColumnWidth(2, 50);  // Age
+    
+    // Enable alternating row colors
+    ui->tableWidget_15->setAlternatingRowColors(true);
+    
+    // Make the table read-only
+    ui->tableWidget_15->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    
+    // Enable selection of entire rows
+    ui->tableWidget_15->setSelectionBehavior(QAbstractItemView::SelectRows);
+    
+    // Enable sorting
+    ui->tableWidget_15->setSortingEnabled(true);
+
+    // Initial population of members table
+    updateMembersTable();
 }
 
 MainWindow::~MainWindow() {
@@ -708,7 +764,6 @@ MainWindow::~MainWindow() {
     qDeleteAll(staffMap);
     qDeleteAll(classesmap);
 }
-
 
 void MainWindow::setPixmapForWidgets() {
     QString imagePaths[] = {
@@ -870,4 +925,313 @@ void MainWindow::setPixmapForWidgets() {
     ui->Chart->setPixmap(QPixmap(imagePaths[23]));
 }
 
+//----------------------------------Class Management----------------------------------
+
+void MainWindow::addClass() {
+    QString className = ui->ClassName_3->text().trimmed();
+    QString ClassID = ui->ClassID_30->text().trimmed();
+    QString capacityStr = ui->Class_capacity_31->text().trimmed();
+    QString ClassTime = ui->Class_Time_32->text().trimmed();
+
+    if (className.isEmpty() || ClassID.isEmpty() || capacityStr.isEmpty() || ClassTime.isEmpty()) {
+        QMessageBox::warning(this, "Input Error", "Please fill in all fields.");
+        return;
+    }
+
+    bool ok;
+    int capacity = capacityStr.toInt(&ok);
+    if (!ok || capacity <= 0) {
+        QMessageBox::warning(this, "Input Error", "Capacity must be a positive integer greater than 0.");
+        return;
+    }
+
+    // Validate time format (HH:MM AM/PM)
+    QTime time = QTime::fromString(ClassTime, "hh:mm AP");
+    if (!time.isValid()) {
+        QMessageBox::warning(this, "Input Error", "Please enter time in format HH:MM AM/PM (e.g., 09:30 AM)");
+        return;
+    }
+
+    if (classesmap.contains(ClassID.toInt())) {
+        QMessageBox::warning(this, "Duplicate ID", "A class with this ID already exists.");
+        return;
+    }
+
+    // Create new class with "Open" status
+    GymClass* newClass = new GymClass(className, "Open", capacity);
+    newClass->setId(ClassID.toInt());
+    newClass->setTime(time);
+    newClass->setEnrolled(0); // Initialize enrolled count to 0
+    
+    classesmap[ClassID.toInt()] = newClass;
+
+    // Update the classes table
+    updateClassesTable();
+
+    // Save to file
+    FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+
+    QMessageBox::information(this, "Success", "Class added successfully!");
+    
+    ui->ClassName_3->clear();
+    ui->ClassID_30->clear();
+    ui->Class_capacity_31->clear();
+    ui->Class_Time_32->clear();
+}
+
+void MainWindow::removeClass() {
+    QString ClassID = ui->ClassID_30->text().trimmed();
+
+    if(ClassID.isEmpty()){
+        QMessageBox::warning(this, "Input Error", "Please enter a class ID.");
+        return;
+    }
+
+    if(!classesmap.contains(ClassID.toInt())){
+        QMessageBox::warning(this, "Class Not Found", "A class with this ID does not exist.");
+        return;
+    }
+
+    GymClass* classToRemove = classesmap[ClassID.toInt()];
+    classesmap.remove(ClassID.toInt());
+
+    FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+
+    QMessageBox::information(this, "Success", "Class removed successfully!");
+
+    ui->ClassID_30->clear();
+}
+
+void MainWindow::updateClassesTable() {
+    ui->tableWidget_2->clearContents();
+    ui->tableWidget_2->setRowCount(0);
+    ui->tableWidget_2->setColumnCount(7);
+    ui->tableWidget_2->setHorizontalHeaderLabels(QStringList()
+        << "ID" << "Class Name" << "Time" << "Status" << "Capacity" << "Enrolled" << "Coach");
+
+    // Set column widths for better readability
+    ui->tableWidget_2->setColumnWidth(0, 50);   // ID
+    ui->tableWidget_2->setColumnWidth(1, 150);  // Class Name
+    ui->tableWidget_2->setColumnWidth(2, 100);  // Time
+    ui->tableWidget_2->setColumnWidth(3, 100);  // Status
+    ui->tableWidget_2->setColumnWidth(4, 80);   // Capacity
+    ui->tableWidget_2->setColumnWidth(5, 80);   // Enrolled
+    ui->tableWidget_2->setColumnWidth(6, 150);  // Coach
+
+    // Enable alternating row colors
+    ui->tableWidget_2->setAlternatingRowColors(true);
+    
+    // Make the table read-only
+    ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    
+    // Enable selection of entire rows
+    ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
+    
+    // Enable sorting
+    ui->tableWidget_2->setSortingEnabled(true);
+
+    for (auto it = classesmap.begin(); it != classesmap.end(); ++it) {
+        int row = ui->tableWidget_2->rowCount();
+        ui->tableWidget_2->insertRow(row);
+        
+        // Add ID
+        ui->tableWidget_2->setItem(row, 0, new QTableWidgetItem(QString::number(it.key())));
+        // Add Name
+        ui->tableWidget_2->setItem(row, 1, new QTableWidgetItem(it.value()->getName()));
+        // Add Time
+        ui->tableWidget_2->setItem(row, 2, new QTableWidgetItem(it.value()->getTime().toString("hh:mm AP")));
+        // Add Status
+        ui->tableWidget_2->setItem(row, 3, new QTableWidgetItem(it.value()->getStatue()));
+        // Add Capacity
+        ui->tableWidget_2->setItem(row, 4, new QTableWidgetItem(QString::number(it.value()->getCapacity())));
+        // Add Enrolled
+        ui->tableWidget_2->setItem(row, 5, new QTableWidgetItem(QString::number(it.value()->getEnrolled())));
+        // Add Coach
+        QString coachName = it.value()->getCoach() ? it.value()->getCoach()->getName() : "Not Assigned";
+        ui->tableWidget_2->setItem(row, 6, new QTableWidgetItem(coachName));
+    }
+
+    // Apply stylesheet for better appearance
+    ui->tableWidget_2->setStyleSheet(R"(
+        QTableWidget {
+            background-color: white;
+            alternate-background-color: #f6f6f6;
+            gridline-color: #d3d3d3;
+            border: 1px solid #d3d3d3;
+            border-radius: 5px;
+        }
+        QTableWidget::item {
+            padding: 5px;
+            border-bottom: 1px solid #d3d3d3;
+        }
+        QHeaderView::section {
+            background-color: #f1c27d;
+            color: black;
+            padding: 5px;
+            border: 1px solid #d3d3d3;
+            font-weight: bold;
+        }
+        QTableWidget::item:selected {
+            background-color: #f1c27d;
+            color: black;
+        }
+    )");
+}
+//----------------------------------Member Management----------------------------------
+
+void MainWindow::updateMembersTable() {
+    ui->tableWidget_15->clearContents();
+    ui->tableWidget_15->setRowCount(0);
+
+    for (auto it = members.begin(); it != members.end(); ++it) {
+        int row = ui->tableWidget_15->rowCount();
+        ui->tableWidget_15->insertRow(row);
+        
+        // Add ID
+        ui->tableWidget_15->setItem(row, 0, new QTableWidgetItem(QString::number(it.key())));
+        // Add Name
+        ui->tableWidget_15->setItem(row, 1, new QTableWidgetItem(it.value()->getName()));
+        // Add Age
+        ui->tableWidget_15->setItem(row, 2, new QTableWidgetItem(QString::number(it.value()->getAge())));
+    }
+}
+
+void MainWindow::addMember() {
+    QString name = ui->MemberName_2->text().trimmed();
+    QString email = ui->MemberEmail_2->text().trimmed();
+    QString password = ui->MemberPassword_2->text().trimmed();
+    QString ageStr = ui->MememberAge_2->text().trimmed();
+    QString phone = ui->MemberPhone_2->text().trimmed();
+    QString address = ui->MemberAddress_2->text().trimmed();
+    bool isMale = ui->radioButton->isChecked();
+    bool isFemale = ui->radioButton_2->isChecked();
+
+    // Basic validation
+    if (name.isEmpty() || name.length() < 3) {
+        QMessageBox::warning(this, "Validation Error", "Name must be at least 3 characters.");
+        return;
+    }
+
+    QRegularExpression emailRegex(R"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)");
+    if (!emailRegex.match(email).hasMatch()) {
+        QMessageBox::warning(this, "Validation Error", "Please enter a valid email.");
+        return;
+    }
+
+    if (password.length() < 6) {
+        QMessageBox::warning(this, "Validation Error", "Password must be at least 6 characters.");
+        return;
+    }
+
+    if (!phone.contains(QRegularExpression("^[0-9]{10,}$"))) {
+        QMessageBox::warning(this, "Validation Error", "Enter a valid phone number (10+ digits).");
+        return;
+    }
+
+    bool ok;
+    int age = ageStr.toInt(&ok);
+    if (!ok || age < 10 || age > 100) {
+        QMessageBox::warning(this, "Validation Error", "Enter a valid age (10–100).");
+        return;
+    }
+
+    if (!isMale && !isFemale) {
+        QMessageBox::warning(this, "Validation Error", "Please select a gender.");
+        return;
+    }
+
+    QString gender = isMale ? "male" : "female";
+
+    // Check if email already exists
+    for (const auto& member : members) {
+        if (member->getEmail() == email) {
+            QMessageBox::warning(this, "Duplicate Email", "A member with this email already exists.");
+            return;
+        }
+    }
+
+    // Create new member
+    int newId = members.size() + 1;
+    Member* newMember = new Member(name, email, password, gender, false, phone, address, age);
+    members[newId] = newMember;
+
+    // Save to file
+    FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
+
+    // Update the members table
+    updateMembersTable();
+
+    // Clear input fields
+    ui->MemberName_2->clear();
+    ui->MemberEmail_2->clear();
+    ui->MemberPassword_2->clear();
+    ui->MememberAge_2->clear();
+    ui->MemberPhone_2->clear();
+    ui->MemberAddress_2->clear();
+    ui->radioButton->setChecked(false);
+    ui->radioButton_2->setChecked(false);
+
+    QMessageBox::information(this, "Success", "Member added successfully!");
+}
+
+void MainWindow::removeMember() {
+    QString email = ui->MemberEmail_2->text().trimmed();
+    QString password = ui->MemberPassword_2->text().trimmed();
+
+    if (email.isEmpty() && password.isEmpty()) {
+        QMessageBox::warning(this, "Input Error", "Please enter both email and password to remove a member.");
+        return;
+    }
+
+    // Find member by email and verify password
+    int memberIdToRemove = -1;
+    for (auto it = members.begin(); it != members.end(); ++it) {
+        if (it.value()->getEmail() == email && it.value()->getPassword() == password) {
+            memberIdToRemove = it.key();
+            break;
+        }
+    }
+
+    if (memberIdToRemove == -1) {
+        QMessageBox::warning(this, "Authentication Failed", "Invalid email or password combination.");
+        return;
+    }
+
+    // Confirm deletion
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Confirm Deletion",
+        "Are you sure you want to remove this member?",
+        QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        // Remove member from all classes
+        Member* memberToRemove = members[memberIdToRemove];
+        for (auto gc : memberToRemove->getClasses()) {
+            gc->removeMember(memberToRemove);
+            gc->setEnrolled(gc->getEnrolled() - 1);
+        }
+
+        // Remove member from members map
+        delete members[memberIdToRemove];
+        members.remove(memberIdToRemove);
+
+        // Save changes to files
+        FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
+        FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+
+        // Update the members table
+        updateMembersTable();
+
+        // Clear input fields
+        ui->MemberEmail_2->clear();
+        ui->MemberPassword_2->clear();
+        ui->MemberName_2->clear();
+        ui->MememberAge_2->clear();
+        ui->MemberPhone_2->clear();
+        ui->MemberAddress_2->clear();
+        ui->radioButton->setChecked(false);
+        ui->radioButton_2->setChecked(false);
+
+        QMessageBox::information(this, "Success", "Member removed successfully!");
+    }
+}
 

@@ -21,4 +21,3 @@ void Coach::addClass(GymClass* gymClass) {
 QVector<GymClass*> Coach::getClasses(){
     return classes;
 }
-

@@ -31,3 +31,7 @@ QString Member::toString() const {
 void Member::removeClass(GymClass* gymClass) {
     classes.removeOne(gymClass);
 }
+
+void Member::setId(int newId) {
+    this->id = newId;
+}

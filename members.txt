@@ -1,18 +1,13 @@
 1:Yosef:yoosefelbooz@gmail.com:01218972:male:false:20:Nasr City:20
 
 2:Alaa:Alaa@gmail.com:01218972:male:true:01218927:El7elmya:19
-Class: Pilates
 
-3:0100000:malak@gmail.com:01218972:male:false:19:Elma3ady:19
+4:Gemmy:Gemmy@gmail.com:789456:male:false:01062116844:Ainshams:23
 
-4:Ali:Ali@gmail.com:01218972:male:false:01098676433:Cairo NaserCity:20
+5:Messi:Messi@gmail.com:102345:male:false:01062116844:Argntina:38
 
-5:Bosela:Boseal@gmail.com:123456:male:false:01062116844:El7lmea:20
-Class: Powerlifting
+6:Elbooz:Elbooz@gamil.com:123456:male:false:01062116844:Nasr city:20
 
-6:Gemmy:Gemmy@gmail.com:123456:male:false:01062116844:Ainshams:23
-
-7:Messi:Messi@gmail.com:102345:male:false:01062116844:Argntina:38
-
-8:Elbooz:Elbooz@gamil.com:123456:male:false:01062116844:Nasr city:20
+7:Bosela:Bosela@gmail.com:123456:male:false:01062116844:El7lmeya:20
+Class: Yoga
 
