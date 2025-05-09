@@ -35,6 +35,13 @@ public:
     ~MainWindow();
 
 private slots:
+    void addMember();
+    void removeMember();
+    void updateMembersTable();
+    void addClass();
+    void removeClass();
+    void updateClassesTable();
+
 private:
     QMap<int, Member*> members;
     QMap<int, Staff*> staffMap;

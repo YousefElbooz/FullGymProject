@@ -21,37 +21,41 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath, QMap<int, M
     Member* m = nullptr;
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
-        if (line.isEmpty() || line.startsWith("#")) {
+        if (line.isEmpty()) {
             m = nullptr;
             continue;
         }
-        if (line.startsWith("Class: ")) {
-            if (m) {
-                QString className = line.mid(QString("Class: ").length()).trimmed();
-                // Find the class by name in classesmap (now passed as parameter)
-                for (auto gc : classesmap) {
-                    if (gc->getName().compare(className, Qt::CaseInsensitive) == 0) {
-                        m->addClass(gc);
-                        break;
-                    }
+        
+        // Member line
+        if (!line.startsWith("Class: ")) {
+            QStringList parts = line.split(":");
+            if (parts.size() == 9) {
+                int id = parts[0].toInt();
+                QString name = parts[1];
+                QString email = parts[2];
+                QString password = parts[3];
+                QString gender = parts[4];
+                bool isVip = (parts[5].toLower() == "true");
+                QString phone = parts[6];
+                QString address = parts[7];
+                int age = parts[8].toInt();
+                m = new Member(name, email, password, gender, isVip, phone, address, age);
+                m->setId(id);  // Set the member's ID
+                members[id] = m;
+            }
+        }
+        // Class line
+        else if (m != nullptr) {  // Only process class if we have a valid member
+            QString className = line.mid(QString("Class: ").length()).trimmed();
+            // Find the class by name in classesmap
+            for (auto gc : classesmap) {
+                if (gc->getName().compare(className, Qt::CaseInsensitive) == 0) {
+                    m->addClass(gc);
+                    gc->addMember(m);  // Add member to class
+                    gc->setEnrolled(gc->getEnrolled() + 1);  // Update enrolled count
+                    break;
                 }
             }
-            continue;
-        }
-        // Member line
-        QStringList parts = line.split(":");
-        if (parts.size() == 9) {
-            int id = parts[0].toInt();
-            QString name = parts[1];
-            QString email = parts[2];
-            QString password = parts[3];
-            QString gender = parts[4];
-            bool isVip = (parts[5].toLower() == "true");
-            QString phone = parts[6];
-            QString address = parts[7];
-            int age = parts[8].toInt();
-            m = new Member(name, email,password, gender, isVip, phone, address, age);
-            members[id] = m;
         }
     }
     file.close();
@@ -84,17 +88,16 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff
             Staff* staff = nullptr;
 
             if (role == "coach") {
-                Coach* coach = new Coach(name,email,password, phone, address, age);
+                Coach* coach = new Coach(name, email, password, phone, address, age);
+                // Read classes for coach
                 while (!in.atEnd()) {
                     QString classLine = in.readLine().trimmed();
                     if (classLine == "---") break;
-
                     QStringList classParts = classLine.split("|");
                     if (classParts.size() >= 3) {
                         int classId = classParts[0].toInt();
                         QString className = classParts[1];
                         QString schedule = classParts[2];
-
                         GymClass* gymClass = new GymClass(className, schedule, 0);
                         gymClass->setId(classId);
                         gymClass->setCoach(coach);
@@ -103,13 +106,13 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff
                 }
                 staff = coach;
             } else if (role == "manager") {
-                staff = new Manger(name,email,password, phone, address, age);
+                staff = new Manger(name, email, password, phone, address, age);
             } else if (role == "receptionist") {
-                staff = new Receptionist(name, email,password,phone, address, age);
+                staff = new Receptionist(name, email, password, phone, address, age);
             }
 
             if (staff) {
-                staffMap[staff->getId()] = staff;
+                staffMap[id] = staff;
             }
         }
     }
@@ -153,34 +156,34 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
         Staff* s = it.value();
         QString role = s->getRole().toLower();
 
+        // Write all staff in the same format, including email and password
+        out << s->getId() << ":"
+            << s->getName() << ":"
+            << s->getEmail() << ":"
+            << s->getPassword() << ":"
+            << s->getAge() << ":"
+            << s->getAddress() << ":"
+            << s->getPhone() << ":"
+            << role << "\n";
+
+        // For coaches, write their unique classes after the staff line
         if (role == "coach") {
             Coach* coach = dynamic_cast<Coach*>(s);
             if (!coach) continue;
-
-            out << coach->getId() << ":"
-                << coach->getName() << ":"
-                << coach->getAge() << ":"
-                << coach->getAddress() << ":"
-                << coach->getPhone() << ":"
-                << "N/A:N/A:N/A:N/A:"  // Placeholders
-                << "coach\n";
-
+            
+            // Use QSet to track unique class IDs
+            QSet<int> uniqueClassIds;
             for (GymClass* gymClass : coach->getClasses()) {
+                if (uniqueClassIds.contains(gymClass->getId())) continue;
+                uniqueClassIds.insert(gymClass->getId());
+                
                 out << gymClass->getId() << "|"
                     << gymClass->getName() << "|"
                     << gymClass->getStatue() << "|"
                     << (gymClass->getCoach() ? gymClass->getCoach()->getName() : "Unknown") << "|"
                     << "Scheduled\n";
             }
-
             out << "---\n";
-        } else {
-            out << s->getId() << ":"
-                << s->getName() << ":"
-                << s->getAge() << ":"
-                << s->getAddress() << ":"
-                << s->getPhone() << ":"
-                << "N/A:N/A:N/A:N/A:" << role << "\n";
         }
     }
 
@@ -214,7 +217,7 @@ void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*
     file.close();
 }
 
-QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses, const QMap<int, Member*>& members) {
+QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses, const QMap<int, Member*>& members, const QMap<int, Staff*>& staffMap) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open gym classes file";
@@ -258,11 +261,26 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
         if (!ok) continue;
         QString coachPart = parts[6].trimmed();
         QString coachName = coachPart.startsWith("Coach: ") ? coachPart.mid(7) : "None";
+        
         gc = new GymClass(name, status, capacity);
         gc->setId(id);
         gc->setTime(time);
         gc->setEnrolled(enrolled);
-        // Note: gc->setCoach() should be set if coach lookup is supported
+        
+        // Find and set the coach if one exists
+        if (coachName != "None") {
+            for (auto staff : staffMap) {
+                if (staff->getName() == coachName && staff->getRole().toLower() == "coach") {
+                    Coach* coach = dynamic_cast<Coach*>(staff);
+                    if (coach) {
+                        gc->setCoach(coach);
+                        coach->addClass(gc);
+                        break;
+                    }
+                }
+            }
+        }
+        
         gymClasses[id] = gc;
     }
     file.close();

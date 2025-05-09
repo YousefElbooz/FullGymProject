@@ -39,6 +39,7 @@ public:
     void setAddress(const QString& address);
     void setAge(int age);
     void setWorkouts(const QStack<QString>& workout);
+    void setId(int newId);
     int getId() const;
     QString getName() const;
     QString getPassword() const;
