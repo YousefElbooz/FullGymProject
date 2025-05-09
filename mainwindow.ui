@@ -26,7 +26,7 @@ border-radius:20px;</string>
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1501</width>
+      <width>1401</width>
       <height>801</height>
      </rect>
     </property>
@@ -34,7 +34,7 @@ border-radius:20px;</string>
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="LoginPageStack">
      <widget class="QLabel" name="label">
@@ -1306,7 +1306,7 @@ border-radius:1px</string>
         </rect>
        </property>
        <property name="currentIndex">
-        <number>8</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="page">
         <widget class="QWidget" name="widget_5" native="true">
@@ -3075,9 +3075,9 @@ hover background-color: #dcdcdc;
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="geometry">
         <rect>
-         <x>300</x>
-         <y>10</y>
-         <width>1041</width>
+         <x>290</x>
+         <y>20</y>
+         <width>1071</width>
          <height>691</height>
         </rect>
        </property>
@@ -3652,7 +3652,7 @@ hover background-color: #008FC1;</string>
          <widget class="QTableWidget" name="tableWidget_5">
           <property name="geometry">
            <rect>
-            <x>0</x>
+            <x>10</x>
             <y>70</y>
             <width>800</width>
             <height>200</height>

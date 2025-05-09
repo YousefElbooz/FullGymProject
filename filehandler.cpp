@@ -58,6 +58,7 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath, QMap<int, M
     return members;
 }
 
+
 QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff*>& staffMap) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -71,6 +72,7 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff
         if (line.isEmpty()) continue;
 
         QStringList parts = line.split(":");
+        // Expecting: id:name:email:password:age:address:phone:N/A:N/A:N/A:N/A:role
         if (parts.size() >= 8) {
             int id = parts[0].toInt();
             QString name = parts[1];
@@ -84,17 +86,16 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff
             Staff* staff = nullptr;
 
             if (role == "coach") {
-                Coach* coach = new Coach(name,email,password, phone, address, age);
+                Coach* coach = new Coach(name, email, password, phone, address, age);
+                // Read classes for coach
                 while (!in.atEnd()) {
                     QString classLine = in.readLine().trimmed();
                     if (classLine == "---") break;
-
                     QStringList classParts = classLine.split("|");
                     if (classParts.size() >= 3) {
                         int classId = classParts[0].toInt();
                         QString className = classParts[1];
                         QString schedule = classParts[2];
-
                         GymClass* gymClass = new GymClass(className, schedule, 0);
                         gymClass->setId(classId);
                         gymClass->setCoach(coach);
@@ -103,13 +104,13 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff
                 }
                 staff = coach;
             } else if (role == "manager") {
-                staff = new Manger(name,email,password, phone, address, age);
+                staff = new Manger(name, email, password, phone, address, age);
             } else if (role == "receptionist") {
-                staff = new Receptionist(name, email,password,phone, address, age);
+                staff = new Receptionist(name, email, password, phone, address, age);
             }
 
             if (staff) {
-                staffMap[staff->getId()] = staff;
+                staffMap[id] = staff;
             }
         }
     }
@@ -153,18 +154,20 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
         Staff* s = it.value();
         QString role = s->getRole().toLower();
 
+        // Write all staff in the same format, including email and password
+        out << s->getId() << ":"
+            << s->getName() << ":"
+            << s->getEmail() << ":"
+            << s->getPassword() << ":"
+            << s->getAge() << ":"
+            << s->getAddress() << ":"
+            << s->getPhone() << ":"
+            << role << "\n";
+
+        // For coaches, write their classes after the staff line
         if (role == "coach") {
             Coach* coach = dynamic_cast<Coach*>(s);
             if (!coach) continue;
-
-            out << coach->getId() << ":"
-                << coach->getName() << ":"
-                << coach->getAge() << ":"
-                << coach->getAddress() << ":"
-                << coach->getPhone() << ":"
-                << "N/A:N/A:N/A:N/A:"  // Placeholders
-                << "coach\n";
-
             for (GymClass* gymClass : coach->getClasses()) {
                 out << gymClass->getId() << "|"
                     << gymClass->getName() << "|"
@@ -172,15 +175,7 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
                     << (gymClass->getCoach() ? gymClass->getCoach()->getName() : "Unknown") << "|"
                     << "Scheduled\n";
             }
-
             out << "---\n";
-        } else {
-            out << s->getId() << ":"
-                << s->getName() << ":"
-                << s->getAge() << ":"
-                << s->getAddress() << ":"
-                << s->getPhone() << ":"
-                << "N/A:N/A:N/A:N/A:" << role << "\n";
         }
     }
 

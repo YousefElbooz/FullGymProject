@@ -3,29 +3,31 @@
 #include "ui_mainwindow.h"
 #include "FileHandler.h"
 #include "animations.h"
+#include <QApplication>
+#include <QScreen>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    ui->setupUi(this);
     this->setWindowFlag(Qt::FramelessWindowHint);
     setFixedSize(1355,720);
     this->setAttribute(Qt::WA_TranslucentBackground);
-    ui->setupUi(this);
 
     Animations* animations = new Animations(this);
     animations->setUI(ui->LoginPageStackedWidget, ui->label, ui->Exit);
     Animations* pageAnimator = new Animations(this);
     pageAnimator->setUI(ui->FullWiedgit, ui->label, ui->Exit);
+    // this->showMaximized();
+
     ui->FullWiedgit->setCurrentIndex(1);
-    this->showMaximized();
-    ui->FullWiedgit->setCurrentIndex(0);
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
-    FileHandler::loadMembers("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/members.txt", members, classesmap);
-    FileHandler::loadStaff("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/staffs.txt", staffMap);
-    FileHandler::loadClasses("C:/Users/Yousef/Documents/FullGymProject/FullGymProject/classes.txt", classesmap, members);
+    FileHandler::loadMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members, classesmap);
+    FileHandler::loadStaff("C:/Users/Yousef/Downloads/FullGymProject/staffs.txt", staffMap);
+    FileHandler::loadClasses("C:/Users/Yousef/Downloads/FullGymProject/classes.txt", classesmap, members);
     // Move updateEnrolledClassesTable here so it is in scope for all later code
     auto updateEnrolledClassesTable = [=]() {
         ui->tableWidget_3->clearContents();
@@ -82,9 +84,25 @@ MainWindow::MainWindow(QWidget *parent)
             for(auto stf: staffMap){
                 if(stf->getEmail()==usrEmail&&stf->getPassword()==usrPassword){
                     currStaff = stf;
+                    QString newImagePath = ":/img/images/member-background.png"; // Change to your target background if needed
+                    QString newExitStyle = R"(
+                        QPushButton {
+                            background-color: #008FC1;
+                            color: white;
+                            border-radius: 10px;
+                            padding: 6px 12px;
+                            font: bold 10pt "Yeasty Flavors";
+                        }
+                    )";
+                    pageAnimator->animatedSwitchAdvanced(
+                        ui->FullWiedgit->currentIndex(), // from LoginPageStack
+                         1, // to MemberPageStack index
+                        newImagePath,
+                        newExitStyle
+                        );
                     QMessageBox::information(this, "Success", "You have logged in successfully.");
                     loggedIn = true;
-                    break;  // Stop checking further
+                    break;
                 }
             }
         }
@@ -568,9 +586,12 @@ void MainWindow::setPixmapForWidgets() {
         )").arg("#f1c27d");
 
             btn->setStyleSheet(activeStyle);
-            if(i<9)
+            if(i<9){
+                if(currStaff->getRole()=="manager"){
+                    QMessageBox::warning(this, "You Don't have the access to enter", "You need to be a manger.");
+                }
                 ui->staffMainStackWidget->setCurrentIndex(index);
-            else if(i<18)
+            }else if(i<18)
                 ui->stackedWidget->setCurrentIndex(index-9);
             else{
                 Animations* pageAnimator = new Animations(this);
@@ -583,7 +604,7 @@ void MainWindow::setPixmapForWidgets() {
                 QPushButton {
                     background-color: rgb(198, 143, 59);
                     color: black;
-                    border-radius: 10px;
+                    border-radius: 25px;
                     font: bold 10pt "Yeasty Flavors";
                     padding: 6px 12px;
                 }

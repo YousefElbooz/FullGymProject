@@ -1,1 +1,1 @@
-1:Xmo:0:N/A:N/A:N/A:N/A:N/A:N/A:manager
+1:Xmo:xmo@gmail.com:123456:10:ddddd:00012312312:manager
