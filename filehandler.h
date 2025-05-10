@@ -34,10 +34,10 @@ public:
     static void saveStaff(const QString& filePath, const QMap<int, Staff*>& staffMap);
     static void saveClasses(const QString& filePath, const QMap<int, GymClass*>& classes);  // ✅ Add this
     //waitlist functions
- //    static QMap<int, GymClass*> loadClasses(const QString& filePath,QMap<int, GymClass*> gymClasses);  // ✅ Add thi
- //     static void saveClasses(const QString& filePath, const QMap<int, GymClass*>& classes);  // ✅ Add this
- 
- //   static void saveQueueData(QTextStream &out, const QQueue<Member*>& normalList, const QQueue<Member*>& VIPList) ;
+    //    static QMap<int, GymClass*> loadClasses(const QString& filePath,QMap<int, GymClass*> gymClasses);  // ✅ Add thi
+    //     static void saveClasses(const QString& filePath, const QMap<int, GymClass*>& classes);  // ✅ Add this
+
+    //   static void saveQueueData(QTextStream &out, const QQueue<Member*>& normalList, const QQueue<Member*>& VIPList) ;
 };
 
 #endif // FILEHANDLER_H
