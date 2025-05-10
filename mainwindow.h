@@ -15,6 +15,7 @@
 #include <QParallelAnimationGroup>
 #include <QStackedWidget>
 #include <QWidget>
+#include <QLabel>
 #include "member.h"
 #include "manger.h"
 #include "staff.h"
@@ -30,17 +31,26 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 private:
     void setPixmapForWidgets();
+    void updateSubscriptionInfo();
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
+    void addMember();
+    void removeMember();
+    void updateMembersTable();
+    void addClass();
+    void removeClass();
+    void updateClassesTable();
+
 private:
     QMap<int, Member*> members;
     QMap<int, Staff*> staffMap;
     QMap<int, GymClass*> classesmap;
     Member* currMember;
     Staff * currStaff;
+    
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

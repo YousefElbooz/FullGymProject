@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QString>
 #include <QStack>
+#include <QDate>
 #include "gymclass.h"
 class GymClass;  // Forward declaration
 
@@ -25,6 +26,9 @@ private:
     int age;         // New
     QStack<QString> workout;
     //payment duration
+    QString subscriptionType; // "1m", "3m", "6m", "12m" or empty for non-subscribed
+    QDate subscriptionStartDate;
+    QDate subscriptionEndDate;
 
 public:
     Member();  // Default constructor
@@ -39,6 +43,17 @@ public:
     void setAddress(const QString& address);
     void setAge(int age);
     void setWorkouts(const QStack<QString>& workout);
+    
+    // Subscription methods
+    void setSubscription(const QString& type);
+    void setSubscriptionStartDate(const QDate& date);
+    void setSubscriptionEndDate(const QDate& date);
+    QString getSubscriptionType() const;
+    QDate getSubscriptionStartDate() const;
+    QDate getSubscriptionEndDate() const;
+    int getDaysRemaining() const;
+    bool isSubscriptionActive() const;
+    
     int getId() const;
     QString getName() const;
     QString getPassword() const;
@@ -64,6 +79,9 @@ public:
         //Before class within 3 hours
 
     void removeClass(GymClass* gymClass);
+
+    // Make FileHandler a friend class to access private members
+    friend class FileHandler;
 };
 
 #endif // MEMBER_H

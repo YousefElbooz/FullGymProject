@@ -21,43 +21,59 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath, QMap<int, M
     Member* m = nullptr;
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
-        if (line.isEmpty() || line.startsWith("#")) {
+        if (line.isEmpty()) {
             m = nullptr;
             continue;
         }
-        if (line.startsWith("Class: ")) {
-            if (m) {
-                QString className = line.mid(QString("Class: ").length()).trimmed();
-                // Find the class by name in classesmap (now passed as parameter)
-                for (auto gc : classesmap) {
-                    if (gc->getName().compare(className, Qt::CaseInsensitive) == 0) {
-                        m->addClass(gc);
-                        break;
+
+        // Member line
+        if (!line.startsWith("Class: ")) {
+            QStringList parts = line.split(":");
+            if (parts.size() >= 9) {  // Changed from == 9 to >= 9 to handle optional subscription fields
+                int id = parts[0].toInt();
+                QString name = parts[1];
+                QString email = parts[2];
+                QString password = parts[3];
+                QString gender = parts[4];
+                bool isVip = (parts[5].toLower() == "true");
+                QString phone = parts[6];
+                QString address = parts[7];
+                int age = parts[8].toInt();
+                m = new Member(name, email, password, gender, isVip, phone, address, age);
+                
+                // Handle subscription data if available
+                if (parts.size() >= 12) {
+                    QString subscriptionType = parts[9];
+                    QDate startDate = QDate::fromString(parts[10], Qt::ISODate);
+                    QDate endDate = QDate::fromString(parts[11], Qt::ISODate);
+                    
+                    if (!subscriptionType.isEmpty() && startDate.isValid() && endDate.isValid()) {
+                        m->setSubscription(subscriptionType);
+                        m->subscriptionStartDate = startDate;
+                        m->subscriptionEndDate = endDate;
                     }
                 }
+                
+                members[id] = m;
             }
-            continue;
         }
-        // Member line
-        QStringList parts = line.split(":");
-        if (parts.size() == 9) {
-            int id = parts[0].toInt();
-            QString name = parts[1];
-            QString email = parts[2];
-            QString password = parts[3];
-            QString gender = parts[4];
-            bool isVip = (parts[5].toLower() == "true");
-            QString phone = parts[6];
-            QString address = parts[7];
-            int age = parts[8].toInt();
-            m = new Member(name, email,password, gender, isVip, phone, address, age);
-            members[id] = m;
+        // Class line
+        else if (m != nullptr) {  // Only process class if we have a valid member
+            QString className = line.mid(QString("Class: ").length()).trimmed();
+            // Find the class by name in classesmap
+            for (auto gc : classesmap) {
+                if (gc->getName().compare(className, Qt::CaseInsensitive) == 0) {
+                    m->addClass(gc);
+                    gc->addMember(m);  // Add member to class
+                    gc->setEnrolled(gc->getEnrolled() + 1);  // Update enrolled count
+                    break;
+                }
+            }
         }
     }
     file.close();
     return members;
 }
-
 
 QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff*>& staffMap) {
     QFile file(filePath);
@@ -72,7 +88,6 @@ QMap<int, Staff*> FileHandler::loadStaff(const QString& filePath,QMap<int, Staff
         if (line.isEmpty()) continue;
 
         QStringList parts = line.split(":");
-        // Expecting: id:name:email:password:age:address:phone:N/A:N/A:N/A:N/A:role
         if (parts.size() >= 8) {
             int id = parts[0].toInt();
             QString name = parts[1];
@@ -131,7 +146,17 @@ void FileHandler::saveMembers(const QString& filePath, const QMap<int, Member*>&
         Member* m = it.value();
         out << it.key() << ":" << m->getName() << ":" << m->getEmail()<<":"<< m->getPassword()
             << ":" << m->getGender() << ":" << (m->getIsVip() ? "true" : "false")
-            << ":" << m->getPhone() << ":" << m->getAddress() << ":" << m->getAge() << "\n";
+            << ":" << m->getPhone() << ":" << m->getAddress() << ":" << m->getAge();
+        
+        // Add subscription data if available
+        if (!m->getSubscriptionType().isEmpty() && m->getSubscriptionStartDate().isValid() && m->getSubscriptionEndDate().isValid()) {
+            out << ":" << m->getSubscriptionType()
+                << ":" << m->getSubscriptionStartDate().toString(Qt::ISODate)
+                << ":" << m->getSubscriptionEndDate().toString(Qt::ISODate);
+        }
+        
+        out << "\n";
+        
         // Write enrolled classes
         for (auto gc : m->getClasses()) {
             out << "Class: " << gc->getName() << "\n";
@@ -164,11 +189,17 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
             << s->getPhone() << ":"
             << role << "\n";
 
-        // For coaches, write their classes after the staff line
+        // For coaches, write their unique classes after the staff line
         if (role == "coach") {
             Coach* coach = dynamic_cast<Coach*>(s);
             if (!coach) continue;
+
+            // Use QSet to track unique class IDs
+            QSet<int> uniqueClassIds;
             for (GymClass* gymClass : coach->getClasses()) {
+                if (uniqueClassIds.contains(gymClass->getId())) continue;
+                uniqueClassIds.insert(gymClass->getId());
+
                 out << gymClass->getId() << "|"
                     << gymClass->getName() << "|"
                     << gymClass->getStatue() << "|"
@@ -209,7 +240,7 @@ void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*
     file.close();
 }
 
-QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses, const QMap<int, Member*>& members) {
+QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int, GymClass*>& gymClasses, const QMap<int, Member*>& members, const QMap<int, Staff*>& staffMap) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Failed to open gym classes file";
@@ -253,11 +284,26 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
         if (!ok) continue;
         QString coachPart = parts[6].trimmed();
         QString coachName = coachPart.startsWith("Coach: ") ? coachPart.mid(7) : "None";
+
         gc = new GymClass(name, status, capacity);
         gc->setId(id);
         gc->setTime(time);
         gc->setEnrolled(enrolled);
-        // Note: gc->setCoach() should be set if coach lookup is supported
+
+        // Find and set the coach if one exists
+        if (coachName != "None") {
+            for (auto staff : staffMap) {
+                if (staff->getName() == coachName && staff->getRole().toLower() == "coach") {
+                    Coach* coach = dynamic_cast<Coach*>(staff);
+                    if (coach) {
+                        gc->setCoach(coach);
+                        coach->addClass(gc);
+                        break;
+                    }
+                }
+            }
+        }
+
         gymClasses[id] = gc;
     }
     file.close();

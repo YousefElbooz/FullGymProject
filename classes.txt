@@ -3,7 +3,7 @@ Member: 2
 
 2,Spin,02:00 PM,Open,20,18,Coach: None
 
-3,HIIT,02:00 PM,Open,12,11,Coach: None
+3,HIIT,02:00 PM,Open,12,11,Coach: Alaa
 
 4,Pilates,02:00 PM,Open,10,8,Coach: None
 
@@ -18,7 +18,6 @@ Member: 2
 Member: 2
 
 9,Barre,02:00 PM,Open,10,3,Coach: None
-
 
 10,Powerlifting,02:00 PM,Open,6,3,Coach: None
 Member: 2

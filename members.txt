@@ -1,4 +1,4 @@
-1:Yosef:yoosefelbooz@gmail.com:01218972:male:false:20:Nasr City:20
+1:Yosef:yoosefelbooz@gmail.com:01218972:male:true:20:Nasr City:20:6m:2025-05-10:2027-02-10
 
 2:Alaa:Alaa@gmail.com:01218972:male:true:01218927:El7elmya:19
 Class: Yoga
