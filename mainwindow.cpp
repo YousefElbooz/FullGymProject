@@ -3,6 +3,13 @@
 #include "ui_mainwindow.h"
 #include "FileHandler.h"
 #include "animations.h"
+#include <QFileDialog>
+#include <QDir>
+#include <QCoreApplication>
+#include <QFileInfo>
+#include <QPainter>
+#include <QBitmap>
+#include <QPainterPath>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -989,6 +996,10 @@ MainWindow::MainWindow(QWidget *parent)
             ui->subBtn12m->setText("12 Month Plan\n$480.00\nSave $120");
         }
     });
+
+    // ---- PROFILE PAGE LOGIC ----
+    setupProfileConnections();
+    // Optionally, call displayProfilePage() when you want to show the profile page
 }
 
 MainWindow::~MainWindow() {
@@ -1519,4 +1530,171 @@ void MainWindow::updateSubscriptionInfo() {
         // Set color for inactive subscription
         ui->subscriptionStatusLabel->setStyleSheet("color: red; font-weight: bold;");
     }
+}
+
+// ---- PROFILE PAGE LOGIC IMPLEMENTATIONS ----
+
+void MainWindow::displayProfilePage() {
+    if (!currMember) return;
+    ui->labelName->setText(currMember->getName());
+    ui->labelUsername->setText("@" + currMember->getEmail().split("@").first());
+    // Load profile picture
+    QString picPath = currMember->getProfilePicturePath();
+    QString absPicPath = picPath;
+    if (!picPath.isEmpty() && !QFile::exists(picPath)) {
+        absPicPath = QCoreApplication::applicationDirPath() + "/" + picPath;
+    }
+    if (!picPath.isEmpty() && QFile::exists(absPicPath)) {
+        QPixmap pix(absPicPath);
+        int size = qMin(pix.width(), pix.height());
+        QPixmap scaled = pix.scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        QPixmap circular(100, 100);
+        circular.fill(Qt::transparent);
+        QPainter painter(&circular);
+        painter.setRenderHint(QPainter::Antialiasing);
+        QPainterPath path;
+        path.addEllipse(0, 0, 100, 100);
+        painter.setClipPath(path);
+        painter.drawPixmap(0, 0, scaled);
+        // Draw border
+        QPen pen(QColor("#c68f3b"), 4);
+        painter.setPen(pen);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawEllipse(2, 2, 96, 96);
+        painter.end();
+        ui->labelProfilePic->setPixmap(circular);
+    } else {
+        ui->labelProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+    ui->stackedWidgetProfile->setCurrentWidget(ui->profileViewPage);
+}
+
+void MainWindow::onEditProfileClicked() {
+    if (!currMember) return;
+    ui->editName->setText(currMember->getName());
+    ui->editEmail->setText(currMember->getEmail());
+    ui->editUsername->setText("@" + currMember->getEmail().split("@").first());
+    ui->editPassword->setText(currMember->getPassword());
+    ui->editPhone->setText(currMember->getPhone());
+    // Load profile picture in edit mode
+    QString picPath = currMember->getProfilePicturePath();
+    if (!picPath.isEmpty() && QFile::exists(picPath)) {
+        QPixmap pix(picPath);
+        ui->labelEditProfilePic->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    } else {
+        ui->labelEditProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+    ui->stackedWidgetProfile->setCurrentWidget(ui->editProfilePage);
+}
+
+void MainWindow::onSaveProfileClicked() {
+    if (!currMember) return;
+    QString name = ui->editName->text().trimmed();
+    QString email = ui->editEmail->text().trimmed();
+    QString password = ui->editPassword->text();
+    QString phone = ui->editPhone->text().trimmed();
+    if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Validation Error", "Name, email, and password cannot be empty.");
+        return;
+    }
+    currMember->setName(name);
+    currMember->setEmail(email);
+    currMember->setPhone(phone);
+    currMember->getPassword() = password; // If password is public, else add a setter
+    // Save profile picture path if changed (already set by file dialog)
+    FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
+    displayProfilePage();
+}
+
+void MainWindow::onCancelEditClicked() {
+    displayProfilePage();
+}
+
+void MainWindow::onTogglePasswordClicked() {
+    if (ui->editPassword->echoMode() == QLineEdit::Password)
+        ui->editPassword->setEchoMode(QLineEdit::Normal);
+    else
+        ui->editPassword->setEchoMode(QLineEdit::Password);
+}
+
+void MainWindow::onLogoutClicked() {
+    currMember = nullptr;
+    QMessageBox::information(this, "Logout", "You have been logged out.");
+    // Example: ui->FullWiedgit->setCurrentIndex(0); // Go to login
+}
+
+// Add this slot to handle profile picture change in edit mode
+void MainWindow::onEditProfilePicClicked() {
+    if (!currMember) return;
+    QString fileName = QFileDialog::getOpenFileName(this, "Select Profile Picture", "", "Images (*.png *.jpg *.jpeg *.bmp)");
+    if (!fileName.isEmpty()) {
+        // Ensure profile_pics directory exists
+        QDir dir(QCoreApplication::applicationDirPath() + "/profile_pics");
+        if (!dir.exists()) dir.mkpath(".");
+        // Copy the file to profile_pics with a unique name (e.g., memberID + extension)
+        QFileInfo fi(fileName);
+        QString ext = fi.suffix();
+        QString newFileName = QString("profile_pics/member_%1.%2").arg(currMember->getId()).arg(ext);
+        QString absNewFileName = QCoreApplication::applicationDirPath() + "/" + newFileName;
+        QFile::remove(absNewFileName); // Remove old if exists
+        QFile::copy(fileName, absNewFileName);
+        currMember->setProfilePicturePath(newFileName); // Save relative path
+
+        // Load and process the image
+        QPixmap pix(absNewFileName);
+        int size = qMin(pix.width(), pix.height());
+        QPixmap scaled = pix.scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        QPixmap circular(100, 100);
+        circular.fill(Qt::transparent);
+        QPainter painter(&circular);
+        painter.setRenderHint(QPainter::Antialiasing);
+        QPainterPath path;
+        path.addEllipse(0, 0, 100, 100);
+        painter.setClipPath(path);
+        painter.drawPixmap(0, 0, scaled);
+        // Draw border
+        QPen pen(QColor("#c68f3b"), 4);
+        painter.setPen(pen);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawEllipse(2, 2, 96, 96);
+        painter.end();
+        ui->labelEditProfilePic->setPixmap(circular);
+        FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
+    }
+}
+
+// --- Profile menu button stubs ---
+void MainWindow::onFavouritesClicked() { QMessageBox::information(this, "Favourites", "Show user's favourites."); }
+void MainWindow::onDownloadsClicked() { QMessageBox::information(this, "Downloads", "Show user's downloads."); }
+void MainWindow::onLanguageClicked() { QMessageBox::information(this, "Language", "Show language selection dialog."); }
+void MainWindow::onLocationClicked() { QMessageBox::information(this, "Location", "Show location settings."); }
+void MainWindow::onSubscriptionClicked() { QMessageBox::information(this, "Subscription", "Show subscription info."); }
+void MainWindow::onClearCacheClicked() { QMessageBox::information(this, "Clear Cache", "Cache cleared."); }
+void MainWindow::onClearHistoryClicked() { QMessageBox::information(this, "Clear History", "History cleared."); }
+
+void MainWindow::setupProfileConnections() {
+    connect(ui->btnEditProfile, &QPushButton::clicked, this, &MainWindow::onEditProfileClicked);
+    connect(ui->btnSaveProfile, &QPushButton::clicked, this, &MainWindow::onSaveProfileClicked);
+    connect(ui->btnCancelEdit, &QPushButton::clicked, this, &MainWindow::onCancelEditClicked);
+    connect(ui->btnTogglePassword, &QToolButton::clicked, this, &MainWindow::onTogglePasswordClicked);
+    connect(ui->btnLogout, &QPushButton::clicked, this, &MainWindow::onLogoutClicked);
+    connect(ui->btnFavourites, &QPushButton::clicked, this, &MainWindow::onFavouritesClicked);
+    connect(ui->btnDownloads, &QPushButton::clicked, this, &MainWindow::onDownloadsClicked);
+    connect(ui->btnLanguage, &QPushButton::clicked, this, &MainWindow::onLanguageClicked);
+    connect(ui->btnLocation, &QPushButton::clicked, this, &MainWindow::onLocationClicked);
+    connect(ui->btnSubscription, &QPushButton::clicked, this, &MainWindow::onSubscriptionClicked);
+    connect(ui->btnClearCache, &QPushButton::clicked, this, &MainWindow::onClearCacheClicked);
+    connect(ui->btnClearHistory, &QPushButton::clicked, this, &MainWindow::onClearHistoryClicked);
+    // Profile picture click in edit mode
+    ui->labelEditProfilePic->installEventFilter(this);
+    connect(ui->btnChangeProfilePic, &QPushButton::clicked, this, &MainWindow::onEditProfilePicClicked);
+}
+
+// Event filter to handle profile pic click
+bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
+    if (obj == ui->labelEditProfilePic && event->type() == QEvent::MouseButtonRelease) {
+        onEditProfilePicClicked();
+        return true;
+    }
+    return QMainWindow::eventFilter(obj, event);
 }

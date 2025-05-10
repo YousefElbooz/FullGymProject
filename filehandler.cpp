@@ -54,6 +54,13 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath, QMap<int, M
                     }
                 }
                 
+                // Load profile picture path if present
+                if (parts.size() >= 13) {
+                    m->setProfilePicturePath(parts[12]);
+                } else {
+                    m->setProfilePicturePath("");
+                }
+                
                 members[id] = m;
             }
         }
@@ -154,6 +161,9 @@ void FileHandler::saveMembers(const QString& filePath, const QMap<int, Member*>&
                 << ":" << m->getSubscriptionStartDate().toString(Qt::ISODate)
                 << ":" << m->getSubscriptionEndDate().toString(Qt::ISODate);
         }
+        
+        // Always add profile picture path (even if empty)
+        out << ":" << m->getProfilePicturePath();
         
         out << "\n";
         

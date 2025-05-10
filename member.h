@@ -29,6 +29,7 @@ private:
     QString subscriptionType; // "1m", "3m", "6m", "12m" or empty for non-subscribed
     QDate subscriptionStartDate;
     QDate subscriptionEndDate;
+    QString profilePicturePath; // Path to profile picture
 
 public:
     Member();  // Default constructor
@@ -39,7 +40,7 @@ public:
     void setEmail(const QString& newEmail);
     void setGender(const QString& newGender);
     void setIsVip(bool vipStatus);
-    void setPhone(const QString& phone);
+    void setPhone (const QString& newPhone);
     void setAddress(const QString& address);
     void setAge(int age);
     void setWorkouts(const QStack<QString>& workout);
@@ -82,6 +83,9 @@ public:
 
     // Make FileHandler a friend class to access private members
     friend class FileHandler;
+
+    void setProfilePicturePath(const QString& path) { profilePicturePath = path; }
+    QString getProfilePicturePath() const { return profilePicturePath; }
 };
 
 #endif // MEMBER_H

@@ -43,6 +43,23 @@ private slots:
     void addClass();
     void removeClass();
     void updateClassesTable();
+    void displayProfilePage();
+    void onEditProfileClicked();
+    void onSaveProfileClicked();
+    void onCancelEditClicked();
+    void onTogglePasswordClicked();
+    void onLogoutClicked();
+    void setupProfileConnections();
+    void onEditProfilePicClicked();
+    void onFavouritesClicked();
+    void onDownloadsClicked();
+    void onLanguageClicked();
+    void onLocationClicked();
+    void onSubscriptionClicked();
+    void onClearCacheClicked();
+    void onClearHistoryClicked();
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 private:
     QMap<int, Member*> members;

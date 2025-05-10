@@ -4,15 +4,16 @@
 // Initialize static member
 int Member::lastId = 0;
 
-Member::Member() : id(0), isVip(false), age(0) {}
+Member::Member() : id(0), isVip(false), age(0), profilePicturePath("") {}
 
 Member::Member(const QString& name, const QString& email, const QString &password, const QString& gender, bool isVip, const QString& phone, const QString& address, int age)
-    : id(++lastId),name(name), email(email),password(password), gender(gender), isVip(isVip), phone(phone), address(address), age(age) {}
+    : id(++lastId),name(name), email(email),password(password), gender(gender), isVip(isVip), phone(phone), address(address), age(age), profilePicturePath("") {}
 
 void Member::setName(const QString& newName) {name = newName;}
 void Member::addClass(GymClass* gymClass) {classes.push_back(gymClass);}
 void Member::setEmail(const QString& newEmail) {email = newEmail;}
 void Member::setGender(const QString& newGender) {gender = newGender;}
+void Member::setPhone (const QString& newPhone) {phone = newPhone;}
 void Member::setIsVip(bool vipStatus) {isVip = vipStatus;}
 int Member::getId() const {return id;}
 QString Member::getName() const {return name;}
