@@ -15,6 +15,7 @@
 #include <QParallelAnimationGroup>
 #include <QStackedWidget>
 #include <QWidget>
+#include <QLineEdit>
 #include "member.h"
 #include "manger.h"
 #include "staff.h"
@@ -30,6 +31,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 private:
     void setPixmapForWidgets();
+    void updateTrainerCount();
+    void updateCapacity();
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -41,6 +44,8 @@ private slots:
     void addClass();
     void removeClass();
     void updateClassesTable();
+    void viewWaitlist();
+    void toggleScheduleWaitlist();
 
 private:
     QMap<int, Member*> members;
@@ -49,5 +54,7 @@ private:
     Member* currMember;
     Staff * currStaff;
     Ui::MainWindow *ui;
+    QLineEdit* lineEditWaitlistClassId;
+    bool showingWaitlist = false;
 };
 #endif // MAINWINDOW_H

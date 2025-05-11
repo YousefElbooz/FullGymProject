@@ -1,5 +1,18 @@
-1,Yoga,02:00 AM,Open,10,1,Coach: Elbooz
-Member: 7
+1,Yoga,02:00 AM,Open,10,1,Coach: Alaa El Gamed
+Member: 11
 
-2,Boxing,03:00 AM,Open,20,0,Coach: Medo
+2,Zumba,03:00 AM,Open,15,1,Coach: Elbooz
+Member: 11
+
+4,KickBoxing,07:15 AM,Open,30,3,Coach: Alaa El Gamed
+Member: 2
+Member: 3
+Member: 11
+
+5,swimming,05:00 PM,Close,1,1,Coach: Ahmed
+Member: 9
+NormalWaitlist:6,
+
+6,Belly Dance,08:00 AM,Open,1,0,Coach: Sakira
+Member: 11
 

@@ -3,7 +3,7 @@
 #include "ui_mainwindow.h"
 #include "FileHandler.h"
 #include "animations.h"
-
+        
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -26,13 +26,10 @@ MainWindow::MainWindow(QWidget *parent)
     FileHandler::loadMembers("G:/cs_project/FullGymProject/members.txt", members, classesmap);
     ui->label_36->setText(QString::number(members.size()));
     FileHandler::loadStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
+    updateTrainerCount();
     FileHandler::loadClasses("G:/cs_project/FullGymProject/classes.txt", classesmap, members, staffMap);
     ui->label_38->setText(QString::number(classesmap.size()));
-    // int totalCapacity = 0;
-    // for (const auto& gc : classesmap) {
-    //     totalCapacity += gc->getCapacity();
-    // }
-    // ui->label_40->setText(QString::number(totalCapacity));
+    updateCapacity();
     // Move updateEnrolledClassesTable here so it is in scope for all later code
     auto updateEnrolledClassesTable = [=]() {
         ui->tableWidget_3->clearContents();
@@ -165,9 +162,10 @@ MainWindow::MainWindow(QWidget *parent)
         }else{
             gender = "female";
         }
-        Member * m = new Member(username,email,password,gender,false,phone,address,ageStr.toInt());
+        bool isVip = ui->Vip_5->isChecked(); // true if VIP, false if Normal
+        Member * m = new Member(username, email, password, gender, isVip, phone, address, ageStr.toInt());
         currMember = m;
-        members[m->getId()]=m;
+        members[m->getId()] = m;
         QMessageBox::information(this, "Success", "Sign-up completed successfully.");
     });
 
@@ -340,20 +338,26 @@ MainWindow::MainWindow(QWidget *parent)
             return;
         }
 
-        if (selectedClass->getEnrolled() >= selectedClass->getCapacity()) {
-            QMessageBox::warning(this, "Cannot Enroll", "Class is full.");
-            return;
-        }
         if (currMember->getClasses().contains(selectedClass)) {
             QMessageBox::warning(this, "Cannot Enroll", "You are already enrolled in this class.");
             return;
         }
 
+        // Try to add member to class (this will handle waitlist if class is full)
         selectedClass->addMember(currMember);
-        selectedClass->setEnrolled(selectedClass->getEnrolled() + 1);
-        updateEnrolledClassesTable();
-        QMessageBox::information(this, "Success", "Successfully enrolled in " + selectedClass->getName());
+        
+        // Check if member was added to waitlist
+        if (!currMember->getClasses().contains(selectedClass)) {
+            QString message = QString("The class is currently full. You have been added to the waitlist. %1")
+                .arg(currMember->getIsVip() ? "As a VIP member, you will be prioritized." : "");
+            QMessageBox::information(this, "Added to Waitlist", message);
+        } else {
+            QMessageBox::information(this, "Success", "Successfully enrolled in " + selectedClass->getName());
+        }
 
+        updateClassesTable();
+        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        updateEnrolledClassesTable();
         ui->lineEditClassNameRequest->clear();
     });
 
@@ -456,11 +460,16 @@ MainWindow::MainWindow(QWidget *parent)
         foundClass->removeMember(currMember);
         // Update enrolled count
         foundClass->setEnrolled(foundClass->getEnrolled() - 1);
+        // Update class status if not full
+        if (foundClass->getEnrolled() < foundClass->getCapacity()) {
+            foundClass->setStatue("Open");
+        }
         // Save changes
-        FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
-        FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
+        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
         // Update UI
         updateEnrolledClassesTable();
+        updateClassesTable();
         ui->tableWidget_5->clearContents();
         ui->tableWidget_5->setRowCount(0);
         for (const auto& gc : currMember->getClasses()) {
@@ -566,6 +575,7 @@ MainWindow::MainWindow(QWidget *parent)
             if (s) {
                 staffMap[newId] = s;
                 QMessageBox::information(this, "Success", "Staff added successfully.");
+                updateTrainerCount();
             } else {
                 QMessageBox::warning(this, "Role Error", "Unknown staff role.");
             }
@@ -692,8 +702,8 @@ MainWindow::MainWindow(QWidget *parent)
         gymClass->setCoach(coach);
 
         // Save changes
-        FileHandler::saveStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
-        FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
+        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
 
         QMessageBox::information(this, "Success", "Class assigned successfully!");
     });
@@ -753,6 +763,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Initial population of members table
     updateMembersTable();
+
+    connect(ui->viewWaitlistBtn, &QPushButton::clicked, this, &MainWindow::viewWaitlist);
+
+    // Connect toggleScheduleWaitlist button
+    connect(ui->toggleScheduleWaitlistBtn, &QPushButton::clicked, this, &MainWindow::toggleScheduleWaitlist);
 }
 
 MainWindow::~MainWindow() {
@@ -929,11 +944,10 @@ void MainWindow::setPixmapForWidgets() {
 
 void MainWindow::addClass() {
     QString className = ui->ClassName_3->text().trimmed();
-    QString ClassID = ui->ClassID_30->text().trimmed();
     QString capacityStr = ui->Class_capacity_31->text().trimmed();
     QString ClassTime = ui->Class_Time_32->text().trimmed();
 
-    if (className.isEmpty() || ClassID.isEmpty() || capacityStr.isEmpty() || ClassTime.isEmpty()) {
+    if (className.isEmpty() || capacityStr.isEmpty() || ClassTime.isEmpty()) {
         QMessageBox::warning(this, "Input Error", "Please fill in all fields.");
         return;
     }
@@ -952,29 +966,29 @@ void MainWindow::addClass() {
         return;
     }
 
-    if (classesmap.contains(ClassID.toInt())) {
-        QMessageBox::warning(this, "Duplicate ID", "A class with this ID already exists.");
-        return;
+    // Generate a new unique class ID
+    int newClassId = 1;
+    if (!classesmap.isEmpty()) {
+        newClassId = classesmap.keys().last() + 1;
     }
 
     // Create new class with "Open" status
     GymClass* newClass = new GymClass(className, "Open", capacity);
-    newClass->setId(ClassID.toInt());
+    newClass->setId(newClassId);
     newClass->setTime(time);
     newClass->setEnrolled(0); // Initialize enrolled count to 0
     
-    classesmap[ClassID.toInt()] = newClass;
+    classesmap[newClassId] = newClass;
 
     // Update the classes table
     updateClassesTable();
 
     // Save to file
-    FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+    // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
 
     QMessageBox::information(this, "Success", "Class added successfully!");
     
     ui->ClassName_3->clear();
-    ui->ClassID_30->clear();
     ui->Class_capacity_31->clear();
     ui->Class_Time_32->clear();
 }
@@ -995,7 +1009,7 @@ void MainWindow::removeClass() {
     GymClass* classToRemove = classesmap[ClassID.toInt()];
     classesmap.remove(ClassID.toInt());
 
-    FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+    // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
 
     QMessageBox::information(this, "Success", "Class removed successfully!");
 
@@ -1152,11 +1166,12 @@ void MainWindow::addMember() {
 
     // Create new member
     int newId = members.size() + 1;
-    Member* newMember = new Member(name, email, password, gender, false, phone, address, age);
+    bool isVip = ui->Vip_4->isChecked(); // true if VIP, false if Normal
+    Member* newMember = new Member(name, email, password, gender, isVip, phone, address, age);
     members[newId] = newMember;
 
     // Save to file
-    FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
+    // FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
 
     // Update the members table
     updateMembersTable();
@@ -1215,8 +1230,8 @@ void MainWindow::removeMember() {
         members.remove(memberIdToRemove);
 
         // Save changes to files
-        FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
-        FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
+        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
 
         // Update the members table
         updateMembersTable();
@@ -1235,3 +1250,117 @@ void MainWindow::removeMember() {
     }
 }
 
+void MainWindow::updateTrainerCount() {
+    int totalCoaches = 0;
+    for (auto stf : staffMap) {
+        if (stf->getRole().toLower() == "coach") {
+            totalCoaches++;
+        }
+    }
+    ui->label_40->setText(QString::number(totalCoaches));
+}
+
+void MainWindow::updateCapacity() {
+        int totalCapacity = 0;
+    for (const auto& gc : classesmap) {
+        totalCapacity += gc->getCapacity(); 
+    }
+    ui->label_39->setText(QString::number(totalCapacity));
+}
+
+void MainWindow::viewWaitlist()
+{
+    // Get the class ID from the line edit
+    QString classIdStr = ui->lineEditWaitlistClassId->text().trimmed();
+    bool ok;
+    int classId = classIdStr.toInt(&ok);
+    
+    if (!ok) {
+        QMessageBox::warning(this, "Invalid Input", "Please enter a valid class ID.");
+        return;
+    }
+    
+    // Find the class in the classes map
+    if (!classesmap.contains(classId)) {
+        QMessageBox::warning(this, "Not Found", "Class with ID " + classIdStr + " not found.");
+        return;
+    }
+    
+    GymClass* gymClass = classesmap[classId];
+    
+    // Use the class schedule table (ui->tableWidget_2) to show the waitlist
+    QTableWidget* waitlistTable = ui->tableWidget_2;
+    waitlistTable->clearContents();
+    waitlistTable->setRowCount(0);
+    waitlistTable->setColumnCount(4);
+    waitlistTable->setHorizontalHeaderLabels(QStringList() 
+        << "Name" << "Email" << "Phone" << "VIP Status");
+    
+    // Add VIP members first
+    for (Member* member : gymClass->getVIPList()) {
+        int row = waitlistTable->rowCount();
+        waitlistTable->insertRow(row);
+        waitlistTable->setItem(row, 0, new QTableWidgetItem(member->getName()));
+        waitlistTable->setItem(row, 1, new QTableWidgetItem(member->getEmail()));
+        waitlistTable->setItem(row, 2, new QTableWidgetItem(member->getPhone()));
+        waitlistTable->setItem(row, 3, new QTableWidgetItem("Yes"));
+    }
+    
+    // Then add normal members
+    for (Member* member : gymClass->getNormalList()) {
+        int row = waitlistTable->rowCount();
+        waitlistTable->insertRow(row);
+        waitlistTable->setItem(row, 0, new QTableWidgetItem(member->getName()));
+        waitlistTable->setItem(row, 1, new QTableWidgetItem(member->getEmail()));
+        waitlistTable->setItem(row, 2, new QTableWidgetItem(member->getPhone()));
+        waitlistTable->setItem(row, 3, new QTableWidgetItem("No"));
+    }
+    
+    // Set table properties
+    waitlistTable->setAlternatingRowColors(true);
+    waitlistTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    waitlistTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    waitlistTable->setSortingEnabled(true);
+    
+    // Set column widths
+    waitlistTable->setColumnWidth(0, 200);  // Name
+    waitlistTable->setColumnWidth(1, 200);  // Email
+    waitlistTable->setColumnWidth(2, 150);  // Phone
+    waitlistTable->setColumnWidth(3, 100);  // VIP Status
+    
+    // Apply stylesheet
+    waitlistTable->setStyleSheet(R"(
+        QTableWidget {
+            background-color: rgb(55, 91, 106);
+            font: 11pt "Yeasty Flavors";
+            color: rgb(249, 234, 205);
+            border-radius: 15px;
+            gridline-color: rgb(249, 234, 205);
+        }
+        QHeaderView::section {
+            background-color: rgb(55, 91, 106);
+            color: rgb(249, 234, 205);
+            font: bold 12pt "Yeasty Flavors";
+            border: none;
+            padding: 6px;
+        }
+        QTableWidget::item {
+            selection-background-color: rgb(198, 143, 59);
+            selection-color: black;
+        }
+    )");
+}
+
+void MainWindow::toggleScheduleWaitlist() {
+    if (!showingWaitlist) {
+        // Show waitlist
+        viewWaitlist();
+        ui->toggleScheduleWaitlistBtn->setText("Show Schedule");
+        showingWaitlist = true;
+    } else {
+        // Show class schedule
+        updateClassesTable();
+        ui->toggleScheduleWaitlistBtn->setText("Show Waitlist");
+        showingWaitlist = false;
+    }
+}

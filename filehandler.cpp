@@ -208,10 +208,15 @@ void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*
             << gymClass->getCapacity() << ","
             << gymClass->getEnrolled() << ","
             << "Coach: " << coachName << "\n";
+        
         // Write enrolled members by ID
         for (auto member : gymClass->getMembers()) {
             out << "Member: " << member->getId() << "\n";
         }
+        
+        // Write waitlist data
+        saveQueueData(out, gymClass->getNormalList(), gymClass->getVIPList());
+        
         out << "\n"; // Blank line after each class
     }
     file.close();
@@ -232,6 +237,8 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
             gc = nullptr;
             continue;
         }
+        
+        // Handle member enrollment
         if (line.startsWith("Member: ")) {
             if (gc) {
                 QString memberIdStr = line.mid(QString("Member: ").length()).trimmed();
@@ -243,12 +250,41 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
             }
             continue;
         }
+        
+        // Handle VIP waitlist by IDs
+        if (line.startsWith("VIPWaitlist:")) {
+            if (gc) {
+                QStringList ids = line.mid(QString("VIPWaitlist:").length()).split(",", Qt::SkipEmptyParts);
+                for (const QString& idStr : ids) {
+                    int id = idStr.toInt();
+                    if (members.contains(id)) {
+                        gc->getVIPList().enqueue(members[id]);
+                    }
+                }
+            }
+            continue;
+        }
+        // Handle Normal waitlist by IDs
+        if (line.startsWith("NormalWaitlist:")) {
+            if (gc) {
+                QStringList ids = line.mid(QString("NormalWaitlist:").length()).split(",", Qt::SkipEmptyParts);
+                for (const QString& idStr : ids) {
+                    int id = idStr.toInt();
+                    if (members.contains(id)) {
+                        gc->getNormalList().enqueue(members[id]);
+                    }
+                }
+            }
+            continue;
+        }
+        
         // Class line
         QStringList parts = line.split(",");
         if (parts.size() < 7) {
             qWarning() << "Malformed class line: " << line;
             continue;
         }
+        
         bool ok = false;
         int id = parts[0].toInt(&ok);
         if (!ok) continue;
@@ -285,4 +321,21 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
     }
     file.close();
     return gymClasses;
+}
+
+void FileHandler::saveQueueData(QTextStream &out, const QQueue<Member*>& normalList, const QQueue<Member*>& VIPList) {
+    if (!VIPList.isEmpty()) {
+        out << "VIPWaitlist:";
+        for (const Member* member : VIPList) {
+            out << member->getId() << ",";
+        }
+        out << "\n";
+    }
+    if (!normalList.isEmpty()) {
+        out << "NormalWaitlist:";
+        for (const Member* member : normalList) {
+            out << member->getId() << ",";
+        }
+        out << "\n";
+    }
 }
