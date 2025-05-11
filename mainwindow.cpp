@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     animations->setUI(ui->LoginPageStackedWidget, ui->label, ui->Exit);
     Animations* pageAnimator = new Animations(this);
     pageAnimator->setUI(ui->FullWiedgit, ui->label, ui->Exit);
-    ui->FullWiedgit->setCurrentIndex(1);
+    ui->FullWiedgit->setCurrentIndex(0);
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
@@ -55,19 +55,19 @@ MainWindow::MainWindow(QWidget *parent)
         ui->tableWidget_3->setColumnCount(6);
         ui->tableWidget_3->setHorizontalHeaderLabels(QStringList()
                                                      << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
-
         for (const auto& gc : currMember->getClasses()) {
             int row = ui->tableWidget_3->rowCount();
             ui->tableWidget_3->insertRow(row);
-
             ui->tableWidget_3->setItem(row, 0, new QTableWidgetItem(QString::number(gc->getId())));
             ui->tableWidget_3->setItem(row, 1, new QTableWidgetItem(gc->getName()));
             ui->tableWidget_3->setItem(row, 2, new QTableWidgetItem(gc->getTime().toString("hh:mm AP")));
             QString coachName = gc->getCoach() ? gc->getCoach()->getName() : "Unknown";
             ui->tableWidget_3->setItem(row, 3, new QTableWidgetItem(coachName));
             ui->tableWidget_3->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
-            ui->tableWidget_3->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
+            ui->tableWidget_3->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity())));
         }
+        // Enable sorting
+        ui->tableWidget_3->setSortingEnabled(true);
     };
 
     connect(ui->loginbtn, &QPushButton::clicked, this, [=] {
@@ -168,7 +168,6 @@ MainWindow::MainWindow(QWidget *parent)
         if (confirm == QMessageBox::Yes) {
             currMember->setSubscription("1m");
             currMember->setIsVip(isVip);
-            FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
             updateSubscriptionInfo();
             
             QString successMessage;
@@ -220,7 +219,6 @@ MainWindow::MainWindow(QWidget *parent)
         if (confirm == QMessageBox::Yes) {
             currMember->setSubscription("3m");
             currMember->setIsVip(isVip);
-            FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
             updateSubscriptionInfo();
             
             QString successMessage;
@@ -272,7 +270,6 @@ MainWindow::MainWindow(QWidget *parent)
         if (confirm == QMessageBox::Yes) {
             currMember->setSubscription("6m");
             currMember->setIsVip(isVip);
-            FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
             updateSubscriptionInfo();
             
             QString successMessage;
@@ -324,7 +321,6 @@ MainWindow::MainWindow(QWidget *parent)
         if (confirm == QMessageBox::Yes) {
             currMember->setSubscription("12m");
             currMember->setIsVip(isVip);
-            FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
             updateSubscriptionInfo();
             
             QString successMessage;
@@ -468,23 +464,24 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-    connect(ui->SortEnrolledClassesBtn,&QPushButton::clicked,this,[=]{
+    // Sort/filter enrolled classes
+    connect(ui->SortEnrolledClassesBtn, &QPushButton::clicked, this, [=]() {
         QStringList filters = {
-            ui->lineEdit_6->text().trimmed(),
-            ui->lineEdit_7->text().trimmed(),
-            ui->lineEdit_8->text().trimmed(),
-            ui->lineEdit_9->text().trimmed(),
-            ui->lineEdit_10->text().trimmed()
+            ui->lineEdit_6->text().trimmed(), // ID
+            ui->lineEdit_7->text().trimmed(), // Name
+            ui->lineEdit_8->text().trimmed(), // Time
+            ui->lineEdit_9->text().trimmed(), // Trainer
+            ui->lineEdit_10->text().trimmed() // Status
         };
-
-        ui->tableWidget_2->clearContents();
-        ui->tableWidget_2->setRowCount(0);
-
+        ui->tableWidget_3->clearContents();
+        ui->tableWidget_3->setRowCount(0);
+        ui->tableWidget_3->setColumnCount(6);
+        ui->tableWidget_3->setHorizontalHeaderLabels(QStringList()
+                                                     << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
         auto match = [](const QString& filter, const QString& value) {
             return filter.isEmpty() || filter.compare("any", Qt::CaseInsensitive) == 0 || filter == value;
         };
-
-        for (auto cls : classesmap) {
+        for (auto cls : currMember->getClasses()) {
             QStringList classData = {
                 QString::number(cls->getId()),                   // 0 - ID
                 cls->getName(),                                  // 1 - Class Name
@@ -493,23 +490,23 @@ MainWindow::MainWindow(QWidget *parent)
                 cls->getStatue(),                                // 4 - Status
                 QString::number(cls->getCapacity())              // 5 - Capacity
             };
-
             bool matched = true;
             for (int i = 0; i < filters.size(); ++i) {
-                if (!match(filters[i], classData[i + 1])) { // skip ID column
+                if (!match(filters[i], classData[i])) {
                     matched = false;
                     break;
                 }
             }
-
             if (matched) {
-                int row = ui->tableWidget_2->rowCount();
-                ui->tableWidget_2->insertRow(row);
+                int row = ui->tableWidget_3->rowCount();
+                ui->tableWidget_3->insertRow(row);
                 for (int col = 0; col < 6; ++col) {
-                    ui->tableWidget_2->setItem(row, col, new QTableWidgetItem(classData[col]));
+                    ui->tableWidget_3->setItem(row, col, new QTableWidgetItem(classData[col]));
                 }
             }
         }
+        // Enable sorting
+        ui->tableWidget_3->setSortingEnabled(true);
     });
 
     // Variable to store the selected class ID
@@ -683,9 +680,6 @@ MainWindow::MainWindow(QWidget *parent)
         foundClass->removeMember(currMember);
         // Update enrolled count
         foundClass->setEnrolled(foundClass->getEnrolled() - 1);
-        // Save changes
-        FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
-        FileHandler::saveClasses("C:/Users/Yousef/Downloads/FullGymProject/classes.txt", classesmap);
         // Update UI
         updateEnrolledClassesTable();
         ui->tableWidget_5->clearContents();
@@ -918,9 +912,6 @@ MainWindow::MainWindow(QWidget *parent)
         coach->addClass(gymClass);
         gymClass->setCoach(coach);
 
-        // Save changes
-        FileHandler::saveStaff("C:/Users/Yousef/Downloads/FullGymProject/staffs.txt", staffMap);
-        FileHandler::saveClasses("C:/Users/Yousef/Downloads/FullGymProject/classes.txt", classesmap);
 
         QMessageBox::information(this, "Success", "Class assigned successfully!");
     });
@@ -998,8 +989,217 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     // ---- PROFILE PAGE LOGIC ----
-    setupProfileConnections();
-    // Optionally, call displayProfilePage() when you want to show the profile page
+    // PROFILE PAGE CONNECTIONS (all as lambdas)
+    // Helper: displayProfilePage logic as a lambda (can be reused)
+    auto displayProfilePage = [=]() {
+        if (!currMember) return;
+        ui->labelName->setText(currMember->getName());
+        ui->labelUsername->setText("@" + currMember->getEmail().split("@").first());
+        // Load profile picture
+        QString picPath = currMember->getProfilePicturePath();
+        QString absPicPath = picPath;
+        if (!picPath.isEmpty() && !QFile::exists(picPath)) {
+            absPicPath = QCoreApplication::applicationDirPath() + "/" + picPath;
+        }
+        if (!picPath.isEmpty() && QFile::exists(absPicPath)) {
+            QPixmap pix(absPicPath);
+            int size = qMin(pix.width(), pix.height());
+            QPixmap scaled = pix.scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+            QPixmap circular(100, 100);
+            circular.fill(Qt::transparent);
+            QPainter painter(&circular);
+            painter.setRenderHint(QPainter::Antialiasing);
+            QPainterPath path;
+            path.addEllipse(0, 0, 100, 100);
+            painter.setClipPath(path);
+            painter.drawPixmap(0, 0, scaled);
+            // Draw border
+            QPen pen(QColor("#c68f3b"), 4);
+            painter.setPen(pen);
+            painter.setBrush(Qt::NoBrush);
+            painter.drawEllipse(2, 2, 96, 96);
+            painter.end();
+            ui->labelProfilePic->setPixmap(circular);
+        } else {
+            ui->labelProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        }
+        ui->stackedWidgetProfile->setCurrentWidget(ui->profileViewPage);
+    };
+
+    connect(ui->btnEditProfile, &QPushButton::clicked, this, [=] {
+        if (!currMember) return;
+        ui->editName->setText(currMember->getName());
+        ui->editEmail->setText(currMember->getEmail());
+        ui->editUsername->setText("@" + currMember->getEmail().split("@").first());
+        ui->editPassword->setText(currMember->getPassword());
+        ui->editPhone->setText(currMember->getPhone());
+        // Load profile picture in edit mode
+        QString picPath = currMember->getProfilePicturePath();
+        QString absPicPath = picPath;
+        if (!picPath.isEmpty() && !QFile::exists(picPath)) {
+            absPicPath = QCoreApplication::applicationDirPath() + "/" + picPath;
+        }
+        if (!picPath.isEmpty() && QFile::exists(absPicPath)) {
+            QPixmap pix(absPicPath);
+            ui->labelEditProfilePic->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        } else {
+            ui->labelEditProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        }
+        ui->stackedWidgetProfile->setCurrentWidget(ui->editProfilePage);
+    });
+
+    connect(ui->btnSaveProfile, &QPushButton::clicked, this, [=] {
+        if (!currMember) return;
+        QString name = ui->editName->text().trimmed();
+        QString email = ui->editEmail->text().trimmed();
+        QString password = ui->editPassword->text();
+        QString phone = ui->editPhone->text().trimmed();
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            QMessageBox::warning(this, "Validation Error", "Name, email, and password cannot be empty.");
+            return;
+        }
+        currMember->setName(name);
+        currMember->setEmail(email);
+        currMember->setPhone(phone);
+        currMember->getPassword() = password; // If password is public, else add a setter
+        displayProfilePage();
+    });
+
+    connect(ui->btnCancelEdit, &QPushButton::clicked, this, [=] {
+        displayProfilePage();
+    });
+
+    connect(ui->btnTogglePassword, &QToolButton::clicked, this, [=] {
+        if (ui->editPassword->echoMode() == QLineEdit::Password)
+            ui->editPassword->setEchoMode(QLineEdit::Normal);
+        else
+            ui->editPassword->setEchoMode(QLineEdit::Password);
+    });
+
+    // Profile picture change in edit mode
+    connect(ui->btnChangeProfilePic, &QPushButton::clicked, this, [=] {
+        if (!currMember) return;
+        QString fileName = QFileDialog::getOpenFileName(this, "Select Profile Picture", "", "Images (*.png *.jpg *.jpeg *.bmp)");
+        if (!fileName.isEmpty()) {
+            QDir dir(QCoreApplication::applicationDirPath() + "/profile_pics");
+            if (!dir.exists()) dir.mkpath(".");
+            QFileInfo fi(fileName);
+            QString ext = fi.suffix();
+            QString newFileName = QString("profile_pics/member_%1.%2").arg(currMember->getId()).arg(ext);
+            QString absNewFileName = QCoreApplication::applicationDirPath() + "/" + newFileName;
+            QFile::remove(absNewFileName);
+            QFile::copy(fileName, absNewFileName);
+            currMember->setProfilePicturePath(newFileName);
+            QPixmap pix(absNewFileName);
+            int size = qMin(pix.width(), pix.height());
+            QPixmap scaled = pix.scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+            QPixmap circular(100, 100);
+            circular.fill(Qt::transparent);
+            QPainter painter(&circular);
+            painter.setRenderHint(QPainter::Antialiasing);
+            QPainterPath path;
+            path.addEllipse(0, 0, 200, 200);
+            painter.setClipPath(path);
+            painter.drawPixmap(0, 0, scaled);
+            QPen pen(QColor("#c68f3b"), 4);
+            painter.setPen(pen);
+            painter.setBrush(Qt::NoBrush);
+            painter.drawEllipse(2, 2, 96, 96);
+            painter.end();
+            ui->labelEditProfilePic->setPixmap(circular);
+        }
+    });
+
+    // Event filter for profile pic click in edit mode
+    ui->labelEditProfilePic->installEventFilter(this);
+
+    // --- CHOOSE CLASS (tableWidget_4) FILTER/SORT ---
+    connect(ui->SortChooseClassesBtn, &QPushButton::clicked, this, [=]() {
+        QStringList filters = {
+            ui->lineEdit_11->text().trimmed(), // ID
+            ui->lineEdit_12->text().trimmed(), // Name
+            ui->lineEdit_13->text().trimmed(), // Time
+            ui->lineEdit_14->text().trimmed(), // Trainer
+            ui->lineEdit_15->text().trimmed()  // Status
+        };
+        ui->tableWidget_4->clearContents();
+        ui->tableWidget_4->setRowCount(0);
+        ui->tableWidget_4->setColumnCount(6);
+        ui->tableWidget_4->setHorizontalHeaderLabels(QStringList()
+                                                     << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+        auto match = [](const QString& filter, const QString& value) {
+            return filter.isEmpty() || filter.compare("any", Qt::CaseInsensitive) == 0 || filter == value;
+        };
+        for (auto cls : classesmap) {
+            QStringList classData = {
+                QString::number(cls->getId()),
+                cls->getName(),
+                cls->getTime().toString("hh:mm AP"),
+                cls->getCoach() ? cls->getCoach()->getName() : "Unknown",
+                cls->getStatue(),
+                QString::number(cls->getCapacity())
+            };
+            bool matched = true;
+            for (int i = 0; i < filters.size(); ++i) {
+                if (!match(filters[i], classData[i+1])) {
+                    matched = false;
+                    break;
+                }
+            }
+            if (matched) {
+                int row = ui->tableWidget_4->rowCount();
+                ui->tableWidget_4->insertRow(row);
+                for (int col = 0; col < 6; ++col) {
+                    ui->tableWidget_4->setItem(row, col, new QTableWidgetItem(classData[col]));
+                }
+            }
+        }
+        ui->tableWidget_4->setSortingEnabled(true);
+    });
+
+    // --- REQUEST CLASS (tableWidget_2) FILTER/SORT ---
+    connect(ui->requestClassbtn, &QPushButton::clicked, this, [=]() {
+        QStringList filters = {
+            ui->lineEdit_6->text().trimmed(), // ID
+            ui->lineEdit_7->text().trimmed(), // Name
+            ui->lineEdit_8->text().trimmed(), // Time
+            ui->lineEdit_9->text().trimmed(), // Trainer
+            ui->lineEdit_10->text().trimmed() // Status
+        };
+        ui->tableWidget_2->clearContents();
+        ui->tableWidget_2->setRowCount(0);
+        ui->tableWidget_2->setColumnCount(6);
+        ui->tableWidget_2->setHorizontalHeaderLabels(QStringList()
+                                                     << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+        auto match = [](const QString& filter, const QString& value) {
+            return filter.isEmpty() || filter.compare("any", Qt::CaseInsensitive) == 0 || filter == value;
+        };
+        for (auto cls : classesmap) {
+            QStringList classData = {
+                QString::number(cls->getId()),
+                cls->getName(),
+                cls->getTime().toString("hh:mm AP"),
+                cls->getCoach() ? cls->getCoach()->getName() : "Unknown",
+                cls->getStatue(),
+                QString::number(cls->getCapacity())
+            };
+            bool matched = true;
+            for (int i = 0; i < filters.size(); ++i) {
+                if (!match(filters[i], classData[i])) {
+                    matched = false;
+                    break;
+                }
+            }
+            if (matched) {
+                int row = ui->tableWidget_2->rowCount();
+                ui->tableWidget_2->insertRow(row);
+                for (int col = 0; col < 6; ++col) {
+                    ui->tableWidget_2->setItem(row, col, new QTableWidgetItem(classData[col]));
+                }
+            }
+        }
+        ui->tableWidget_2->setSortingEnabled(true);
+    });
 }
 
 MainWindow::~MainWindow() {
@@ -1157,7 +1357,7 @@ void MainWindow::setPixmapForWidgets() {
                 QPushButton {
                     background-color: rgb(198, 143, 59);
                     color: black;
-                    border-radius: 10px;
+                    border-radius: 25px;
                     font: bold 10pt "Yeasty Flavors";
                     padding: 6px 12px;
                 }
@@ -1220,7 +1420,6 @@ void MainWindow::addClass() {
     updateClassesTable();
 
     // Save to file
-    FileHandler::saveClasses("C:/Users/Yousef/Downloads/FullGymProject/classes.txt", classesmap);
 
     QMessageBox::information(this, "Success", "Class added successfully!");
 
@@ -1246,7 +1445,6 @@ void MainWindow::removeClass() {
     GymClass* classToRemove = classesmap[ClassID.toInt()];
     classesmap.remove(ClassID.toInt());
 
-    FileHandler::saveClasses("C:/Users/Yousef/Downloads/FullGymProject/classes.txt", classesmap);
 
     QMessageBox::information(this, "Success", "Class removed successfully!");
 
@@ -1407,7 +1605,6 @@ void MainWindow::addMember() {
     members[newId] = newMember;
 
     // Save to file
-    FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
 
     // Update the members table
     updateMembersTable();
@@ -1465,9 +1662,6 @@ void MainWindow::removeMember() {
         delete members[memberIdToRemove];
         members.remove(memberIdToRemove);
 
-        // Save changes to files
-        FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
-        FileHandler::saveClasses("C:/Users/Yousef/Downloads/FullGymProject/classes.txt", classesmap);
 
         // Update the members table
         updateMembersTable();
@@ -1532,168 +1726,39 @@ void MainWindow::updateSubscriptionInfo() {
     }
 }
 
-// ---- PROFILE PAGE LOGIC IMPLEMENTATIONS ----
-
-void MainWindow::displayProfilePage() {
-    if (!currMember) return;
-    ui->labelName->setText(currMember->getName());
-    ui->labelUsername->setText("@" + currMember->getEmail().split("@").first());
-    // Load profile picture
-    QString picPath = currMember->getProfilePicturePath();
-    QString absPicPath = picPath;
-    if (!picPath.isEmpty() && !QFile::exists(picPath)) {
-        absPicPath = QCoreApplication::applicationDirPath() + "/" + picPath;
-    }
-    if (!picPath.isEmpty() && QFile::exists(absPicPath)) {
-        QPixmap pix(absPicPath);
-        int size = qMin(pix.width(), pix.height());
-        QPixmap scaled = pix.scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-        QPixmap circular(100, 100);
-        circular.fill(Qt::transparent);
-        QPainter painter(&circular);
-        painter.setRenderHint(QPainter::Antialiasing);
-        QPainterPath path;
-        path.addEllipse(0, 0, 100, 100);
-        painter.setClipPath(path);
-        painter.drawPixmap(0, 0, scaled);
-        // Draw border
-        QPen pen(QColor("#c68f3b"), 4);
-        painter.setPen(pen);
-        painter.setBrush(Qt::NoBrush);
-        painter.drawEllipse(2, 2, 96, 96);
-        painter.end();
-        ui->labelProfilePic->setPixmap(circular);
-    } else {
-        ui->labelProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    }
-    ui->stackedWidgetProfile->setCurrentWidget(ui->profileViewPage);
-}
-
-void MainWindow::onEditProfileClicked() {
-    if (!currMember) return;
-    ui->editName->setText(currMember->getName());
-    ui->editEmail->setText(currMember->getEmail());
-    ui->editUsername->setText("@" + currMember->getEmail().split("@").first());
-    ui->editPassword->setText(currMember->getPassword());
-    ui->editPhone->setText(currMember->getPhone());
-    // Load profile picture in edit mode
-    QString picPath = currMember->getProfilePicturePath();
-    if (!picPath.isEmpty() && QFile::exists(picPath)) {
-        QPixmap pix(picPath);
-        ui->labelEditProfilePic->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    } else {
-        ui->labelEditProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    }
-    ui->stackedWidgetProfile->setCurrentWidget(ui->editProfilePage);
-}
-
-void MainWindow::onSaveProfileClicked() {
-    if (!currMember) return;
-    QString name = ui->editName->text().trimmed();
-    QString email = ui->editEmail->text().trimmed();
-    QString password = ui->editPassword->text();
-    QString phone = ui->editPhone->text().trimmed();
-    if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-        QMessageBox::warning(this, "Validation Error", "Name, email, and password cannot be empty.");
-        return;
-    }
-    currMember->setName(name);
-    currMember->setEmail(email);
-    currMember->setPhone(phone);
-    currMember->getPassword() = password; // If password is public, else add a setter
-    // Save profile picture path if changed (already set by file dialog)
-    FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
-    displayProfilePage();
-}
-
-void MainWindow::onCancelEditClicked() {
-    displayProfilePage();
-}
-
-void MainWindow::onTogglePasswordClicked() {
-    if (ui->editPassword->echoMode() == QLineEdit::Password)
-        ui->editPassword->setEchoMode(QLineEdit::Normal);
-    else
-        ui->editPassword->setEchoMode(QLineEdit::Password);
-}
-
-void MainWindow::onLogoutClicked() {
-    currMember = nullptr;
-    QMessageBox::information(this, "Logout", "You have been logged out.");
-    // Example: ui->FullWiedgit->setCurrentIndex(0); // Go to login
-}
-
-// Add this slot to handle profile picture change in edit mode
-void MainWindow::onEditProfilePicClicked() {
-    if (!currMember) return;
-    QString fileName = QFileDialog::getOpenFileName(this, "Select Profile Picture", "", "Images (*.png *.jpg *.jpeg *.bmp)");
-    if (!fileName.isEmpty()) {
-        // Ensure profile_pics directory exists
-        QDir dir(QCoreApplication::applicationDirPath() + "/profile_pics");
-        if (!dir.exists()) dir.mkpath(".");
-        // Copy the file to profile_pics with a unique name (e.g., memberID + extension)
-        QFileInfo fi(fileName);
-        QString ext = fi.suffix();
-        QString newFileName = QString("profile_pics/member_%1.%2").arg(currMember->getId()).arg(ext);
-        QString absNewFileName = QCoreApplication::applicationDirPath() + "/" + newFileName;
-        QFile::remove(absNewFileName); // Remove old if exists
-        QFile::copy(fileName, absNewFileName);
-        currMember->setProfilePicturePath(newFileName); // Save relative path
-
-        // Load and process the image
-        QPixmap pix(absNewFileName);
-        int size = qMin(pix.width(), pix.height());
-        QPixmap scaled = pix.scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-        QPixmap circular(100, 100);
-        circular.fill(Qt::transparent);
-        QPainter painter(&circular);
-        painter.setRenderHint(QPainter::Antialiasing);
-        QPainterPath path;
-        path.addEllipse(0, 0, 100, 100);
-        painter.setClipPath(path);
-        painter.drawPixmap(0, 0, scaled);
-        // Draw border
-        QPen pen(QColor("#c68f3b"), 4);
-        painter.setPen(pen);
-        painter.setBrush(Qt::NoBrush);
-        painter.drawEllipse(2, 2, 96, 96);
-        painter.end();
-        ui->labelEditProfilePic->setPixmap(circular);
-        FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
-    }
-}
-
-// --- Profile menu button stubs ---
-void MainWindow::onFavouritesClicked() { QMessageBox::information(this, "Favourites", "Show user's favourites."); }
-void MainWindow::onDownloadsClicked() { QMessageBox::information(this, "Downloads", "Show user's downloads."); }
-void MainWindow::onLanguageClicked() { QMessageBox::information(this, "Language", "Show language selection dialog."); }
-void MainWindow::onLocationClicked() { QMessageBox::information(this, "Location", "Show location settings."); }
-void MainWindow::onSubscriptionClicked() { QMessageBox::information(this, "Subscription", "Show subscription info."); }
-void MainWindow::onClearCacheClicked() { QMessageBox::information(this, "Clear Cache", "Cache cleared."); }
-void MainWindow::onClearHistoryClicked() { QMessageBox::information(this, "Clear History", "History cleared."); }
-
-void MainWindow::setupProfileConnections() {
-    connect(ui->btnEditProfile, &QPushButton::clicked, this, &MainWindow::onEditProfileClicked);
-    connect(ui->btnSaveProfile, &QPushButton::clicked, this, &MainWindow::onSaveProfileClicked);
-    connect(ui->btnCancelEdit, &QPushButton::clicked, this, &MainWindow::onCancelEditClicked);
-    connect(ui->btnTogglePassword, &QToolButton::clicked, this, &MainWindow::onTogglePasswordClicked);
-    connect(ui->btnLogout, &QPushButton::clicked, this, &MainWindow::onLogoutClicked);
-    connect(ui->btnFavourites, &QPushButton::clicked, this, &MainWindow::onFavouritesClicked);
-    connect(ui->btnDownloads, &QPushButton::clicked, this, &MainWindow::onDownloadsClicked);
-    connect(ui->btnLanguage, &QPushButton::clicked, this, &MainWindow::onLanguageClicked);
-    connect(ui->btnLocation, &QPushButton::clicked, this, &MainWindow::onLocationClicked);
-    connect(ui->btnSubscription, &QPushButton::clicked, this, &MainWindow::onSubscriptionClicked);
-    connect(ui->btnClearCache, &QPushButton::clicked, this, &MainWindow::onClearCacheClicked);
-    connect(ui->btnClearHistory, &QPushButton::clicked, this, &MainWindow::onClearHistoryClicked);
-    // Profile picture click in edit mode
-    ui->labelEditProfilePic->installEventFilter(this);
-    connect(ui->btnChangeProfilePic, &QPushButton::clicked, this, &MainWindow::onEditProfilePicClicked);
-}
-
 // Event filter to handle profile pic click
 bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
     if (obj == ui->labelEditProfilePic && event->type() == QEvent::MouseButtonRelease) {
-        onEditProfilePicClicked();
+        if (!currMember) return true;
+        QString fileName = QFileDialog::getOpenFileName(this, "Select Profile Picture", "", "Images (*.png *.jpg *.jpeg *.bmp)");
+        if (!fileName.isEmpty()) {
+            QDir dir(QCoreApplication::applicationDirPath() + "/profile_pics");
+            if (!dir.exists()) dir.mkpath(".");
+            QFileInfo fi(fileName);
+            QString ext = fi.suffix();
+            QString newFileName = QString("profile_pics/member_%1.%2").arg(currMember->getId()).arg(ext);
+            QString absNewFileName = QCoreApplication::applicationDirPath() + "/" + newFileName;
+            QFile::remove(absNewFileName);
+            QFile::copy(fileName, absNewFileName);
+            currMember->setProfilePicturePath(newFileName);
+            QPixmap pix(absNewFileName);
+            int size = qMin(pix.width(), pix.height());
+            QPixmap scaled = pix.scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+            QPixmap circular(100, 100);
+            circular.fill(Qt::transparent);
+            QPainter painter(&circular);
+            painter.setRenderHint(QPainter::Antialiasing);
+            QPainterPath path;
+            path.addEllipse(0, 0, 100, 100);
+            painter.setClipPath(path);
+            painter.drawPixmap(0, 0, scaled);
+            QPen pen(QColor("#c68f3b"), 4);
+            painter.setPen(pen);
+            painter.setBrush(Qt::NoBrush);
+            painter.drawEllipse(2, 2, 96, 96);
+            painter.end();
+            ui->labelEditProfilePic->setPixmap(circular);
+        }
         return true;
     }
     return QMainWindow::eventFilter(obj, event);
