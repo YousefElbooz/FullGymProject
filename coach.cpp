@@ -6,6 +6,7 @@ Coach::Coach(const QString& name,const QString& email,const QString& password, c
 QString Coach::getDetails() const {
     return "Coach: " + name + " (ID: " + QString::number(id) + ")";
 }
+/////what to do/???
 
 
 QString Coach::toString() const {

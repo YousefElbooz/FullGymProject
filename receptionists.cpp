@@ -11,3 +11,4 @@ QString Receptionist::getDetails() const {
 QString Receptionist::toString() const {
     return Staff::toString();
 }
+/////what to do/???

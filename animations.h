@@ -13,6 +13,7 @@
 
 class Animations : public QObject {
     Q_OBJECT
+    /////what to do/???
 
 public:
     explicit Animations(QObject* parent = nullptr);

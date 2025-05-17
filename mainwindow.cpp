@@ -1879,7 +1879,7 @@ void MainWindow::displayWorkouts()
             color: rgb(249, 234, 205);
             border-radius: 15px;
             gridline-color: rgb(249, 234, 205);
-
+    })");
     QStack<QString> workouts = currMember->getWorkouts();
     QStack<QString> tempStack = workouts;
     QStringList workoutList;

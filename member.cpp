@@ -28,6 +28,7 @@ QStack<QString> Member::getWorkouts() const {return workout;}
 void Member::setWorkouts(const QStack<QString> & workouts){workout = workouts;}
 void Member::setAge(int age) { this->age = age; }
 
+/////what to do/???
 
 
 // Subscription methods

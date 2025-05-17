@@ -6,6 +6,7 @@
 #include "coach.h"
 class Member;  // Forward declare Member
 class Coach;
+    /////what to do/???
 
 class GymClass
 {
