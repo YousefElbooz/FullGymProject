@@ -42,7 +42,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     classes.txt \
     members.txt \
-    staffs.txt
+    staffs.txt \
+    waitlist.txt
 
 RESOURCES += \
     resource.qrc
