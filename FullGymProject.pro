@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    animations.cpp \
     coach.cpp \
     filehandler.cpp \
     gymclass.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
     staff.cpp
 
 HEADERS += \
+    animations.h \
     coach.h \
     filehandler.h \
     gymclass.h \
@@ -40,7 +42,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     classes.txt \
     members.txt \
-    staffs.txt
+    staffs.txt \
+    waitlist.txt
 
 RESOURCES += \
     resource.qrc

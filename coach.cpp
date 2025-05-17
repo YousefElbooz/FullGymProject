@@ -13,10 +13,11 @@ QString Coach::toString() const {
 }
 
 void Coach::addClass(GymClass* gymClass) {
-    classes.push_back(gymClass);
+    if (!classes.contains(gymClass)) {
+        classes.push_back(gymClass);
+    }
 }
 
 QVector<GymClass*> Coach::getClasses(){
     return classes;
 }
-

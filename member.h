@@ -39,6 +39,7 @@ public:
     void setAddress(const QString& address);
     void setAge(int age);
     void setWorkouts(const QStack<QString>& workout);
+    void setId(int newId);
     int getId() const;
     QString getName() const;
     QString getPassword() const;
@@ -62,6 +63,8 @@ public:
         //search by (location, date ,time )
     //cancel padel court
         //Before class within 3 hours
+
+    void removeClass(GymClass* gymClass);
 };
 
 #endif // MEMBER_H
