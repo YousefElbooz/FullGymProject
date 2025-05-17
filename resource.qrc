@@ -1,0 +1,33 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>images/icons/add-user.svg</file>
+        <file>images/icons/auto-renew.svg</file>
+        <file>images/icons/bill.svg</file>
+        <file>images/icons/calendar.svg</file>
+        <file>images/icons/cancel.svg</file>
+        <file>images/icons/chart.svg</file>
+        <file>images/icons/coach.svg</file>
+        <file>images/icons/court-playground.svg</file>
+        <file>images/icons/dashboard.svg</file>
+        <file>images/icons/enter.svg</file>
+        <file>images/icons/exit.svg</file>
+        <file>images/icons/gymDumble.svg</file>
+        <file>images/icons/home-workouts.svg</file>
+        <file>images/icons/logout.svg</file>
+        <file>images/icons/money.svg</file>
+        <file>images/icons/notification.svg</file>
+        <file>images/icons/profile.svg</file>
+        <file>images/icons/sand-clock.svg</file>
+        <file>images/icons/settings.svg</file>
+        <file>images/icons/stretching.svg</file>
+        <file>images/icons/teamMangment.svg</file>
+        <file>images/icons/user-admin.svg</file>
+    </qresource>
+    <qresource prefix="/img">
+        <file>images/logo.png</file>
+        <file>images/newGym.png</file>
+        <file>images/newpadel.png</file>
+        <file>images/newGymrounded.png</file>
+        <file>images/newpadelrounded.png</file>
+    </qresource>
+</RCC>

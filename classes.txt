@@ -1,10 +1,18 @@
-1,Yoga,,Active,25,15,Coach: None---
-2,Spinning,,Active,20,10,Coach: None---
-3,Boxing,,Inactive,15,7,Coach: None---
-4,Pilates,,Active,18,12,Coach: None---
-5,Zumba,,Active,22,20,Coach: None---
-6,Crossfit,,Inactive,30,25,Coach: None---
-7,Aerobics,,Active,20,16,Coach: None---
-8,HIIT,,Active,25,18,Coach: None---
-9,Strength,,Active,28,26,Coach: None---
-10,Cardio,,Inactive,24,22,Coach: None---
+1,Yoga,02:00 AM,Open,10,1,Coach: Alaa El Gamed
+Member: 11
+
+2,Zumba,03:00 AM,Open,15,1,Coach: Elbooz
+Member: 11
+
+4,KickBoxing,07:15 AM,Open,30,3,Coach: Alaa El Gamed
+Member: 2
+Member: 3
+Member: 11
+
+5,swimming,05:00 PM,Close,1,1,Coach: Ahmed
+Member: 9
+NormalWaitlist:6,
+
+6,Belly Dance,08:00 AM,Open,1,0,Coach: Sakira
+Member: 11
+
