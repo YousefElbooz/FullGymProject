@@ -35,6 +35,9 @@ public:
     Member();  // Default constructor
     Member(const QString& name, const QString& email,const QString& password, const QString& gender, bool isVip, const QString& phone, const QString& address, int age);
 
+    QStack<QString> getWorkouts() const;
+    void setWorkouts(const QStack<QString>& workouts);
+
     void addClass(GymClass* gymClass);
     void setName(const QString& newName);
     void setEmail(const QString& newEmail);
@@ -43,7 +46,6 @@ public:
     void setPhone (const QString& newPhone);
     void setAddress(const QString& address);
     void setAge(int age);
-    void setWorkouts(const QStack<QString>& workout);
     
     // Subscription methods
     void setSubscription(const QString& type);
@@ -64,20 +66,11 @@ public:
     QString getPhone() const;
     QString getAddress() const;
     int getAge() const;
-    QStack<QString> getWorkouts() const;
     QVector<GymClass*> getClasses() const { return classes; }
 
     /*--------------helper Functions----------*/
     QString toString() const;
 
-    //Enroll classes
-        //Search (fillter By class details)
-    //keep track of workout
-    //cancel classes
-    //book padel court
-        //search by (location, date ,time )
-    //cancel padel court
-        //Before class within 3 hours
 
     void removeClass(GymClass* gymClass);
 

@@ -43,6 +43,10 @@ private slots:
     void addClass();
     void removeClass();
     void updateClassesTable();
+    void addWorkout();
+    void removeLastWorkout();
+    void displayWorkouts();
+    void clearWorkouts();
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
 

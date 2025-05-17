@@ -26,6 +26,9 @@ QString Member::getAddress() const { return address; }
 int Member::getAge() const { return age; }
 QStack<QString> Member::getWorkouts() const {return workout;}
 void Member::setWorkouts(const QStack<QString> & workouts){workout = workouts;}
+void Member::setAge(int age) { this->age = age; }
+
+
 
 // Subscription methods
 void Member::setSubscription(const QString& type) {
