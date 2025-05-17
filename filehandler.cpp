@@ -25,11 +25,11 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath, QMap<int, M
             m = nullptr;
             continue;
         }
-            /////what to do/???
+
         // Member line
         if (!line.startsWith("Class: ")) {
             QStringList parts = line.split(":");
-            if (parts.size() == 9) {
+            if (parts.size() >= 9) {  // Changed from == 9 to >= 9 to handle optional subscription fields
                 int id = parts[0].toInt();
                 QString name = parts[1];
                 QString email = parts[2];
@@ -40,7 +40,39 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath, QMap<int, M
                 QString address = parts[7];
                 int age = parts[8].toInt();
                 m = new Member(name, email, password, gender, isVip, phone, address, age);
-                m->setId(id);  // Set the member's ID
+                
+                // Handle subscription data if available
+                if (parts.size() >= 12) {
+                    QString subscriptionType = parts[9];
+                    QDate startDate = QDate::fromString(parts[10], Qt::ISODate);
+                    QDate endDate = QDate::fromString(parts[11], Qt::ISODate);
+                    
+                    if (!subscriptionType.isEmpty() && startDate.isValid() && endDate.isValid()) {
+                        m->setSubscription(subscriptionType);
+                        m->subscriptionStartDate = startDate;
+                        m->subscriptionEndDate = endDate;
+                    }
+                }
+                
+                // Load profile picture path if present
+                if (parts.size() >= 13) {
+                    m->setProfilePicturePath(parts[12]);
+                } else {
+                    m->setProfilePicturePath("");
+                }
+                
+                // Load workouts if present
+                if (parts.size() >= 14) {
+                    QStringList workouts = parts[13].split("|");
+                    QStack<QString> workoutStack;
+                    for (const QString& workout : workouts) {
+                        if (!workout.isEmpty()) {
+                            workoutStack.push(workout);
+                        }
+                    }
+                    m->setWorkouts(workoutStack);
+                }
+                
                 members[id] = m;
             }
         }
@@ -133,7 +165,28 @@ void FileHandler::saveMembers(const QString& filePath, const QMap<int, Member*>&
         Member* m = it.value();
         out << it.key() << ":" << m->getName() << ":" << m->getEmail()<<":"<< m->getPassword()
             << ":" << m->getGender() << ":" << (m->getIsVip() ? "true" : "false")
-            << ":" << m->getPhone() << ":" << m->getAddress() << ":" << m->getAge() << "\n";
+            << ":" << m->getPhone() << ":" << m->getAddress() << ":" << m->getAge();
+        
+        // Add subscription data if available
+        if (!m->getSubscriptionType().isEmpty() && m->getSubscriptionStartDate().isValid() && m->getSubscriptionEndDate().isValid()) {
+            out << ":" << m->getSubscriptionType()
+                << ":" << m->getSubscriptionStartDate().toString(Qt::ISODate)
+                << ":" << m->getSubscriptionEndDate().toString(Qt::ISODate);
+        }
+        
+        // Always add profile picture path (even if empty)
+        out << ":" << m->getProfilePicturePath();
+        
+        // Save workouts
+        QStack<QString> workouts = m->getWorkouts();
+        QStringList workoutList;
+        while (!workouts.isEmpty()) {
+            workoutList.prepend(workouts.pop());
+        }
+        out << ":" << workoutList.join("|");
+        
+        out << "\n";
+        
         // Write enrolled classes
         for (auto gc : m->getClasses()) {
             out << "Class: " << gc->getName() << "\n";
@@ -170,13 +223,13 @@ void FileHandler::saveStaff(const QString& filePath, const QMap<int, Staff*>& st
         if (role == "coach") {
             Coach* coach = dynamic_cast<Coach*>(s);
             if (!coach) continue;
-            
+
             // Use QSet to track unique class IDs
             QSet<int> uniqueClassIds;
             for (GymClass* gymClass : coach->getClasses()) {
                 if (uniqueClassIds.contains(gymClass->getId())) continue;
                 uniqueClassIds.insert(gymClass->getId());
-                
+
                 out << gymClass->getId() << "|"
                     << gymClass->getName() << "|"
                     << gymClass->getStatue() << "|"
@@ -208,15 +261,10 @@ void FileHandler::saveClasses(const QString& filePath, const QMap<int, GymClass*
             << gymClass->getCapacity() << ","
             << gymClass->getEnrolled() << ","
             << "Coach: " << coachName << "\n";
-        
         // Write enrolled members by ID
         for (auto member : gymClass->getMembers()) {
             out << "Member: " << member->getId() << "\n";
         }
-        
-        // Write waitlist data
-        saveQueueData(out, gymClass->getNormalList(), gymClass->getVIPList());
-        
         out << "\n"; // Blank line after each class
     }
     file.close();
@@ -237,8 +285,6 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
             gc = nullptr;
             continue;
         }
-        
-        // Handle member enrollment
         if (line.startsWith("Member: ")) {
             if (gc) {
                 QString memberIdStr = line.mid(QString("Member: ").length()).trimmed();
@@ -250,41 +296,12 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
             }
             continue;
         }
-        
-        // Handle VIP waitlist by IDs
-        if (line.startsWith("VIPWaitlist:")) {
-            if (gc) {
-                QStringList ids = line.mid(QString("VIPWaitlist:").length()).split(",", Qt::SkipEmptyParts);
-                for (const QString& idStr : ids) {
-                    int id = idStr.toInt();
-                    if (members.contains(id)) {
-                        gc->getVIPList().enqueue(members[id]);
-                    }
-                }
-            }
-            continue;
-        }
-        // Handle Normal waitlist by IDs
-        if (line.startsWith("NormalWaitlist:")) {
-            if (gc) {
-                QStringList ids = line.mid(QString("NormalWaitlist:").length()).split(",", Qt::SkipEmptyParts);
-                for (const QString& idStr : ids) {
-                    int id = idStr.toInt();
-                    if (members.contains(id)) {
-                        gc->getNormalList().enqueue(members[id]);
-                    }
-                }
-            }
-            continue;
-        }
-        
         // Class line
         QStringList parts = line.split(",");
         if (parts.size() < 7) {
             qWarning() << "Malformed class line: " << line;
             continue;
         }
-        
         bool ok = false;
         int id = parts[0].toInt(&ok);
         if (!ok) continue;
@@ -297,12 +314,12 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
         if (!ok) continue;
         QString coachPart = parts[6].trimmed();
         QString coachName = coachPart.startsWith("Coach: ") ? coachPart.mid(7) : "None";
-        
+
         gc = new GymClass(name, status, capacity);
         gc->setId(id);
         gc->setTime(time);
         gc->setEnrolled(enrolled);
-        
+
         // Find and set the coach if one exists
         if (coachName != "None") {
             for (auto staff : staffMap) {
@@ -316,13 +333,12 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
                 }
             }
         }
-        
+
         gymClasses[id] = gc;
     }
     file.close();
     return gymClasses;
 }
-
 void FileHandler::saveQueueData(QTextStream &out, const QQueue<Member*>& normalList, const QQueue<Member*>& VIPList) {
     if (!VIPList.isEmpty()) {
         out << "VIPWaitlist:";

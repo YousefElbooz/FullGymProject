@@ -1,18 +1,27 @@
-1,Yoga,02:00 AM,Open,10,1,Coach: Alaa El Gamed
-Member: 11
-
-2,Zumba,03:00 AM,Open,15,1,Coach: Elbooz
-Member: 11
-
-4,KickBoxing,07:15 AM,Open,30,3,Coach: Alaa El Gamed
+1,Yoga,10:00 AM,Open,10,9,Coach: None
 Member: 2
-Member: 3
-Member: 11
+Member: 1
 
-5,swimming,05:00 PM,Close,1,1,Coach: Ahmed
-Member: 9
-NormalWaitlist:6,
+2,Spin,02:00 PM,Open,20,18,Coach: None
 
-6,Belly Dance,08:00 AM,Open,1,0,Coach: Sakira
-Member: 11
+3,HIIT,02:00 PM,Open,12,12,Coach: Alaa
+Member: 1
+
+4,Pilates,02:00 PM,Open,10,8,Coach: None
+
+5,CrossFit,02:00 PM,Open,10,7,Coach: None
+Member: 2
+
+6,Zumba,02:00 PM,Open,25,20,Coach: None
+
+7,Boxing,02:00 PM,Open,8,6,Coach: None
+
+8,TRX,02:00 PM,Open,12,6,Coach: None
+Member: 2
+
+9,Barre,02:00 PM,Open,10,3,Coach: None
+
+10,Powerlifting,02:00 PM,Open,6,3,Coach: None
+Member: 2
+Member: 5
 
