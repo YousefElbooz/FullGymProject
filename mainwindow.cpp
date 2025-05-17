@@ -10,6 +10,9 @@
 #include <QPainter>
 #include <QBitmap>
 #include <QPainterPath>
+#include <QInputDialog>
+#include <QStack>
+#include <algorithm>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -29,12 +32,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
-    FileHandler::loadMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members, classesmap);
+    FileHandler::loadMembers("D:/Mybranch/FullGymProject/members.txt", members, classesmap);
     ui->label_36->setText(QString::number(members.size()));
-    FileHandler::loadStaff("C:/Users/Yousef/Downloads/FullGymProject/staffs.txt", staffMap);
-    FileHandler::loadClasses("C:/Users/Yousef/Downloads/FullGymProject/classes.txt", classesmap, members, staffMap);
+    FileHandler::loadStaff("D:/Mybranch/FullGymProject/staffs.txt", staffMap);
+    FileHandler::loadClasses("D:/Mybranch/FullGymProject/classes.txt", classesmap, members, staffMap);
     ui->label_38->setText(QString::number(classesmap.size()));
-    
+    ui->stackedWidgetProfile->setCurrentIndex(0);
     // Set up subscription button styles
     if (ui->subBtn1m) {
         ui->subBtn1m->setText("1 Month Plan\n$50.00");
@@ -133,18 +136,18 @@ MainWindow::MainWindow(QWidget *parent)
             QMessageBox::warning(this, "Invalid Email or Password", "Please re-enter the information correctly.");
         }
     });
-    
+
     // Connect subscription buttons
     connect(ui->subBtn1m, &QPushButton::clicked, this, [=]() {
         if (!currMember) {
             QMessageBox::warning(this, "Error", "No member logged in");
             return;
         }
-        
+
         QString message;
         bool isVip = ui->vipCheckBox->isChecked();
         double price = isVip ? 70.00 : 50.00;
-        
+
         if (currMember->isSubscriptionActive()) {
             // Extending existing subscription
             QDate newEndDate = currMember->getSubscriptionEndDate().addMonths(1);
@@ -161,39 +164,39 @@ MainWindow::MainWindow(QWidget *parent)
                      .arg(price)
                      .arg(isVip ? " (VIP)" : "");
         }
-        
-        QMessageBox::StandardButton confirm = QMessageBox::question(this, 
+
+        QMessageBox::StandardButton confirm = QMessageBox::question(this,
             "Confirm Subscription", message, QMessageBox::Yes | QMessageBox::No);
-            
+
         if (confirm == QMessageBox::Yes) {
             currMember->setSubscription("1m");
             currMember->setIsVip(isVip);
             updateSubscriptionInfo();
-            
+
             QString successMessage;
             if (currMember->getSubscriptionStartDate() == QDate::currentDate()) {
                 successMessage = "You have successfully subscribed for 1 month.";
             } else {
                 successMessage = "You have successfully extended your subscription for 1 month.";
             }
-            
-            QMessageBox::information(this, "Subscription Activated", 
-                                   successMessage + "\nYour membership is active until " + 
+
+            QMessageBox::information(this, "Subscription Activated",
+                                   successMessage + "\nYour membership is active until " +
                                    currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"));
         }
     });
-    
+
     connect(ui->subBtn3m, &QPushButton::clicked, this, [=]() {
         if (!currMember) {
             QMessageBox::warning(this, "Error", "No member logged in");
             return;
         }
-        
+
         QString message;
         bool isVip = ui->vipCheckBox->isChecked();
         double price = isVip ? 150.00 : 130.00;
         double savings = isVip ? 60.00 : 20.00;
-        
+
         if (currMember->isSubscriptionActive()) {
             // Extending existing subscription
             QDate newEndDate = currMember->getSubscriptionEndDate().addMonths(3);
@@ -212,39 +215,39 @@ MainWindow::MainWindow(QWidget *parent)
                      .arg(savings)
                      .arg(isVip ? " (VIP)" : "");
         }
-        
-        QMessageBox::StandardButton confirm = QMessageBox::question(this, 
+
+        QMessageBox::StandardButton confirm = QMessageBox::question(this,
             "Confirm Subscription", message, QMessageBox::Yes | QMessageBox::No);
-            
+
         if (confirm == QMessageBox::Yes) {
             currMember->setSubscription("3m");
             currMember->setIsVip(isVip);
             updateSubscriptionInfo();
-            
+
             QString successMessage;
             if (currMember->getSubscriptionStartDate() == QDate::currentDate()) {
                 successMessage = "You have successfully subscribed for 3 months.";
             } else {
                 successMessage = "You have successfully extended your subscription for 3 months.";
             }
-            
-            QMessageBox::information(this, "Subscription Activated", 
-                                   successMessage + "\nYour membership is active until " + 
+
+            QMessageBox::information(this, "Subscription Activated",
+                                   successMessage + "\nYour membership is active until " +
                                    currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"));
         }
     });
-    
+
     connect(ui->subBtn6m, &QPushButton::clicked, this, [=]() {
         if (!currMember) {
             QMessageBox::warning(this, "Error", "No member logged in");
             return;
         }
-        
+
         QString message;
         bool isVip = ui->vipCheckBox->isChecked();
         double price = isVip ? 270.00 : 250.00;
         double savings = isVip ? 90.00 : 50.00;
-        
+
         if (currMember->isSubscriptionActive()) {
             // Extending existing subscription
             QDate newEndDate = currMember->getSubscriptionEndDate().addMonths(6);
@@ -263,39 +266,39 @@ MainWindow::MainWindow(QWidget *parent)
                      .arg(savings)
                      .arg(isVip ? " (VIP)" : "");
         }
-        
-        QMessageBox::StandardButton confirm = QMessageBox::question(this, 
+
+        QMessageBox::StandardButton confirm = QMessageBox::question(this,
             "Confirm Subscription", message, QMessageBox::Yes | QMessageBox::No);
-            
+
         if (confirm == QMessageBox::Yes) {
             currMember->setSubscription("6m");
             currMember->setIsVip(isVip);
             updateSubscriptionInfo();
-            
+
             QString successMessage;
             if (currMember->getSubscriptionStartDate() == QDate::currentDate()) {
                 successMessage = "You have successfully subscribed for 6 months.";
             } else {
                 successMessage = "You have successfully extended your subscription for 6 months.";
             }
-            
-            QMessageBox::information(this, "Subscription Activated", 
-                                   successMessage + "\nYour membership is active until " + 
+
+            QMessageBox::information(this, "Subscription Activated",
+                                   successMessage + "\nYour membership is active until " +
                                    currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"));
         }
     });
-    
+
     connect(ui->subBtn12m, &QPushButton::clicked, this, [=]() {
         if (!currMember) {
             QMessageBox::warning(this, "Error", "No member logged in");
             return;
         }
-        
+
         QString message;
         bool isVip = ui->vipCheckBox->isChecked();
         double price = isVip ? 500.00 : 480.00;
         double savings = isVip ? 160.00 : 120.00;
-        
+
         if (currMember->isSubscriptionActive()) {
             // Extending existing subscription
             QDate newEndDate = currMember->getSubscriptionEndDate().addMonths(12);
@@ -314,31 +317,31 @@ MainWindow::MainWindow(QWidget *parent)
                      .arg(savings)
                      .arg(isVip ? " (VIP)" : "");
         }
-        
-        QMessageBox::StandardButton confirm = QMessageBox::question(this, 
+
+        QMessageBox::StandardButton confirm = QMessageBox::question(this,
             "Confirm Subscription", message, QMessageBox::Yes | QMessageBox::No);
-            
+
         if (confirm == QMessageBox::Yes) {
             currMember->setSubscription("12m");
             currMember->setIsVip(isVip);
             updateSubscriptionInfo();
-            
+
             QString successMessage;
             if (currMember->getSubscriptionStartDate() == QDate::currentDate()) {
                 successMessage = "You have successfully subscribed for 12 months.";
             } else {
                 successMessage = "You have successfully extended your subscription for 12 months.";
             }
-            
-            QMessageBox::information(this, "Subscription Activated", 
-                                   successMessage + "\nYour membership is active until " + 
+
+            QMessageBox::information(this, "Subscription Activated",
+                                   successMessage + "\nYour membership is active until " +
                                    currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"));
         }
     });
-    
+
     // Connect to notification button to update subscription info when clicked
     connect(ui->NotifiMemberBtn, &QPushButton::clicked, this, &MainWindow::updateSubscriptionInfo);
-    
+
     connect(ui->SignUp,&QPushButton::clicked,this,[=]{
         QString username = ui->LineEditUserNameSignUp->text();
         QString email = ui->LineEditEmailSignUp->text();
@@ -590,31 +593,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->tableWidget_5->setHorizontalHeaderLabels(QStringList()
                                                      << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
 
-        // Set table styling to match enrolled window
-        ui->tableWidget_5->setStyleSheet(R"(
-            QTableWidget {
-                background-color: white;
-                alternate-background-color: #f6f6f6;
-                gridline-color: #d3d3d3;
-                border: 1px solid #d3d3d3;
-                border-radius: 5px;
-            }
-            QTableWidget::item {
-                padding: 5px;
-                border-bottom: 1px solid #d3d3d3;
-            }
-            QHeaderView::section {
-                background-color: #f1c27d;
-                color: black;
-                padding: 5px;
-                border: 1px solid #d3d3d3;
-                font-weight: bold;
-            }
-            QTableWidget::item:selected {
-                background-color: #f1c27d;
-                color: black;
-            }
-        )");
+
 
         // Set column widths
         ui->tableWidget_5->setColumnWidth(0, 50);  // ID
@@ -748,7 +727,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         if (role == "member") {
             // Append to members.txt
-            QFile file("C:/Users/Yousef/Downloads/FullGymProject/members.txt");
+            QFile file("D:/Mybranch/FullGymProject/members.txt");
             if (file.open(QIODevice::Append | QIODevice::Text)) {
                 QTextStream out(&file);
                 int newId = members.size() + 1;
@@ -771,7 +750,7 @@ MainWindow::MainWindow(QWidget *parent)
             return;
         }
 
-        QFile file("C:/Users/Yousef/Downloads/FullGymProject/staffs.txt");
+        QFile file("D:/Mybranch/FullGymProject/staffs.txt");
         if (file.open(QIODevice::Append | QIODevice::Text)) {
             QTextStream out(&file);
             int newId = staffMap.size() + 1;
@@ -976,15 +955,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->vipCheckBox, &QCheckBox::toggled, this, [=](bool checked) {
         // Update prices based on VIP status
         if (checked) {
-            ui->subBtn1m->setText("1 Month Plan\n$70.00");
-            ui->subBtn3m->setText("3 Month Plan\n$150.00\nSave $60");
-            ui->subBtn6m->setText("6 Month Plan\n$270.00\nSave $90");
-            ui->subBtn12m->setText("12 Month Plan\n$500.00\nSave $160");
+            ui->subBtn1m->setText("1 Month$80.00✓ \n Full Access✓\n All Classes✓ \nAll Equipment");
+            ui->subBtn3m->setText("3 Months$150.00✓\n Save $20✓ \nFree Towel Service✓\n 1 Personal Training");
+            ui->subBtn6m->setText("6 Months$300.00✓ \nSave $50✓\n 2 Personal Trainings✓\n Free Protein Shake");
+            ui->subBtn12m->setText("12 Months$500.00\n★ BEST VALUE ★✓\n Save $120✓\n 4 Personal Trainings");
         } else {
-            ui->subBtn1m->setText("1 Month Plan\n$50.00");
-            ui->subBtn3m->setText("3 Month Plan\n$130.00\nSave $20");
-            ui->subBtn6m->setText("6 Month Plan\n$250.00\nSave $50");
-            ui->subBtn12m->setText("12 Month Plan\n$480.00\nSave $120");
+            ui->subBtn1m->setText("1 Month$50.00✓ \n Full Access✓\n All Classes✓ \nAll Equipment");
+            ui->subBtn3m->setText("3 Months$130.00✓\n Save $20✓ \nFree Towel Service✓\n 1 Personal Training");
+            ui->subBtn6m->setText("6 Months$250.00✓ \nSave $50✓\n 2 Personal Trainings✓\n Free Protein Shake");
+            ui->subBtn12m->setText("12 Months$480.00\n★ BEST VALUE ★✓\n Save $120✓\n 4 Personal Trainings");
         }
     });
 
@@ -1004,24 +983,24 @@ MainWindow::MainWindow(QWidget *parent)
         if (!picPath.isEmpty() && QFile::exists(absPicPath)) {
             QPixmap pix(absPicPath);
             int size = qMin(pix.width(), pix.height());
-            QPixmap scaled = pix.scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-            QPixmap circular(100, 100);
+            QPixmap scaled = pix.scaled(180, 180, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+            QPixmap circular(200, 200);
             circular.fill(Qt::transparent);
             QPainter painter(&circular);
             painter.setRenderHint(QPainter::Antialiasing);
             QPainterPath path;
-            path.addEllipse(0, 0, 100, 100);
+            path.addEllipse(0, 0,200, 200);
             painter.setClipPath(path);
             painter.drawPixmap(0, 0, scaled);
             // Draw border
             QPen pen(QColor("#c68f3b"), 4);
             painter.setPen(pen);
             painter.setBrush(Qt::NoBrush);
-            painter.drawEllipse(2, 2, 96, 96);
+            painter.drawEllipse(2, 2,200, 200);
             painter.end();
             ui->labelProfilePic->setPixmap(circular);
         } else {
-            ui->labelProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            ui->labelProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(120, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         }
         ui->stackedWidgetProfile->setCurrentWidget(ui->profileViewPage);
     };
@@ -1041,9 +1020,9 @@ MainWindow::MainWindow(QWidget *parent)
         }
         if (!picPath.isEmpty() && QFile::exists(absPicPath)) {
             QPixmap pix(absPicPath);
-            ui->labelEditProfilePic->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            ui->labelEditProfilePic->setPixmap(pix.scaled(120, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         } else {
-            ui->labelEditProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            ui->labelEditProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(120, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         }
         ui->stackedWidgetProfile->setCurrentWidget(ui->editProfilePage);
     });
@@ -1200,13 +1179,79 @@ MainWindow::MainWindow(QWidget *parent)
         }
         ui->tableWidget_2->setSortingEnabled(true);
     });
+
+    connect(ui->addWorkoutButton, &QPushButton::clicked, this, &MainWindow::addWorkout);
+    connect(ui->removeLastWorkoutButton, &QPushButton::clicked, this, &MainWindow::removeLastWorkout);
+    connect(ui->clearWorkoutsButton, &QPushButton::clicked, this, &MainWindow::clearWorkouts);
+    connect(ui->workoutLineEdit, &QLineEdit::returnPressed, this, &MainWindow::addWorkout);
+
+    // Update workouts display when member logs in
+    connect(ui->loginbtn, &QPushButton::clicked, this, [=] {
+        if (currMember) {
+            displayWorkouts();
+        }
+    });
+
+    // Connect the WorkoutBtn to navigate to workout page
+    connect(ui->WorkoutBtn, &QPushButton::clicked, this, [=]() {
+        if (currMember) {
+            // Find the workout page index
+            int workoutPageIndex = -1;
+            for (int i = 0; i < ui->stackedWidget->count(); i++) {
+                if (ui->stackedWidget->widget(i)->objectName() == "workoutPage") {
+                    workoutPageIndex = i;
+                    break;
+                }
+            }
+
+            if (workoutPageIndex >= 0) {
+                ui->stackedWidget->setCurrentIndex(workoutPageIndex);
+                displayWorkouts(); // Update the workout display
+            }
+        } else {
+            QMessageBox::warning(this, "Error", "Please log in first");
+        }
+    });
+
+    // Connect profile and subscription buttons
+    connect(ui->Subscriptionbtn, &QPushButton::clicked, this, [=]() {
+        // Find the Subscription page in the stackedWidget
+        for (int i = 0; i < ui->stackedWidget->count(); i++) {
+            if (ui->stackedWidget->widget(i)->objectName() == "Subscription") {
+                ui->stackedWidget->setCurrentIndex(i);
+                break;
+            }
+        }
+    });
+
+    connect(ui->NotifiMemberBtn, &QPushButton::clicked, this, [=]() {
+        // Find the Notification page in the stackedWidget
+        for (int i = 0; i < ui->stackedWidget->count(); i++) {
+            if (ui->stackedWidget->widget(i)->objectName() == "Notification") {
+                ui->stackedWidget->setCurrentIndex(i);
+                // Update subscription info when showing the page
+                updateSubscriptionInfo();
+                break;
+            }
+        }
+    });
+
+    connect(ui->MemberProfileBtn, &QPushButton::clicked, this, [=]() {
+        // Find the profile page in the stackedWidget
+        for (int i = 0; i < ui->stackedWidget->count(); i++) {
+            if (ui->stackedWidget->widget(i)->objectName() == "page_21") {
+                ui->stackedWidget->setCurrentIndex(i);
+                break;
+            }
+        }
+    });
 }
 
 MainWindow::~MainWindow() {
     delete ui;
-    FileHandler::saveMembers("C:/Users/Yousef/Downloads/FullGymProject/members.txt", members);
-    FileHandler::saveStaff("C:/Users/Yousef/Downloads/FullGymProject/staffs.txt", staffMap);
-    FileHandler::saveClasses("C:/Users/Yousef/Downloads/FullGymProject/classes.txt", classesmap);
+    FileHandler::saveMembers("D:/Mybranch/FullGymProject/members.txt", members);
+    FileHandler::saveStaff("D:/Mybranch/FullGymProject/staffs.txt", staffMap);
+    FileHandler::saveClasses("D:/Mybranch/FullGymProject/classes.txt", classesmap);
     qDeleteAll(members);
     qDeleteAll(staffMap);
     qDeleteAll(classesmap);
@@ -1344,6 +1389,8 @@ void MainWindow::setPixmapForWidgets() {
                 ui->stackedWidget->setCurrentIndex(index-9);
                 if(i==14){
                     currMember;
+                }else if(i==17){
+                    ui->btnCancelEdit->click();
                 }
             }
             else{
@@ -1682,11 +1729,11 @@ void MainWindow::removeMember() {
 
 void MainWindow::updateSubscriptionInfo() {
     if (!currMember) return;
-    
+
     if (currMember->isSubscriptionActive()) {
         // Active subscription
         ui->subscriptionStatusLabel->setText("Active");
-        
+
         // Display subscription type in a more user-friendly format
         QString friendlyType;
         if (currMember->getSubscriptionType() == "1m") {
@@ -1700,17 +1747,17 @@ void MainWindow::updateSubscriptionInfo() {
         } else {
             friendlyType = currMember->getSubscriptionType();
         }
-        
+
         // Add VIP status to subscription type if applicable
         if (currMember->getIsVip()) {
             friendlyType += " (VIP)";
         }
-        
+
         ui->subscriptionTypeLabel->setText(friendlyType);
         ui->subscriptionStartLabel->setText(currMember->getSubscriptionStartDate().toString("yyyy-MM-dd"));
         ui->subscriptionEndLabel->setText(currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"));
         ui->subscriptionDaysLabel->setText(QString::number(currMember->getDaysRemaining()));
-        
+
         // Set color for active subscription
         ui->subscriptionStatusLabel->setStyleSheet("color: green; font-weight: bold;");
     } else {
@@ -1720,7 +1767,7 @@ void MainWindow::updateSubscriptionInfo() {
         ui->subscriptionStartLabel->setText("N/A");
         ui->subscriptionEndLabel->setText("N/A");
         ui->subscriptionDaysLabel->setText("0");
-        
+
         // Set color for inactive subscription
         ui->subscriptionStatusLabel->setStyleSheet("color: red; font-weight: bold;");
     }
@@ -1763,3 +1810,129 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
     }
     return QMainWindow::eventFilter(obj, event);
 }
+
+void MainWindow::addWorkout()
+{
+    if (!currMember) {
+        QMessageBox::warning(this, "Error", "No member selected!");
+        return;
+    }
+
+    QString workoutText = ui->workoutLineEdit->text().trimmed();
+    if (workoutText.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Please enter workout details!");
+        return;
+    }
+
+    // Add workout to member's stack
+    QStack<QString> workouts = currMember->getWorkouts();
+    workouts.push(workoutText);
+    currMember->setWorkouts(workouts);
+
+    // Clear input field
+    ui->workoutLineEdit->clear();
+
+    // Update display
+    displayWorkouts();
+}
+
+void MainWindow::removeLastWorkout()
+{
+    if (!currMember) {
+        QMessageBox::warning(this, "Error", "No member selected!");
+        return;
+    }
+
+    QStack<QString> workouts = currMember->getWorkouts();
+    if (!workouts.isEmpty()) {
+        workouts.pop();
+        currMember->setWorkouts(workouts);
+        displayWorkouts();
+    }
+}
+
+void MainWindow::displayWorkouts()
+{
+    ui->workoutListWidget->clear();
+    if (!currMember) {
+        return;
+    }
+
+    QStack<QString> workouts = currMember->getWorkouts();
+    QStack<QString> tempStack = workouts;
+    QStringList workoutList;
+
+    // Convert stack to list in reverse order (most recent first)
+    while (!tempStack.isEmpty()) {
+        workoutList.prepend(tempStack.pop());
+    }
+
+    // Add workouts to list widget with formatted text and icons
+    for (const QString& workout : workoutList) {
+        QListWidgetItem* item = new QListWidgetItem();
+
+        // Set icon based on workout type (simple detection based on keywords)
+        QIcon icon;
+        if (workout.contains("run", Qt::CaseInsensitive) ||
+            workout.contains("jog", Qt::CaseInsensitive)) {
+            icon = QIcon(":/img/images/running.png"); // Replace with actual icon path
+        }
+        else if (workout.contains("swim", Qt::CaseInsensitive)) {
+            icon = QIcon(":/img/images/swimming.png"); // Replace with actual icon path
+        }
+        else if (workout.contains("bike", Qt::CaseInsensitive) ||
+                workout.contains("cycle", Qt::CaseInsensitive)) {
+            icon = QIcon(":/img/images/cycling.png"); // Replace with actual icon path
+        }
+        else if (workout.contains("lift", Qt::CaseInsensitive) ||
+                workout.contains("weight", Qt::CaseInsensitive) ||
+                workout.contains("press", Qt::CaseInsensitive) ||
+                workout.contains("curl", Qt::CaseInsensitive)) {
+            icon = QIcon(":/img/images/weight.png"); // Replace with actual icon path
+        }
+        else {
+            icon = QIcon(":/img/images/workout.png"); // Default icon
+        }
+
+        item->setIcon(icon);
+
+        // Format the workout text with current date
+        QString formattedText = QString("%1 - %2")
+            .arg(QDate::currentDate().toString("dd MMM yyyy"))
+            .arg(workout);
+
+        item->setText(formattedText);
+        item->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+
+        // Add some padding using sizehint
+        item->setSizeHint(QSize(item->sizeHint().width(), 40));
+
+        ui->workoutListWidget->addItem(item);
+    }
+
+    // Display a message if no workouts available
+    if (workoutList.isEmpty()) {
+        QListWidgetItem* emptyItem = new QListWidgetItem("No workouts recorded yet. Add your first workout!");
+        emptyItem->setTextAlignment(Qt::AlignCenter);
+        emptyItem->setForeground(QBrush(QColor(100, 100, 100)));
+        ui->workoutListWidget->addItem(emptyItem);
+    }
+}
+
+void MainWindow::clearWorkouts()
+{
+    if (!currMember) {
+        QMessageBox::warning(this, "Error", "No member selected!");
+        return;
+    }
+
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Confirm Clear",
+        "Are you sure you want to clear all workouts?",
+        QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        currMember->setWorkouts(QStack<QString>());
+        displayWorkouts();
+    }
+}
+

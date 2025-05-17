@@ -1,9 +1,11 @@
-1,Yoga,10:00 AM,Open,10,8,Coach: None
+1,Yoga,10:00 AM,Open,10,9,Coach: None
 Member: 2
+Member: 1
 
 2,Spin,02:00 PM,Open,20,18,Coach: None
 
-3,HIIT,02:00 PM,Open,12,11,Coach: Alaa
+3,HIIT,02:00 PM,Open,12,12,Coach: Alaa
+Member: 1
 
 4,Pilates,02:00 PM,Open,10,8,Coach: None
 

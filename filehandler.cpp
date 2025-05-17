@@ -61,6 +61,18 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath, QMap<int, M
                     m->setProfilePicturePath("");
                 }
                 
+                // Load workouts if present
+                if (parts.size() >= 14) {
+                    QStringList workouts = parts[13].split("|");
+                    QStack<QString> workoutStack;
+                    for (const QString& workout : workouts) {
+                        if (!workout.isEmpty()) {
+                            workoutStack.push(workout);
+                        }
+                    }
+                    m->setWorkouts(workoutStack);
+                }
+                
                 members[id] = m;
             }
         }
@@ -164,6 +176,14 @@ void FileHandler::saveMembers(const QString& filePath, const QMap<int, Member*>&
         
         // Always add profile picture path (even if empty)
         out << ":" << m->getProfilePicturePath();
+        
+        // Save workouts
+        QStack<QString> workouts = m->getWorkouts();
+        QStringList workoutList;
+        while (!workouts.isEmpty()) {
+            workoutList.prepend(workouts.pop());
+        }
+        out << ":" << workoutList.join("|");
         
         out << "\n";
         
