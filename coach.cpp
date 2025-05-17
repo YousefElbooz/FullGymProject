@@ -11,7 +11,7 @@ QString Coach::getDetails() const {
 QString Coach::toString() const {
     return Staff::toString();
 }
-
+//////
 void Coach::addClass(GymClass* gymClass) {
     if (!classes.contains(gymClass)) {
         classes.push_back(gymClass);
