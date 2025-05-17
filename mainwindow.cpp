@@ -1858,6 +1858,28 @@ void MainWindow::displayWorkouts()
         return;
     }
 
+    /////what to do/???
+    // Set table properties
+    waitlistTable->setAlternatingRowColors(true);
+    waitlistTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    waitlistTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    waitlistTable->setSortingEnabled(true);
+    
+    // Set column widths
+    waitlistTable->setColumnWidth(0, 200);  // Name
+    waitlistTable->setColumnWidth(1, 200);  // Email
+    waitlistTable->setColumnWidth(2, 150);  // Phone
+    waitlistTable->setColumnWidth(3, 100);  // VIP Status
+    
+    // Apply stylesheet
+    waitlistTable->setStyleSheet(R"(
+        QTableWidget {
+            background-color: rgb(55, 91, 106);
+            font: 11pt "Yeasty Flavors";
+            color: rgb(249, 234, 205);
+            border-radius: 15px;
+            gridline-color: rgb(249, 234, 205);
+
     QStack<QString> workouts = currMember->getWorkouts();
     QStack<QString> tempStack = workouts;
     QStringList workoutList;

@@ -339,3 +339,19 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
     file.close();
     return gymClasses;
 }
+void FileHandler::saveQueueData(QTextStream &out, const QQueue<Member*>& normalList, const QQueue<Member*>& VIPList) {
+    if (!VIPList.isEmpty()) {
+        out << "VIPWaitlist:";
+        for (const Member* member : VIPList) {
+            out << member->getId() << ",";
+        }
+        out << "\n";
+    }
+    if (!normalList.isEmpty()) {
+        out << "NormalWaitlist:";
+        for (const Member* member : normalList) {
+            out << member->getId() << ",";
+        }
+        out << "\n";
+    }
+}
