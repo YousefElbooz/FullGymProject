@@ -2,6 +2,7 @@
 #define STAFF_H
 
 #include <QString>
+/////what to do/???
 
 class Staff {
 protected:

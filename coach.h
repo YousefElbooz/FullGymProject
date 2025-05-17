@@ -6,6 +6,7 @@
 
 class GymClass;
 class Staff;
+    /////what to do/???
 
 class Coach : public Staff {
 private:

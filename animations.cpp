@@ -7,6 +7,7 @@ void Animations::setUI(QStackedWidget* stacked, QLabel* label, QPushButton* exit
     backgroundLabel = label;
     exitButton = exitBtn;
 }
+/////what to do/???
 
 void Animations::animateStackedWidgetTransition(int fromIndex, int toIndex) {
     QWidget* fromWidget = stackedWidget->widget(fromIndex);

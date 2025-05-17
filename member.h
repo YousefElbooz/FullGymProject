@@ -8,6 +8,7 @@
 #include <QDate>
 #include "gymclass.h"
 class GymClass;  // Forward declaration
+    /////what to do/???
 
 
 class Member {

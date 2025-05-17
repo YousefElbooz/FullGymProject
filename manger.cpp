@@ -18,3 +18,5 @@ QString Manger::assignClass(Coach* coach,GymClass* gymClass){
     coach->addClass(gymClass);
     gymClass->setCoach(coach);
 }
+
+/////what to do/???

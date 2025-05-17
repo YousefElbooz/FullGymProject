@@ -8,6 +8,7 @@ public:
     Receptionist(const QString& name,const QString& email,const QString& password, const QString& phone, const QString& address, int age);
     QString getDetails() const override;
     QString toString() const override;
+    /////what to do/???
 
     //store member data
     //retrive

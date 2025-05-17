@@ -21,6 +21,7 @@ class Member;
 class Staff;
 class GymClass;
 class Coach;
+    /////what to do/???
 
 class FileHandler {
 public:

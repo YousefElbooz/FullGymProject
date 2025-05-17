@@ -23,3 +23,4 @@ QString Staff::toString() const {
     return QString("ID: %1, Name: %2, Role: %3, Phone: %4, Address: %5, Age: %6")
     .arg(id).arg(name).arg(role).arg(phone).arg(address).arg(age);
 }
+/////what to do/???

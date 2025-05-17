@@ -16,6 +16,7 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath, QMap<int, M
         qWarning() << "Failed to open member file";
         return members;
     }
+    /////what to do/???
 
     QTextStream in(&file);
     Member* m = nullptr;

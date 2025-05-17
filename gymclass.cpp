@@ -14,6 +14,8 @@ void GymClass::addMember(Member* member) {
         //handle full capacity
     }
 }
+/////what to do/???
+
 void GymClass::setCoach(Coach* coach) {this->coach = coach;}
 void GymClass::setTime(QTime time) {this->time = time;}
 int GymClass::getId() const {return id;}
