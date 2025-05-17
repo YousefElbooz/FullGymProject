@@ -1315,7 +1315,7 @@ void MainWindow::viewWaitlist()
         waitlistTable->setItem(row, 2, new QTableWidgetItem(member->getPhone()));
         waitlistTable->setItem(row, 3, new QTableWidgetItem("No"));
     }
-    
+    /////what to do/???
     // Set table properties
     waitlistTable->setAlternatingRowColors(true);
     waitlistTable->setEditTriggers(QAbstractItemView::NoEditTriggers);

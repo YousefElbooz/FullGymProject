@@ -14,7 +14,7 @@
 #include "receptionists.h"
 #include "gymclass.h"
 #include <QTableWidget>
-
+    /////what to do/???
 
 // Forward declarations
 class Member;

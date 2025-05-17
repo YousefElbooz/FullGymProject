@@ -25,7 +25,7 @@ QMap<int, Member*> FileHandler::loadMembers(const QString& filePath, QMap<int, M
             m = nullptr;
             continue;
         }
-        
+            /////what to do/???
         // Member line
         if (!line.startsWith("Class: ")) {
             QStringList parts = line.split(":");
