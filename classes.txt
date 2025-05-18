@@ -16,4 +16,5 @@ NormalWaitlist:6,
 
 6,Belly Dance,08:00 AM,Close,1,1,Coach: Sakira
 Member: 11
+NormalWaitlist:8,
 

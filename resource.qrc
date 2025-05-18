@@ -26,8 +26,6 @@
     <qresource prefix="/img">
         <file>images/logo.png</file>
         <file>images/newGym.png</file>
-        <file>images/newpadel.png</file>
         <file>images/newGymrounded.png</file>
-        <file>images/newpadelrounded.png</file>
     </qresource>
 </RCC>

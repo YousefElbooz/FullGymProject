@@ -15,6 +15,7 @@ void GymClass::addMember(Member* member) {
             statue = "Close";
         }
     } else {
+        ///// remove//////////
         // If class is full, add to waitlist
         addToWaitlist(member);
     }

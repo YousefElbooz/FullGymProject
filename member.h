@@ -19,7 +19,6 @@ private:
     QString gender;
     bool isVip;
     QVector<GymClass*> classes;
-    // QVector<PadelCourt*> classes;
     QString phone;   // New field
     QString address; // New field
     int age;         // New
@@ -60,7 +59,6 @@ public:
     //keep track of workout
     //cancel classes
     //book padel court
-        //search by (location, date ,time )
     //cancel padel court
         //Before class within 3 hours
 

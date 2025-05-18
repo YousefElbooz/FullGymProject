@@ -1,0 +1,2 @@
+Padel Court 1|C-201|Padel|03:00|09:00
+Padel Court 2|C-202|Padel|03:00|09:00 

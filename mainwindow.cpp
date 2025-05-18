@@ -189,7 +189,7 @@ MainWindow::MainWindow(QWidget *parent)
             border-color:#008FC1;
         }
     )";
-        animations->animatedSwitchAdvanced(0, 1, ":/img/images/newpadelrounded.png", newStyle);
+        animations->animatedSwitchAdvanced(0, 1, ":/img/images/newGymrounded.png", newStyle);
     });
 
     connect(ui->toggleButton_2, &QPushButton::clicked, this, [=]() {
@@ -771,8 +771,65 @@ MainWindow::MainWindow(QWidget *parent)
     // Connect toggleScheduleWaitlist button
     connect(ui->toggleScheduleWaitlistBtn, &QPushButton::clicked, this, &MainWindow::toggleScheduleWaitlist);
 
-    // Connect paddle court button
-    connect(ui->PadekCourtBtn, &QPushButton::clicked, this, &MainWindow::showPadelCourtPage);
+    connect(ui->PadekCourtBtn, &QPushButton::clicked, this, [=]() {
+        loadCourts();
+        displayCourts();
+        ui->stackedWidget->setCurrentIndex(9); // Set to the correct index for Padel Court page
+    });
+
+    connect(ui->pushButton_padel_book, &QPushButton::clicked, this, [=]() {
+        QString courtId = ui->lineEdit_padel_ID->text().trimmed();
+        QString date = ui->lineEdit_padel_date->text().trimmed();
+        QString time = ui->comboBox_padel_time->currentText().trimmed();
+
+        if (courtId.isEmpty() || date.isEmpty() || time.isEmpty()) {
+            QMessageBox::warning(this, "Input Error", "Please fill in all fields.");
+            return;
+        }
+
+        // Validate court exists
+        bool courtExists = false;
+        for (const auto& court : courts) {
+            if (QString::fromStdString(court.location) == courtId) {
+                courtExists = true;
+                break;
+            }
+        }
+        if (!courtExists) {
+            QMessageBox::warning(this, "Invalid Court", "Court ID does not exist.");
+            return;
+        }
+
+        // Map time to slot index
+        QMap<QString, int> timeSlotMap = {{"03:00", 0}, {"05:00", 1}, {"07:00", 2}, {"10:00", 3}};
+        if (!timeSlotMap.contains(time)) {
+            QMessageBox::warning(this, "Invalid Time", "Invalid time slot.");
+            return;
+        }
+        int slotIdx = timeSlotMap[time];
+
+        // Load bookings
+        auto bookings = BookingLoader::loadBookingsFromFile("G:/cs_project/project/FullGymProject/bookings.txt");
+        std::string courtIdStd = courtId.toStdString();
+        std::string dateStd = date.toStdString();
+
+        // If no entry for this court/date, create one with all slots available
+        if (bookings[courtIdStd][dateStd].empty()) {
+            bookings[courtIdStd][dateStd] = std::vector<bool>(4, false);
+        }
+
+        // Check if slot is available
+        if (bookings[courtIdStd][dateStd][slotIdx]) {
+            QMessageBox::warning(this, "Unavailable", "This time slot is already booked.");
+            return;
+        }
+
+        // Book the slot
+        bookings[courtIdStd][dateStd][slotIdx] = true;
+        BookingLoader::saveBookingsToFile("G:/cs_project/project/FullGymProject/bookings.txt", bookings);
+
+        QMessageBox::information(this, "Success", "Court booked successfully!");
+    });
 }
 
 MainWindow::~MainWindow() {
@@ -1370,54 +1427,66 @@ void MainWindow::toggleScheduleWaitlist() {
     }
 }
 
-void MainWindow::showPadelCourtPage() {
-    ui->stackedWidget->setCurrentWidget(ui->page_18);
-    QTableWidget* table = ui->tableWidget_padel;
-    table->clear();
-    table->setColumnCount(5);
-    table->setHorizontalHeaderLabels({"Court ID", "Location", "Type", "Opening Time", "Closing Time"});
-    table->setRowCount(0);
+void MainWindow::loadCourts() {
+    // Load courts from file
+    courts = CourtLoader::loadCourtsFromFile("G:/cs_project/project/FullGymProject/courts.txt");
+    // Load bookings from file (if needed)
+    bookings = BookingLoader::loadBookingsFromFile("bookings.txt");
+}
 
-    // --- Modern Table Style ---
-    table->setStyleSheet(R"(
+void MainWindow::displayCourts() {
+    ui->tableWidget_padel->clearContents();
+    ui->tableWidget_padel->setRowCount(0);
+
+    ui->tableWidget_padel->setColumnCount(5);
+    ui->tableWidget_padel->setHorizontalHeaderLabels(QStringList()
+        << "Court Name" << "Location" << "Type" << "Start Time" << "End Time");
+
+    ui->tableWidget_padel->setColumnWidth(0, 150);
+    ui->tableWidget_padel->setColumnWidth(1, 100);
+    ui->tableWidget_padel->setColumnWidth(2, 100);
+    ui->tableWidget_padel->setColumnWidth(3, 100);
+    ui->tableWidget_padel->setColumnWidth(4, 100);
+
+    for (const auto& court : courts) {
+        int row = ui->tableWidget_padel->rowCount();
+        ui->tableWidget_padel->insertRow(row);
+
+        ui->tableWidget_padel->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(court.courtName)));
+        ui->tableWidget_padel->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(court.location)));
+        ui->tableWidget_padel->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(court.type)));
+        ui->tableWidget_padel->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(court.startTime)));
+        ui->tableWidget_padel->setItem(row, 4, new QTableWidgetItem(QString::fromStdString(court.endTime)));
+    }
+
+    ui->tableWidget_padel->setStyleSheet(R"(
         QTableWidget {
-            background-color: #2d3e50;
-            color: #f5e9c6;
-            font: 15pt 'Segoe UI', 'Yeasty Flavors';
-            border-radius: 18px;
-            gridline-color: #f5e9c6;
-            selection-background-color: #f1c27d;
-            selection-color: #2d3e50;
+            background-color: white;
+            alternate-background-color: #f6f6f6;
+            gridline-color: #d3d3d3;
+            border: 1px solid #d3d3d3;
+            border-radius: 5px;
         }
-      
         QTableWidget::item {
-            border-bottom: 1px solid #f5e9c6;
-            padding: 10px;
+            padding: 5px;
+            border-bottom: 1px solid #d3d3d3;
+        }
+        QHeaderView::section {
+            background-color: #f1c27d;
+            color: black;
+            padding: 5px;
+            border: 1px solid #d3d3d3;
+            font-weight: bold;
         }
         QTableWidget::item:selected {
             background-color: #f1c27d;
-            color: #2d3e50;
+            color: black;
         }
     )");
-    table->setAlternatingRowColors(true);
-    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    table->setSelectionBehavior(QAbstractItemView::SelectRows);
-    table->setSortingEnabled(false);
 
-    // Use FileHandler to load courts from new file
-    QString courtsPath = "G:/cs_project/project/FullGymProject/padel_courts.txt";
-    QList<QStringList> courts = FileHandler::loadCourts(courtsPath);
-    int rowCount = 0;
-    for (const QStringList& court : courts) {
-        table->insertRow(rowCount);
-        for (int i = 0; i < 5; ++i)
-            table->setItem(rowCount, i, new QTableWidgetItem(court[i]));
-        rowCount++;
-    }
-    if (rowCount == 0) {
-        QMessageBox::information(this, "No Courts", "No courts found in padel_courts.txt");
-    }
-    table->resizeColumnsToContents();
-    table->horizontalHeader()->setStretchLastSection(true);
+    ui->tableWidget_padel->setAlternatingRowColors(true);
+    ui->tableWidget_padel->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget_padel->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget_padel->setSortingEnabled(true);
 }
 

@@ -19,6 +19,11 @@
 #include "member.h"
 #include "manger.h"
 #include "staff.h"
+#include <vector>
+#include "Court.h"
+#include "BookingCourt.h"
+#include "CourtLoader.h"
+#include "BookingLoader.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -46,7 +51,8 @@ private slots:
     void updateClassesTable();
     void viewWaitlist();
     void toggleScheduleWaitlist();
-    void showPadelCourtPage();
+    void loadCourts();
+    void displayCourts();
 
 private:
     QMap<int, Member*> members;
@@ -57,5 +63,7 @@ private:
     Ui::MainWindow *ui;
     QLineEdit* lineEditWaitlistClassId;
     bool showingWaitlist = false;
+    std::vector<Court> courts;
+    std::map<std::string, std::map<std::string, std::vector<bool>>> bookings;
 };
 #endif // MAINWINDOW_H

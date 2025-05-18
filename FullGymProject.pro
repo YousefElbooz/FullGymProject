@@ -17,14 +17,13 @@ SOURCES += \
     manger.cpp \
     receptionists.cpp \
     gymclass.cpp \
-    filehandler.cpp \
+    FileHandler.cpp \
     animations.cpp \
     HelperFunction.cpp \
     BookingLoader.cpp \
     BookingCourt.cpp \
     Court.cpp \
-    CourtLoader.cpp \
-    PaddleCourtWindow.cpp
+    CourtLoader.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -34,14 +33,13 @@ HEADERS += \
     manger.h \
     receptionists.h \
     gymclass.h \
-    filehandler.h \
+    FileHandler.h \
     animations.h \
     HelperFunction.h \
     BookingLoader.h \
     BookingCourt.h \
     Court.h \
-    CourtLoader.h \
-    PaddleCourtWindow.h
+    CourtLoader.h
 
 FORMS += \
     mainwindow.ui
@@ -54,10 +52,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     bookings.txt \
     classes.txt \
+    courts.txt \
     members.txt \
-    padel_courts.txt \
     staffs.txt \
     waitlist.txt
 
 RESOURCES += \
     resource.qrc
+
+OTHER_FILES += \
+    members.txt \
+    staffs.txt \
+    classes.txt
