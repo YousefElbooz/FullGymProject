@@ -347,7 +347,6 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
             }
             continue;
         }
-
         if (line.startsWith("NormalWaitlist:")) {
             if (gc) {
                 QStringList memberIds = line.mid(QString("NormalWaitlist:").length()).split(",", Qt::SkipEmptyParts);

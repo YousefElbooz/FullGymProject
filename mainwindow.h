@@ -21,6 +21,7 @@
 #include "manger.h"
 #include "staff.h"
 #include "animations.h"
+#include "Court.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -37,7 +38,7 @@ private:
     void updateCapacity();
     void updateSubscriptionInfo();
     void applyTableStyle(QTableWidget* table);
-
+    void searchCourtAvailability();
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -61,8 +62,10 @@ private:
     QMap<int, Member*> members;
     QMap<int, Staff*> staffMap;
     QMap<int, GymClass*> classesmap;
-    Member* currMember;
-    Staff * currStaff;
+    QMap<QString, QMap<QString, QStringList>> padelBookings; // location -> (date -> slots)
+    Member* currMember = nullptr;
+    Staff* currStaff = nullptr;
+    QVector<Court> courts;
     Ui::MainWindow *ui;
     QLineEdit* lineEditWaitlistClassId;
     bool showingWaitlist = false;

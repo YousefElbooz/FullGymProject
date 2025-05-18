@@ -4,15 +4,15 @@ Member: 11
 2,Zumba,03:00 AM,Open,15,1,Coach: Elbooz
 Member: 11
 
-4,KickBoxing,07:15 AM,Open,30,3,Coach: Alaa El Gamed
+4,KickBoxing,07:15 AM,Open,30,4,Coach: Alaa El Gamed
 Member: 2
 Member: 3
 Member: 11
+Member: 6
 
 5,swimming,05:00 PM,Close,1,1,Coach: Ahmed
-Member: 9
-Waitlist:8:true,2:false,6:false,3:false,
+Member: 11
+NormalWaitlist:6
 
 6,Belly Dance,08:00 AM,Close,1,1,Coach: Sakira
-Member: 9
-
+Member: 11
