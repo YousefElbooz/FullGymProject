@@ -1,5 +1,14 @@
 #include "gymclass.h"
+#include "member.h" // Add explicit include to ensure Member is fully defined
+#include <algorithm>
+
 int GymClass::lastId =0;
+
+// Implementation of the MemberPriorityCompare operator
+bool MemberPriorityCompare::operator()(Member* a, Member* b) const {
+    // VIP members have higher priority (true means a has lower priority than b)
+    return !a->getIsVip() && b->getIsVip();
+}
 
 GymClass::GymClass(QString name, QString statue, int capacity)
     : name(name), statue(statue), capacity(capacity), coach(nullptr) {
@@ -21,39 +30,42 @@ void GymClass::addMember(Member* member) {
 }
 
 void GymClass::addToWaitlist(Member* member) {
-    if (member->getIsVip()) {
-        vipWaitlist.enqueue(member);
-    } else {
-        normalWaitlist.enqueue(member);
-    }
+    waitlist.push(member);
 }
 
 void GymClass::processWaitlist() {
-    // Process VIP waitlist first
-    while (!vipWaitlist.isEmpty() && members.size() < capacity) {
-        Member* member = vipWaitlist.dequeue();
+    // Process waitlist based on priority (VIP first)
+    while (!waitlist.empty() && members.size() < capacity) {
+        Member* member = waitlist.top();
+        waitlist.pop();
+        
         // Only add if not already enrolled
         if (!members.contains(member)) {
             members.push_back(member);
             member->addClass(this); // Add class to member's enrolled classes
         }
     }
-    
-    // Then process normal waitlist
-    while (!normalWaitlist.isEmpty() && members.size() < capacity) {
-        Member* member = normalWaitlist.dequeue();
-        if (!members.contains(member)) {
-            members.push_back(member);
-            member->addClass(this); // Add class to member's enrolled classes
-        }
-    }
-    
+
     enrolled = members.size();
     if (enrolled >= capacity) {
         statue = "Close";
     } else {
         statue = "Open";
     }
+}
+
+QVector<Member*> GymClass::getWaitlistAsVector() const {
+    // Create a copy of the priority queue so we don't modify the original
+    std::priority_queue<Member*, std::vector<Member*>, MemberPriorityCompare> tempQueue = waitlist;
+    QVector<Member*> result;
+    
+    // Extract members from the priority queue in order
+    while (!tempQueue.empty()) {
+        result.append(tempQueue.top());
+        tempQueue.pop();
+    }
+    
+    return result;
 }
 
 void GymClass::setCoach(Coach* coach) {this->coach = coach;}

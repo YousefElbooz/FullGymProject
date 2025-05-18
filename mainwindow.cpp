@@ -3,7 +3,17 @@
 #include "ui_mainwindow.h"
 #include "FileHandler.h"
 #include "animations.h"
-        
+#include <QFileDialog>
+#include <QDir>
+#include <QCoreApplication>
+#include <QFileInfo>
+#include <QPainter>
+#include <QBitmap>
+#include <QPainterPath>
+#include <QInputDialog>
+#include <QStack>
+#include <algorithm>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -13,23 +23,72 @@ MainWindow::MainWindow(QWidget *parent)
     this->setAttribute(Qt::WA_TranslucentBackground);
     ui->setupUi(this);
 
-    Animations* animations = new Animations(this);
+    // Initialize animation objects as member variables
+    animations = new Animations(this);
     animations->setUI(ui->LoginPageStackedWidget, ui->label, ui->Exit);
-    Animations* pageAnimator = new Animations(this);
+    
+    pageAnimator = new Animations(this);
     pageAnimator->setUI(ui->FullWiedgit, ui->label, ui->Exit);
-    ui->FullWiedgit->setCurrentIndex(1);
-    this->showMaximized();
-    ui->FullWiedgit->setCurrentIndex(0);
-    ui->LoginPageStackedWidget->setCurrentIndex(0);
-    ui->staffMainStackWidget->setCurrentIndex(1);
-    setPixmapForWidgets();
-    FileHandler::loadMembers("G:/cs_project/FullGymProject/members.txt", members, classesmap);
-    ui->label_36->setText(QString::number(members.size()));
-    FileHandler::loadStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
-    updateTrainerCount();
-    FileHandler::loadClasses("G:/cs_project/FullGymProject/classes.txt", classesmap, members, staffMap);
-    ui->label_38->setText(QString::number(classesmap.size()));
-    updateCapacity();
+
+    try {
+        ui->FullWiedgit->setCurrentIndex(1);
+        ui->FullWiedgit->setCurrentIndex(0);
+        ui->LoginPageStackedWidget->setCurrentIndex(0);
+        
+        // Important: Make sure staff UI is initialized to a safe state
+        if (ui->staffMainStackWidget) {
+            ui->staffMainStackWidget->setCurrentIndex(0);  // Set to dashboard (safer default)
+        }
+        
+        setPixmapForWidgets();
+        
+        // Load data with safety checks
+        FileHandler::loadMembers("D:/temp windows/New folder/New folder/FullGymProject/members.txt", members, classesmap);
+        if (ui->label_36) {
+            ui->label_36->setText(QString::number(members.size()));
+        }
+        
+        FileHandler::loadStaff("D:/temp windows/New folder/New folder/FullGymProject/staffs.txt", staffMap);
+        updateTrainerCount();
+        
+        FileHandler::loadClasses("D:/temp windows/New folder/New folder/FullGymProject/classes.txt", classesmap, members, staffMap);
+        if (ui->label_38) {
+            ui->label_38->setText(QString::number(classesmap.size()));
+        }
+        
+        updateCapacity();
+        
+        if (ui->stackedWidgetProfile) {
+            ui->stackedWidgetProfile->setCurrentIndex(0);
+        }
+        
+        // Apply the consistent style to all table widgets
+        QList<QTableWidget*> allTables = findChildren<QTableWidget*>();
+        for (QTableWidget* table : allTables) {
+            applyTableStyle(table);
+        }
+    }
+    catch (const std::exception& e) {
+        QMessageBox::critical(this, "Initialization Error", QString("Error during initialization: %1").arg(e.what()));
+    }
+    catch (...) {
+        QMessageBox::critical(this, "Initialization Error", "An unexpected error occurred during application initialization.");
+    }
+
+    // Set up subscription button styles
+    if (ui->subBtn1m) {
+        ui->subBtn1m->setText("1 Month Plan\n$50.00");
+    }
+    if (ui->subBtn3m) {
+        ui->subBtn3m->setText("3 Month Plan\n$130.00\nSave $20");
+    }
+    if (ui->subBtn6m) {
+        ui->subBtn6m->setText("6 Month Plan\n$250.00\nSave $50");
+    }
+    if (ui->subBtn12m) {
+        ui->subBtn12m->setText("12 Month Plan\n$480.00\nSave $120");
+    }
+
     // Move updateEnrolledClassesTable here so it is in scope for all later code
     auto updateEnrolledClassesTable = [=]() {
         ui->tableWidget_3->clearContents();
@@ -60,6 +119,8 @@ MainWindow::MainWindow(QWidget *parent)
             if (mem->getEmail() == usrEmail && mem->getPassword() == usrPassword) {
                 currMember = mem;
                 updateEnrolledClassesTable();
+                displayWorkouts();  // Also update workouts here if member logs in
+
                 QMessageBox::information(this, "Success", "You have logged in successfully.");
                 QString newImagePath = ":/img/images/member-background.png"; // Change to your target background if needed
                 QString newExitStyle = R"(
@@ -71,7 +132,7 @@ MainWindow::MainWindow(QWidget *parent)
                             font: bold 10pt "Yeasty Flavors";
                         }
                     )";
-                pageAnimator->animatedSwitchAdvanced(
+                this->pageAnimator->animatedSwitchAdvanced(
                     ui->FullWiedgit->currentIndex(), // from LoginPageStack
                     2, // to MemberPageStack index
                     newImagePath,
@@ -85,26 +146,51 @@ MainWindow::MainWindow(QWidget *parent)
         if(!loggedIn){
             for(auto stf: staffMap){
                 if(stf->getEmail()==usrEmail&&stf->getPassword()==usrPassword){
-                    currStaff = stf;
-                    QMessageBox::information(this, "Success", "You have logged in successfully.");
-                    QString newImagePath = ":/img/images/member-background.png"; // Change to your target background if needed
-                    QString newExitStyle = R"(
-                            QPushButton {
-                                background-color: #008FC1;
-                                color: white;
-                                border-radius: 10px;
-                                padding: 6px 12px;
-                                font: bold 10pt "Yeasty Flavors";
-                            }
-                        )";
-                    pageAnimator->animatedSwitchAdvanced(
-                        ui->FullWiedgit->currentIndex(), // from LoginPageStack
-                        1, // to StaffPageStack index
-                        newImagePath,
-                        newExitStyle
+                    // Set the current staff member safely
+                    try {
+                        currStaff = stf;
+                        
+                        // Success message
+                        QMessageBox::information(this, "Success", "You have logged in successfully.");
+                        
+                        // Configure style
+                        QString newImagePath = ":/img/images/member-background.png";
+                        QString newExitStyle = R"(
+                                QPushButton {
+                                    background-color: #008FC1;
+                                    color: white;
+                                    border-radius: 10px;
+                                    padding: 6px 12px;
+                                    font: bold 10pt "Yeasty Flavors";
+                                }
+                            )";
+                        
+                        // IMPORTANT: Use a safer approach to initialize the staff UI
+                        // First set relevant UI elements to safe states
+                        ui->staffMainStackWidget->setCurrentIndex(0); // Set to dashboard
+                        
+                        // Ensure UI is properly prepared before animation
+                        QApplication::processEvents();
+                        
+                        // Switch pages with animation
+                        this->pageAnimator->animatedSwitchAdvanced(
+                            ui->FullWiedgit->currentIndex(),
+                            1, // Staff page index
+                            newImagePath,
+                            newExitStyle
                         );
-                    loggedIn = true;
-                    break;  // Stop checking further
+                        
+                        // Mark as logged in
+                        loggedIn = true;
+                    }
+                    catch (const std::exception& e) {
+                        QMessageBox::critical(this, "Error", QString("An error occurred: %1").arg(e.what()));
+                    }
+                    catch (...) {
+                        QMessageBox::critical(this, "Error", "An unexpected error occurred during login.");
+                    }
+                    
+                    break; // Stop checking other staff
                 }
             }
         }
@@ -113,6 +199,338 @@ MainWindow::MainWindow(QWidget *parent)
             QMessageBox::warning(this, "Invalid Email or Password", "Please re-enter the information correctly.");
         }
     });
+
+    // ---- PROFILE PAGE LOGIC ----
+    // PROFILE PAGE CONNECTIONS (all as lambdas)
+    // Helper: displayProfilePage logic as a lambda (can be reused)
+    auto displayProfilePage = [=]() {
+        if (!currMember) return;
+        ui->labelName->setText(currMember->getName());
+        ui->labelUsername->setText("@" + currMember->getEmail().split("@").first());
+        // Load profile picture
+        QString picPath = currMember->getProfilePicturePath();
+        QString absPicPath = picPath;
+        if (!picPath.isEmpty() && !QFile::exists(picPath)) {
+            absPicPath = QCoreApplication::applicationDirPath() + "/" + picPath;
+        }
+        if (!picPath.isEmpty() && QFile::exists(absPicPath)) {
+            QPixmap pix(absPicPath);
+            int size = qMin(pix.width(), pix.height());
+            QPixmap scaled = pix.scaled(180, 180, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+            QPixmap circular(200, 200);
+            circular.fill(Qt::transparent);
+            QPainter painter(&circular);
+            painter.setRenderHint(QPainter::Antialiasing);
+            QPainterPath path;
+            path.addEllipse(0, 0,200, 200);
+            painter.setClipPath(path);
+            painter.drawPixmap(0, 0, scaled);
+            // Draw border
+            QPen pen(QColor("#c68f3b"), 4);
+            painter.setPen(pen);
+            painter.setBrush(Qt::NoBrush);
+            painter.drawEllipse(2, 2,200, 200);
+            painter.end();
+            ui->labelProfilePic->setPixmap(circular);
+        } else {
+            ui->labelProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(120, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        }
+        ui->stackedWidgetProfile->setCurrentWidget(ui->profileViewPage);
+    };
+
+    connect(ui->btnEditProfile, &QPushButton::clicked, this, [=] {
+        if (!currMember) return;
+        ui->editName->setText(currMember->getName());
+        ui->editEmail->setText(currMember->getEmail());
+        ui->editUsername->setText("@" + currMember->getEmail().split("@").first());
+        ui->editPassword->setText(currMember->getPassword());
+        ui->editPhone->setText(currMember->getPhone());
+        // Load profile picture in edit mode
+        QString picPath = currMember->getProfilePicturePath();
+        QString absPicPath = picPath;
+        if (!picPath.isEmpty() && !QFile::exists(picPath)) {
+            absPicPath = QCoreApplication::applicationDirPath() + "/" + picPath;
+        }
+        if (!picPath.isEmpty() && QFile::exists(absPicPath)) {
+            QPixmap pix(absPicPath);
+            ui->labelEditProfilePic->setPixmap(pix.scaled(120, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        } else {
+            ui->labelEditProfilePic->setPixmap(QPixmap(":/icons/images/icons/profile.svg").scaled(120, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        }
+        ui->stackedWidgetProfile->setCurrentWidget(ui->editProfilePage);
+    });
+
+    connect(ui->btnSaveProfile, &QPushButton::clicked, this, [=] {
+        if (!currMember) return;
+        QString name = ui->editName->text().trimmed();
+        QString email = ui->editEmail->text().trimmed();
+        QString password = ui->editPassword->text();
+        QString phone = ui->editPhone->text().trimmed();
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            QMessageBox::warning(this, "Validation Error", "Name, email, and password cannot be empty.");
+            return;
+        }
+        currMember->setName(name);
+        currMember->setEmail(email);
+        currMember->setPhone(phone);
+        currMember->getPassword() = password; // If password is public, else add a setter
+        displayProfilePage();
+    });
+
+    connect(ui->btnCancelEdit, &QPushButton::clicked, this, [=] {
+        displayProfilePage();
+    });
+
+    connect(ui->btnTogglePassword, &QToolButton::clicked, this, [=] {
+        if (ui->editPassword->echoMode() == QLineEdit::Password)
+            ui->editPassword->setEchoMode(QLineEdit::Normal);
+        else
+            ui->editPassword->setEchoMode(QLineEdit::Password);
+    });
+
+    // Profile picture change in edit mode
+    connect(ui->btnChangeProfilePic, &QPushButton::clicked, this, [=] {
+        if (!currMember) return;
+        QString fileName = QFileDialog::getOpenFileName(this, "Select Profile Picture", "", "Images (*.png *.jpg *.jpeg *.bmp)");
+        if (!fileName.isEmpty()) {
+            QDir dir(QCoreApplication::applicationDirPath() + "/profile_pics");
+            if (!dir.exists()) dir.mkpath(".");
+            QFileInfo fi(fileName);
+            QString ext = fi.suffix();
+            QString newFileName = QString("profile_pics/member_%1.%2").arg(currMember->getId()).arg(ext);
+            QString absNewFileName = QCoreApplication::applicationDirPath() + "/" + newFileName;
+            QFile::remove(absNewFileName);
+            QFile::copy(fileName, absNewFileName);
+            currMember->setProfilePicturePath(newFileName);
+            QPixmap pix(absNewFileName);
+            int size = qMin(pix.width(), pix.height());
+            QPixmap scaled = pix.scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+            QPixmap circular(100, 100);
+            circular.fill(Qt::transparent);
+            QPainter painter(&circular);
+            painter.setRenderHint(QPainter::Antialiasing);
+            QPainterPath path;
+            path.addEllipse(0, 0, 200, 200);
+            painter.setClipPath(path);
+            painter.drawPixmap(0, 0, scaled);
+            QPen pen(QColor("#c68f3b"), 4);
+            painter.setPen(pen);
+            painter.setBrush(Qt::NoBrush);
+            painter.drawEllipse(2, 2, 96, 96);
+            painter.end();
+            ui->labelEditProfilePic->setPixmap(circular);
+        }
+    });
+
+    // Event filter for profile pic click in edit mode
+    ui->labelEditProfilePic->installEventFilter(this);
+
+
+    // Connect subscription buttons
+    connect(ui->subBtn1m, &QPushButton::clicked, this, [=]() {
+        if (!currMember) {
+            QMessageBox::warning(this, "Error", "No member logged in");
+            return;
+        }
+
+        QString message;
+        bool isVip = ui->vipCheckBox->isChecked();
+        double price = isVip ? 70.00 : 50.00;
+
+        if (currMember->isSubscriptionActive()) {
+            // Extending existing subscription
+            QDate newEndDate = currMember->getSubscriptionEndDate().addMonths(1);
+            message = QString("You currently have an active subscription ending on %1.\n\n"
+                              "Subscribing for 1 month will extend your membership to %2.\n\n"
+                              "Price: $%3.00%4")
+                          .arg(currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"))
+                          .arg(newEndDate.toString("yyyy-MM-dd"))
+                          .arg(price)
+                          .arg(isVip ? " (VIP)" : "");
+        } else {
+            // New subscription
+            message = QString("Would you like to subscribe for 1 month?\n\nPrice: $%1.00%2")
+                          .arg(price)
+                          .arg(isVip ? " (VIP)" : "");
+        }
+
+        QMessageBox::StandardButton confirm = QMessageBox::question(this,
+                                                                    "Confirm Subscription", message, QMessageBox::Yes | QMessageBox::No);
+
+        if (confirm == QMessageBox::Yes) {
+            currMember->setSubscription("1m");
+            currMember->setIsVip(isVip);
+            updateSubscriptionInfo();
+
+            QString successMessage;
+            if (currMember->getSubscriptionStartDate() == QDate::currentDate()) {
+                successMessage = "You have successfully subscribed for 1 month.";
+            } else {
+                successMessage = "You have successfully extended your subscription for 1 month.";
+            }
+
+            QMessageBox::information(this, "Subscription Activated",
+                                     successMessage + "\nYour membership is active until " +
+                                         currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"));
+        }
+    });
+
+    connect(ui->subBtn3m, &QPushButton::clicked, this, [=]() {
+        if (!currMember) {
+            QMessageBox::warning(this, "Error", "No member logged in");
+            return;
+        }
+
+        QString message;
+        bool isVip = ui->vipCheckBox->isChecked();
+        double price = isVip ? 150.00 : 130.00;
+        double savings = isVip ? 60.00 : 20.00;
+
+        if (currMember->isSubscriptionActive()) {
+            // Extending existing subscription
+            QDate newEndDate = currMember->getSubscriptionEndDate().addMonths(3);
+            message = QString("You currently have an active subscription ending on %1.\n\n"
+                              "Subscribing for 3 months will extend your membership to %2.\n\n"
+                              "Price: $%3.00 (Save $%4.00)%5")
+                          .arg(currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"))
+                          .arg(newEndDate.toString("yyyy-MM-dd"))
+                          .arg(price)
+                          .arg(savings)
+                          .arg(isVip ? " (VIP)" : "");
+        } else {
+            // New subscription
+            message = QString("Would you like to subscribe for 3 months?\n\nPrice: $%1.00 (Save $%2.00)%3")
+                          .arg(price)
+                          .arg(savings)
+                          .arg(isVip ? " (VIP)" : "");
+        }
+
+        QMessageBox::StandardButton confirm = QMessageBox::question(this,
+                                                                    "Confirm Subscription", message, QMessageBox::Yes | QMessageBox::No);
+
+        if (confirm == QMessageBox::Yes) {
+            currMember->setSubscription("3m");
+            currMember->setIsVip(isVip);
+            updateSubscriptionInfo();
+
+            QString successMessage;
+            if (currMember->getSubscriptionStartDate() == QDate::currentDate()) {
+                successMessage = "You have successfully subscribed for 3 months.";
+            } else {
+                successMessage = "You have successfully extended your subscription for 3 months.";
+            }
+
+            QMessageBox::information(this, "Subscription Activated",
+                                     successMessage + "\nYour membership is active until " +
+                                         currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"));
+        }
+    });
+
+    connect(ui->subBtn6m, &QPushButton::clicked, this, [=]() {
+        if (!currMember) {
+            QMessageBox::warning(this, "Error", "No member logged in");
+            return;
+        }
+
+        QString message;
+        bool isVip = ui->vipCheckBox->isChecked();
+        double price = isVip ? 270.00 : 250.00;
+        double savings = isVip ? 90.00 : 50.00;
+
+        if (currMember->isSubscriptionActive()) {
+            // Extending existing subscription
+            QDate newEndDate = currMember->getSubscriptionEndDate().addMonths(6);
+            message = QString("You currently have an active subscription ending on %1.\n\n"
+                              "Subscribing for 6 months will extend your membership to %2.\n\n"
+                              "Price: $%3.00 (Save $%4.00)%5")
+                          .arg(currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"))
+                          .arg(newEndDate.toString("yyyy-MM-dd"))
+                          .arg(price)
+                          .arg(savings)
+                          .arg(isVip ? " (VIP)" : "");
+        } else {
+            // New subscription
+            message = QString("Would you like to subscribe for 6 months?\n\nPrice: $%1.00 (Save $%2.00)%3")
+                          .arg(price)
+                          .arg(savings)
+                          .arg(isVip ? " (VIP)" : "");
+        }
+
+        QMessageBox::StandardButton confirm = QMessageBox::question(this,
+                                                                    "Confirm Subscription", message, QMessageBox::Yes | QMessageBox::No);
+
+        if (confirm == QMessageBox::Yes) {
+            currMember->setSubscription("6m");
+            currMember->setIsVip(isVip);
+            updateSubscriptionInfo();
+
+            QString successMessage;
+            if (currMember->getSubscriptionStartDate() == QDate::currentDate()) {
+                successMessage = "You have successfully subscribed for 6 months.";
+            } else {
+                successMessage = "You have successfully extended your subscription for 6 months.";
+            }
+
+            QMessageBox::information(this, "Subscription Activated",
+                                     successMessage + "\nYour membership is active until " +
+                                         currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"));
+        }
+    });
+
+    connect(ui->subBtn12m, &QPushButton::clicked, this, [=]() {
+        if (!currMember) {
+            QMessageBox::warning(this, "Error", "No member logged in");
+            return;
+        }
+
+        QString message;
+        bool isVip = ui->vipCheckBox->isChecked();
+        double price = isVip ? 500.00 : 480.00;
+        double savings = isVip ? 160.00 : 120.00;
+
+        if (currMember->isSubscriptionActive()) {
+            // Extending existing subscription
+            QDate newEndDate = currMember->getSubscriptionEndDate().addMonths(12);
+            message = QString("You currently have an active subscription ending on %1.\n\n"
+                              "Subscribing for 12 months will extend your membership to %2.\n\n"
+                              "Price: $%3.00 (Save $%4.00)%5")
+                          .arg(currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"))
+                          .arg(newEndDate.toString("yyyy-MM-dd"))
+                          .arg(price)
+                          .arg(savings)
+                          .arg(isVip ? " (VIP)" : "");
+        } else {
+            // New subscription
+            message = QString("Would you like to subscribe for 12 months (1 year)?\n\nPrice: $%1.00 (Save $%2.00)%3")
+                          .arg(price)
+                          .arg(savings)
+                          .arg(isVip ? " (VIP)" : "");
+        }
+
+        QMessageBox::StandardButton confirm = QMessageBox::question(this,
+                                                                    "Confirm Subscription", message, QMessageBox::Yes | QMessageBox::No);
+
+        if (confirm == QMessageBox::Yes) {
+            currMember->setSubscription("12m");
+            currMember->setIsVip(isVip);
+            updateSubscriptionInfo();
+
+            QString successMessage;
+            if (currMember->getSubscriptionStartDate() == QDate::currentDate()) {
+                successMessage = "You have successfully subscribed for 12 months.";
+            } else {
+                successMessage = "You have successfully extended your subscription for 12 months.";
+            }
+
+            QMessageBox::information(this, "Subscription Activated",
+                                     successMessage + "\nYour membership is active until " +
+                                         currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"));
+        }
+    });
+
+    // Connect to notification button to update subscription info when clicked
+    connect(ui->NotifiMemberBtn, &QPushButton::clicked, this, &MainWindow::updateSubscriptionInfo);
+
     connect(ui->SignUp,&QPushButton::clicked,this,[=]{
         QString username = ui->LineEditUserNameSignUp->text();
         QString email = ui->LineEditEmailSignUp->text();
@@ -187,7 +605,7 @@ MainWindow::MainWindow(QWidget *parent)
             border-color:#008FC1;
         }
     )";
-        animations->animatedSwitchAdvanced(0, 1, ":/img/images/newpadelrounded.png", newStyle);
+        this->animations->animatedSwitchAdvanced(0, 1, ":/img/images/newpadelrounded.png", newStyle);
     });
 
     connect(ui->toggleButton_2, &QPushButton::clicked, this, [=]() {
@@ -208,7 +626,7 @@ MainWindow::MainWindow(QWidget *parent)
             border-color: rgb(198, 143, 59);
         }
     )";
-        animations->animatedSwitchAdvanced(1, 0, ":/img/images/newGymrounded.png", newStyle);
+        this->animations->animatedSwitchAdvanced(1, 0, ":/img/images/newGymrounded.png", newStyle);
     });
     connect(ui->Exit,&QPushButton::clicked,this,&MainWindow::close);
 
@@ -238,6 +656,19 @@ MainWindow::MainWindow(QWidget *parent)
             tableWidget->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
         }
     }
+
+    connect(ui->NotifiMemberBtn, &QPushButton::clicked, this, [=]() {
+        // Find the Notification page in the stackedWidget
+        for (int i = 0; i < ui->stackedWidget->count(); i++) {
+            if (ui->stackedWidget->widget(i)->objectName() == "Notification") {
+                ui->stackedWidget->setCurrentIndex(i);
+                // Update subscription info when showing the page
+                updateSubscriptionInfo();
+                break;
+            }
+        }
+    });
+
 
     connect(ui->SortEnrolledClassesBtn,&QPushButton::clicked,this,[=]{
         QStringList filters = {
@@ -302,7 +733,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         // Populate available classes
         for (const auto& gc : classesmap) {
-            if (gc->getEnrolled() < gc->getCapacity() && 
+            if (gc->getEnrolled() < gc->getCapacity() &&
                 !currMember->getClasses().contains(gc)) {
                 int row = ui->tableWidget_2->rowCount();
                 ui->tableWidget_2->insertRow(row);
@@ -345,7 +776,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         // Try to add member to class (this will handle waitlist if class is full)
         selectedClass->addMember(currMember);
-        
+
         // Check if member was added to waitlist
         if (!currMember->getClasses().contains(selectedClass)) {
             QString message = QString("The class is currently full. You have been added to the waitlist. %1")
@@ -356,7 +787,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
 
         updateClassesTable();
-        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveClasses("D:/temp windows/New folder/New folder/FullGymProject/classes.txt", classesmap);
         updateEnrolledClassesTable();
         ui->lineEditClassNameRequest->clear();
     });
@@ -369,33 +800,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->tableWidget_5->setColumnCount(6);
         ui->tableWidget_5->setHorizontalHeaderLabels(QStringList()
             << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
-        
-        // Set table styling to match enrolled window
-        ui->tableWidget_5->setStyleSheet(R"(
-            QTableWidget {
-                background-color: white;
-                alternate-background-color: #f6f6f6;
-                gridline-color: #d3d3d3;
-                border: 1px solid #d3d3d3;
-                border-radius: 5px;
-            }
-            QTableWidget::item {
-                padding: 5px;
-                border-bottom: 1px solid #d3d3d3;
-            }
-            QHeaderView::section {
-                background-color: #f1c27d;
-                color: black;
-                padding: 5px;
-                border: 1px solid #d3d3d3;
-                font-weight: bold;
-            }
-            QTableWidget::item:selected {
-                background-color: #f1c27d;
-                color: black;
-            }
-        )");
-        
+
         // Set column widths
         ui->tableWidget_5->setColumnWidth(0, 50);  // ID
         ui->tableWidget_5->setColumnWidth(1, 200); // Class Name
@@ -403,18 +808,6 @@ MainWindow::MainWindow(QWidget *parent)
         ui->tableWidget_5->setColumnWidth(3, 150); // Trainer
         ui->tableWidget_5->setColumnWidth(4, 100); // Status
         ui->tableWidget_5->setColumnWidth(5, 100); // Capacity
-        
-        // Enable alternating row colors
-        ui->tableWidget_5->setAlternatingRowColors(true);
-        
-        // Make the table read-only
-        ui->tableWidget_5->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        
-        // Enable selection of entire rows
-        ui->tableWidget_5->setSelectionBehavior(QAbstractItemView::SelectRows);
-        
-        // Enable sorting
-        ui->tableWidget_5->setSortingEnabled(true);
 
         for (const auto& gc : currMember->getClasses()) {
             int row = ui->tableWidget_5->rowCount();
@@ -427,6 +820,9 @@ MainWindow::MainWindow(QWidget *parent)
             ui->tableWidget_5->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
             ui->tableWidget_5->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
         }
+        
+        // Apply the consistent styling
+        applyTableStyle(ui->tableWidget_5);
     });
 
     ////////////////Cancel button secton //////////////////
@@ -465,8 +861,8 @@ MainWindow::MainWindow(QWidget *parent)
             foundClass->setStatue("Open");
         }
         // Save changes
-        // FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
-        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveMembers("D:/temp windows/New folder/New folder/FullGymProject/members.txt", members);
+        // FileHandler::saveClasses("D:/temp windows/New folder/New folder/FullGymProject/classes.txt", classesmap);
         // Update UI
         updateEnrolledClassesTable();
         updateClassesTable();
@@ -496,6 +892,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->tableWidget_6->setColumnCount(6);
         ui->tableWidget_6->setHorizontalHeaderLabels(QStringList()
             << "ID" << "Class Name" << "Time" << "Trainer" << "Status" << "Capacity");
+            
         for (const auto& gc : classesmap) {
             int row = ui->tableWidget_6->rowCount();
             ui->tableWidget_6->insertRow(row);
@@ -507,6 +904,9 @@ MainWindow::MainWindow(QWidget *parent)
             ui->tableWidget_6->setItem(row, 4, new QTableWidgetItem(gc->getStatue()));
             ui->tableWidget_6->setItem(row, 5, new QTableWidgetItem(QString::number(gc->getCapacity() - gc->getEnrolled())));
         }
+        
+        // Apply consistent styling
+        applyTableStyle(ui->tableWidget_6);
     });
 
     /////////////// --- Add Users Button Logic ---/////////////////
@@ -536,7 +936,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         if (role == "member") {
             // Append to members.txt
-            QFile file("G:/cs_project/FullGymProject/members.txt");
+            QFile file("D:/temp windows/New folder/New folder/FullGymProject/members.txt");
             if (file.open(QIODevice::Append | QIODevice::Text)) {
                 QTextStream out(&file);
                 int newId = members.size() + 1;
@@ -558,8 +958,8 @@ MainWindow::MainWindow(QWidget *parent)
             ui->comboBox->setCurrentIndex(0);
             return;
         }
-        
-        QFile file("G:/cs_project/FullGymProject/staffs.txt");
+
+        QFile file("D:/temp windows/New folder/New folder/FullGymProject/staffs.txt");
         if (file.open(QIODevice::Append | QIODevice::Text)) {
             QTextStream out(&file);
             int newId = staffMap.size() + 1;
@@ -590,8 +990,8 @@ MainWindow::MainWindow(QWidget *parent)
         ui->lineEditAddress->clear();
         ui->comboBox->setCurrentIndex(0);
     });
-    
-    
+
+
     connect(ui->TMbtn, &QPushButton::clicked, this, [=]() {
         // Only allow access if current staff is a manager
         Manger* manager = dynamic_cast<Manger*>(currStaff);
@@ -702,8 +1102,8 @@ MainWindow::MainWindow(QWidget *parent)
         gymClass->setCoach(coach);
 
         // Save changes
-        // FileHandler::saveStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
-        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveStaff("D:/temp windows/New folder/New folder/FullGymProject/staffs.txt", staffMap);
+        // FileHandler::saveClasses("D:/temp windows/New folder/New folder/FullGymProject/classes.txt", classesmap);
 
         QMessageBox::information(this, "Success", "Class assigned successfully!");
     });
@@ -719,47 +1119,14 @@ MainWindow::MainWindow(QWidget *parent)
     // Setup members table
     ui->tableWidget_15->setColumnCount(3);
     ui->tableWidget_15->setHorizontalHeaderLabels(QStringList() << "ID" << "Name" << "Age");
-    ui->tableWidget_15->setStyleSheet(R"(
-        QTableWidget {
-            background-color: white;
-            alternate-background-color: #f6f6f6;
-            gridline-color: #d3d3d3;
-            border: 1px solid #d3d3d3;
-            border-radius: 5px;
-        }
-        QTableWidget::item {
-            padding: 5px;
-            border-bottom: 1px solid #d3d3d3;
-        }
-        QHeaderView::section {
-            background-color: #f1c27d;
-            color: black;
-            padding: 5px;
-            border: 1px solid #d3d3d3;
-            font-weight: bold;
-        }
-        QTableWidget::item:selected {
-            background-color: #f1c27d;
-            color: black;
-        }
-    )");
-    
+
     // Set column widths
     ui->tableWidget_15->setColumnWidth(0, 50);  // ID
     ui->tableWidget_15->setColumnWidth(1, 200); // Name
     ui->tableWidget_15->setColumnWidth(2, 50);  // Age
-    
-    // Enable alternating row colors
-    ui->tableWidget_15->setAlternatingRowColors(true);
-    
-    // Make the table read-only
-    ui->tableWidget_15->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    
-    // Enable selection of entire rows
-    ui->tableWidget_15->setSelectionBehavior(QAbstractItemView::SelectRows);
-    
-    // Enable sorting
-    ui->tableWidget_15->setSortingEnabled(true);
+
+    // Apply the consistent styling
+    applyTableStyle(ui->tableWidget_15);
 
     // Initial population of members table
     updateMembersTable();
@@ -768,13 +1135,163 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Connect toggleScheduleWaitlist button
     connect(ui->toggleScheduleWaitlistBtn, &QPushButton::clicked, this, &MainWindow::toggleScheduleWaitlist);
+    connect(ui->addWorkoutButton, &QPushButton::clicked, this, &MainWindow::addWorkout);
+    connect(ui->removeLastWorkoutButton, &QPushButton::clicked, this, &MainWindow::removeLastWorkout);
+    connect(ui->clearWorkoutsButton, &QPushButton::clicked, this, &MainWindow::clearWorkouts);
+    connect(ui->workoutLineEdit, &QLineEdit::returnPressed, this, &MainWindow::addWorkout);
+
+    // Update workouts display when member logs in
+    connect(ui->loginbtn, &QPushButton::clicked, this, [=] {
+        if (currMember) {
+            displayWorkouts();
+        }
+    });
+
+    // Connect the WorkoutBtn to navigate to workout page
+    connect(ui->WorkoutBtn, &QPushButton::clicked, this, [=]() {
+        if (currMember) {
+            // Find the workout page index
+            int workoutPageIndex = -1;
+            for (int i = 0; i < ui->stackedWidget->count(); i++) {
+                if (ui->stackedWidget->widget(i)->objectName() == "workoutPage") {
+                    workoutPageIndex = i;
+                    break;
+                }
+            }
+
+            if (workoutPageIndex >= 0) {
+                ui->stackedWidget->setCurrentIndex(workoutPageIndex);
+                displayWorkouts(); // Update the workout display
+            }
+        } else {
+            QMessageBox::warning(this, "Error", "Please log in first");
+        }
+    });
+
+    // Connect profile and subscription buttons
+    connect(ui->Subscriptionbtn, &QPushButton::clicked, this, [=]() {
+        // Find the Subscription page in the stackedWidget
+        for (int i = 0; i < ui->stackedWidget->count(); i++) {
+            if (ui->stackedWidget->widget(i)->objectName() == "Subscription") {
+                ui->stackedWidget->setCurrentIndex(i);
+                break;
+            }
+        }
+    });
+
+    connect(ui->NotifiMemberBtn, &QPushButton::clicked, this, [=]() {
+        // Find the Notification page in the stackedWidget
+        for (int i = 0; i < ui->stackedWidget->count(); i++) {
+            if (ui->stackedWidget->widget(i)->objectName() == "Notification") {
+                ui->stackedWidget->setCurrentIndex(i);
+                // Update subscription info when showing the page
+                updateSubscriptionInfo();
+                break;
+            }
+        }
+    });
+
+    connect(ui->MemberProfileBtn, &QPushButton::clicked, this, [=]() {
+        // Find the profile page in the stackedWidget
+        for (int i = 0; i < ui->stackedWidget->count(); i++) {
+            if (ui->stackedWidget->widget(i)->objectName() == "page_21") {
+                ui->stackedWidget->setCurrentIndex(i);
+                break;
+            }
+        }
+    });
 }
+
+void MainWindow::updateSubscriptionInfo() {
+    if (!currMember) return;
+
+    if (currMember->isSubscriptionActive()) {
+        // Active subscription
+        ui->subscriptionStatusLabel_2->setText("Active");
+
+        // Display subscription type in a more user-friendly format
+        QString friendlyType;
+        if (currMember->getSubscriptionType() == "1m") {
+            friendlyType = "1 Month";
+        } else if (currMember->getSubscriptionType() == "3m") {
+            friendlyType = "3 Months";
+        } else if (currMember->getSubscriptionType() == "6m") {
+            friendlyType = "6 Months";
+        } else if (currMember->getSubscriptionType() == "12m") {
+            friendlyType = "12 Months (1 Year)";
+        } else {
+            friendlyType = currMember->getSubscriptionType();
+        }
+
+        // Add VIP status to subscription type if applicable
+        if (currMember->getIsVip()) {
+            friendlyType += " (VIP)";
+        }
+
+        ui->subscriptionTypeLabel_2->setText(friendlyType);
+        ui->subscriptionStartLabel_2->setText(currMember->getSubscriptionStartDate().toString("yyyy-MM-dd"));
+        ui->subscriptionEndLabel_2->setText(currMember->getSubscriptionEndDate().toString("yyyy-MM-dd"));
+        ui->subscriptionDaysLabel_2->setText(QString::number(currMember->getDaysRemaining()));
+
+        // Set color for active subscription
+        ui->subscriptionStatusLabel_2->setStyleSheet("color: green; font-weight: bold;");
+    } else {
+        // No active subscription
+        ui->subscriptionStatusLabel_2->setText("Inactive");
+        ui->subscriptionTypeLabel_2->setText("None");
+        ui->subscriptionStartLabel_2->setText("N/A");
+        ui->subscriptionEndLabel_2->setText("N/A");
+        ui->subscriptionDaysLabel_2->setText("0");
+
+        // Set color for inactive subscription
+        ui->subscriptionStatusLabel_2->setStyleSheet("color: red; font-weight: bold;");
+    }
+}
+
+// Event filter to handle profile pic click
+bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
+    if (obj == ui->labelEditProfilePic && event->type() == QEvent::MouseButtonRelease) {
+        if (!currMember) return true;
+        QString fileName = QFileDialog::getOpenFileName(this, "Select Profile Picture", "", "Images (*.png *.jpg *.jpeg *.bmp)");
+        if (!fileName.isEmpty()) {
+            QDir dir(QCoreApplication::applicationDirPath() + "/profile_pics");
+            if (!dir.exists()) dir.mkpath(".");
+            QFileInfo fi(fileName);
+            QString ext = fi.suffix();
+            QString newFileName = QString("profile_pics/member_%1.%2").arg(currMember->getId()).arg(ext);
+            QString absNewFileName = QCoreApplication::applicationDirPath() + "/" + newFileName;
+            QFile::remove(absNewFileName);
+            QFile::copy(fileName, absNewFileName);
+            currMember->setProfilePicturePath(newFileName);
+            QPixmap pix(absNewFileName);
+            int size = qMin(pix.width(), pix.height());
+            QPixmap scaled = pix.scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+            QPixmap circular(100, 100);
+            circular.fill(Qt::transparent);
+            QPainter painter(&circular);
+            painter.setRenderHint(QPainter::Antialiasing);
+            QPainterPath path;
+            path.addEllipse(0, 0, 100, 100);
+            painter.setClipPath(path);
+            painter.drawPixmap(0, 0, scaled);
+            QPen pen(QColor("#c68f3b"), 4);
+            painter.setPen(pen);
+            painter.setBrush(Qt::NoBrush);
+            painter.drawEllipse(2, 2, 96, 96);
+            painter.end();
+            ui->labelEditProfilePic->setPixmap(circular);
+        }
+        return true;
+    }
+    return QMainWindow::eventFilter(obj, event);
+}
+
 
 MainWindow::~MainWindow() {
     delete ui;
-    FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
-    FileHandler::saveStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
-    FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+    FileHandler::saveMembers("D:/temp windows/New folder/New folder/FullGymProject/members.txt", members);
+    FileHandler::saveStaff("D:/temp windows/New folder/New folder/FullGymProject/staffs.txt", staffMap);
+    FileHandler::saveClasses("D:/temp windows/New folder/New folder/FullGymProject/classes.txt", classesmap);
     qDeleteAll(members);
     qDeleteAll(staffMap);
     qDeleteAll(classesmap);
@@ -911,9 +1428,10 @@ void MainWindow::setPixmapForWidgets() {
             else if(i<18)
                 ui->stackedWidget->setCurrentIndex(index-9);
             else{
-                Animations* pageAnimator = new Animations(this);
-                pageAnimator->setUI(ui->FullWiedgit, ui->label, ui->Exit);
-                pageAnimator->animatedSwitchAdvanced(
+                // Using a local animation object for logout
+                Animations* logoutAnimator = new Animations(this);
+                logoutAnimator->setUI(ui->FullWiedgit, ui->label, ui->Exit);
+                logoutAnimator->animatedSwitchAdvanced(
                     ui->FullWiedgit->currentIndex(),
                     0,
                     ":/img/images/newGymrounded.png",
@@ -977,17 +1495,17 @@ void MainWindow::addClass() {
     newClass->setId(newClassId);
     newClass->setTime(time);
     newClass->setEnrolled(0); // Initialize enrolled count to 0
-    
+
     classesmap[newClassId] = newClass;
 
     // Update the classes table
     updateClassesTable();
 
     // Save to file
-    // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+    // FileHandler::saveClasses("D:/temp windows/New folder/New folder/FullGymProject/classes.txt", classesmap);
 
     QMessageBox::information(this, "Success", "Class added successfully!");
-    
+
     ui->ClassName_3->clear();
     ui->Class_capacity_31->clear();
     ui->Class_Time_32->clear();
@@ -1009,7 +1527,7 @@ void MainWindow::removeClass() {
     GymClass* classToRemove = classesmap[ClassID.toInt()];
     classesmap.remove(ClassID.toInt());
 
-    // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+    // FileHandler::saveClasses("D:/temp windows/New folder/New folder/FullGymProject/classes.txt", classesmap);
 
     QMessageBox::information(this, "Success", "Class removed successfully!");
 
@@ -1032,22 +1550,10 @@ void MainWindow::updateClassesTable() {
     ui->tableWidget_2->setColumnWidth(5, 80);   // Enrolled
     ui->tableWidget_2->setColumnWidth(6, 150);  // Coach
 
-    // Enable alternating row colors
-    ui->tableWidget_2->setAlternatingRowColors(true);
-    
-    // Make the table read-only
-    ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    
-    // Enable selection of entire rows
-    ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
-    
-    // Enable sorting
-    ui->tableWidget_2->setSortingEnabled(true);
-
     for (auto it = classesmap.begin(); it != classesmap.end(); ++it) {
         int row = ui->tableWidget_2->rowCount();
         ui->tableWidget_2->insertRow(row);
-        
+
         // Add ID
         ui->tableWidget_2->setItem(row, 0, new QTableWidgetItem(QString::number(it.key())));
         // Add Name
@@ -1065,31 +1571,8 @@ void MainWindow::updateClassesTable() {
         ui->tableWidget_2->setItem(row, 6, new QTableWidgetItem(coachName));
     }
 
-    // Apply stylesheet for better appearance
-    ui->tableWidget_2->setStyleSheet(R"(
-        QTableWidget {
-            background-color: white;
-            alternate-background-color: #f6f6f6;
-            gridline-color: #d3d3d3;
-            border: 1px solid #d3d3d3;
-            border-radius: 5px;
-        }
-        QTableWidget::item {
-            padding: 5px;
-            border-bottom: 1px solid #d3d3d3;
-        }
-        QHeaderView::section {
-            background-color: #f1c27d;
-            color: black;
-            padding: 5px;
-            border: 1px solid #d3d3d3;
-            font-weight: bold;
-        }
-        QTableWidget::item:selected {
-            background-color: #f1c27d;
-            color: black;
-        }
-    )");
+    // Apply the consistent styling
+    applyTableStyle(ui->tableWidget_2);
 }
 //----------------------------------Member Management----------------------------------
 
@@ -1100,7 +1583,7 @@ void MainWindow::updateMembersTable() {
     for (auto it = members.begin(); it != members.end(); ++it) {
         int row = ui->tableWidget_15->rowCount();
         ui->tableWidget_15->insertRow(row);
-        
+
         // Add ID
         ui->tableWidget_15->setItem(row, 0, new QTableWidgetItem(QString::number(it.key())));
         // Add Name
@@ -1108,6 +1591,9 @@ void MainWindow::updateMembersTable() {
         // Add Age
         ui->tableWidget_15->setItem(row, 2, new QTableWidgetItem(QString::number(it.value()->getAge())));
     }
+    
+    // Apply the consistent styling
+    applyTableStyle(ui->tableWidget_15);
 }
 
 void MainWindow::addMember() {
@@ -1171,7 +1657,7 @@ void MainWindow::addMember() {
     members[newId] = newMember;
 
     // Save to file
-    // FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
+    // FileHandler::saveMembers("D:/temp windows/New folder/New folder/FullGymProject/members.txt", members);
 
     // Update the members table
     updateMembersTable();
@@ -1230,8 +1716,8 @@ void MainWindow::removeMember() {
         members.remove(memberIdToRemove);
 
         // Save changes to files
-        // FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
-        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveMembers("D:/temp windows/New folder/New folder/FullGymProject/members.txt", members);
+        // FileHandler::saveClasses("D:/temp windows/New folder/New folder/FullGymProject/classes.txt", classesmap);
 
         // Update the members table
         updateMembersTable();
@@ -1263,7 +1749,7 @@ void MainWindow::updateTrainerCount() {
 void MainWindow::updateCapacity() {
         int totalCapacity = 0;
     for (const auto& gc : classesmap) {
-        totalCapacity += gc->getCapacity(); 
+        totalCapacity += gc->getCapacity();
     }
     ui->label_39->setText(QString::number(totalCapacity));
 }
@@ -1274,62 +1760,196 @@ void MainWindow::viewWaitlist()
     QString classIdStr = ui->lineEditWaitlistClassId->text().trimmed();
     bool ok;
     int classId = classIdStr.toInt(&ok);
-    
+
     if (!ok) {
         QMessageBox::warning(this, "Invalid Input", "Please enter a valid class ID.");
         return;
     }
-    
+
     // Find the class in the classes map
     if (!classesmap.contains(classId)) {
         QMessageBox::warning(this, "Not Found", "Class with ID " + classIdStr + " not found.");
         return;
     }
-    
+
     GymClass* gymClass = classesmap[classId];
-    
+
     // Use the class schedule table (ui->tableWidget_2) to show the waitlist
     QTableWidget* waitlistTable = ui->tableWidget_2;
     waitlistTable->clearContents();
     waitlistTable->setRowCount(0);
     waitlistTable->setColumnCount(4);
-    waitlistTable->setHorizontalHeaderLabels(QStringList() 
+    waitlistTable->setHorizontalHeaderLabels(QStringList()
         << "Name" << "Email" << "Phone" << "VIP Status");
+
+    // Get waitlist as vector (already sorted by priority)
+    QVector<Member*> waitlistMembers = gymClass->getWaitlistAsVector();
     
-    // Add VIP members first
-    for (Member* member : gymClass->getVIPList()) {
+    // Add all members in priority order
+    for (Member* member : waitlistMembers) {
         int row = waitlistTable->rowCount();
         waitlistTable->insertRow(row);
         waitlistTable->setItem(row, 0, new QTableWidgetItem(member->getName()));
         waitlistTable->setItem(row, 1, new QTableWidgetItem(member->getEmail()));
         waitlistTable->setItem(row, 2, new QTableWidgetItem(member->getPhone()));
-        waitlistTable->setItem(row, 3, new QTableWidgetItem("Yes"));
+        waitlistTable->setItem(row, 3, new QTableWidgetItem(member->getIsVip() ? "Yes" : "No"));
     }
-    
-    // Then add normal members
-    for (Member* member : gymClass->getNormalList()) {
-        int row = waitlistTable->rowCount();
-        waitlistTable->insertRow(row);
-        waitlistTable->setItem(row, 0, new QTableWidgetItem(member->getName()));
-        waitlistTable->setItem(row, 1, new QTableWidgetItem(member->getEmail()));
-        waitlistTable->setItem(row, 2, new QTableWidgetItem(member->getPhone()));
-        waitlistTable->setItem(row, 3, new QTableWidgetItem("No"));
-    }
-    
-    // Set table properties
-    waitlistTable->setAlternatingRowColors(true);
-    waitlistTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    waitlistTable->setSelectionBehavior(QAbstractItemView::SelectRows);
-    waitlistTable->setSortingEnabled(true);
-    
+
     // Set column widths
     waitlistTable->setColumnWidth(0, 200);  // Name
     waitlistTable->setColumnWidth(1, 200);  // Email
     waitlistTable->setColumnWidth(2, 150);  // Phone
     waitlistTable->setColumnWidth(3, 100);  // VIP Status
+
+    // Apply our consistent styling
+    applyTableStyle(waitlistTable);
+}
+
+void MainWindow::toggleScheduleWaitlist() {
+    try {
+        // Safely check if we should toggle
+        if (ui->tableWidget_2 && ui->toggleScheduleWaitlistBtn) {
+            if (!showingWaitlist) {
+                // Instead of showing waitlist, just show a message that it's not available
+                QMessageBox::information(this, "Information", "Waitlist view is currently disabled.");
+                
+                // Just update the current table instead of using waitlist
+                updateClassesTable();
+                ui->toggleScheduleWaitlistBtn->setText("Show Waitlist");
+                showingWaitlist = false;
+            } else {
+                // Show class schedule
+                updateClassesTable();
+                ui->toggleScheduleWaitlistBtn->setText("Show Waitlist");
+                showingWaitlist = false;
+            }
+        }
+    } catch (...) {
+        // Silently handle any errors to prevent crashes
+        showingWaitlist = false;
+        // Try to reset the UI to a known state
+        if (ui->tableWidget_2) {
+            ui->tableWidget_2->clearContents();
+            ui->tableWidget_2->setRowCount(0);
+        }
+    }
+}
+
+
+
+void MainWindow::addWorkout()
+{
+    if (!currMember) {
+        QMessageBox::warning(this, "Error", "No member selected!");
+        return;
+    }
+
+    QString workoutText = ui->workoutLineEdit->text().trimmed();
+    if (workoutText.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Please enter workout details!");
+        return;
+    }
+
+    // Add workout to member's stack
+    QStack<QPair<QString, QDate>> workouts = currMember->getWorkouts();
+    workouts.push(qMakePair(workoutText, QDate::currentDate()));
+    currMember->setWorkouts(workouts);
+
+    // Clear input field
+    ui->workoutLineEdit->clear();
+
+    // Update display
+    displayWorkouts();
+}
+
+void MainWindow::removeLastWorkout()
+{
+    if (!currMember) {
+        QMessageBox::warning(this, "Error", "No member selected!");
+        return;
+    }
+
+    QStack<QPair<QString, QDate>> workouts = currMember->getWorkouts();
+    if (!workouts.isEmpty()) {
+        workouts.pop();
+        currMember->setWorkouts(workouts);
+        displayWorkouts();
+    } else {
+        QMessageBox::information(this, "Info", "No workouts to remove.");
+    }
+}
+
+
+void MainWindow::displayWorkouts()
+{
+    ui->workoutListWidget->clear();
+    if (!currMember) {
+        return;
+    }
+
+    QStack<QPair<QString, QDate>> workouts = currMember->getWorkouts();
+    QStack<QPair<QString, QDate>> tempStack = workouts;
+
+    QStringList workoutList;
+
+    while (!tempStack.isEmpty()) {
+        auto entry = tempStack.pop();
+        QString workoutText = entry.first;
+        QDate workoutDate = entry.second;
+
+        QListWidgetItem* item = new QListWidgetItem();
+
+        // Icon selection logic (reuse your current checks)
+        QIcon icon;
+        if (workoutText.contains("run", Qt::CaseInsensitive) || workoutText.contains("jog", Qt::CaseInsensitive)) {
+            icon = QIcon(":/img/images/running.png");
+        } else if (workoutText.contains("swim", Qt::CaseInsensitive)) {
+            icon = QIcon(":/img/images/swimming.png");
+        } else if (workoutText.contains("bike", Qt::CaseInsensitive) || workoutText.contains("cycle", Qt::CaseInsensitive)) {
+            icon = QIcon(":/img/images/cycling.png");
+        } else if (workoutText.contains("lift", Qt::CaseInsensitive) || workoutText.contains("weight", Qt::CaseInsensitive) ||
+                   workoutText.contains("press", Qt::CaseInsensitive) || workoutText.contains("curl", Qt::CaseInsensitive)) {
+            icon = QIcon(":/img/images/weight.png");
+        } else {
+            icon = QIcon(":/img/images/workout.png");
+        }
+
+        item->setIcon(icon);
+
+        QString formattedText = QString("%1 - %2")
+                                    .arg(workoutDate.toString("dd MMM yyyy"))
+                                    .arg(workoutText);
+
+        item->setText(formattedText);
+        item->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        item->setSizeHint(QSize(item->sizeHint().width(), 40));
+        ui->workoutListWidget->addItem(item);
+    }
+}
+
+void MainWindow::clearWorkouts()
+{
+    if (!currMember) {
+        QMessageBox::warning(this, "Error", "No member selected!");
+        return;
+    }
+
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Confirm Clear",
+                                                              "Are you sure you want to clear all workouts?",
+                                                              QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        currMember->setWorkouts(QStack<QPair<QString, QDate>>());
+        displayWorkouts();
+    }
+}
+
+// Add this function to apply consistent styling to all tables
+void MainWindow::applyTableStyle(QTableWidget* table) {
+    if (!table) return;
     
-    // Apply stylesheet
-    waitlistTable->setStyleSheet(R"(
+    // Apply the requested styling
+    table->setStyleSheet(R"(
         QTableWidget {
             background-color: rgb(55, 91, 106);
             font: 11pt "Yeasty Flavors";
@@ -1349,18 +1969,14 @@ void MainWindow::viewWaitlist()
             selection-color: black;
         }
     )");
+    
+    // Additional customizations
+    table->setAlternatingRowColors(false); // Disable alternating colors since we have a dark theme
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers); // Make table read-only
+    table->setSelectionBehavior(QAbstractItemView::SelectRows); // Select entire rows
+    table->horizontalHeader()->setStretchLastSection(true); // Stretch last column
+    table->verticalHeader()->setVisible(false); // Hide vertical headers
+    table->setShowGrid(true); // Show grid lines
 }
 
-void MainWindow::toggleScheduleWaitlist() {
-    if (!showingWaitlist) {
-        // Show waitlist
-        viewWaitlist();
-        ui->toggleScheduleWaitlistBtn->setText("Show Schedule");
-        showingWaitlist = true;
-    } else {
-        // Show class schedule
-        updateClassesTable();
-        ui->toggleScheduleWaitlistBtn->setText("Show Waitlist");
-        showingWaitlist = false;
-    }
-}
+

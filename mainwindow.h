@@ -16,9 +16,11 @@
 #include <QStackedWidget>
 #include <QWidget>
 #include <QLineEdit>
+#include <QTableWidget>
 #include "member.h"
 #include "manger.h"
 #include "staff.h"
+#include "animations.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -33,6 +35,9 @@ private:
     void setPixmapForWidgets();
     void updateTrainerCount();
     void updateCapacity();
+    void updateSubscriptionInfo();
+    void applyTableStyle(QTableWidget* table);
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -46,7 +51,12 @@ private slots:
     void updateClassesTable();
     void viewWaitlist();
     void toggleScheduleWaitlist();
-
+    void addWorkout();
+    void removeLastWorkout();
+    void displayWorkouts();
+    void clearWorkouts();
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override;
 private:
     QMap<int, Member*> members;
     QMap<int, Staff*> staffMap;
@@ -56,5 +66,9 @@ private:
     Ui::MainWindow *ui;
     QLineEdit* lineEditWaitlistClassId;
     bool showingWaitlist = false;
+    
+    // Animation objects
+    Animations* animations;
+    Animations* pageAnimator;
 };
 #endif // MAINWINDOW_H
