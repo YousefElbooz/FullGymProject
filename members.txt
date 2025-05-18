@@ -7,12 +7,16 @@ Class: Yoga
 Class: CrossFit
 Class: TRX
 Class: Powerlifting
-
+9:vddsf:dsds@gmail.com:123456:male:true:5465665444:hhjhjjh:12
+Class: Yoga
 3:0100000:malak@gmail.com:01218972:male:false:19:Elma3ady:19::
-
 4:Ali:Ali@gmail.com:01218972:male:false:01098676433:Cairo NaserCity:20::
-
+11:Marwan:Marwan@gmail.com:123456:male:true:01062116844:El gemza:33
+Class: Yoga
+Class: Zumba
+Class: KickBoxing
+Class: swimming
+Class: Belly Dance
 5:Bosela:Boseal@gmail.com:123456:male:false:01062116844:El7lmea:20::
 Class: Powerlifting
-
 /////what to do/???

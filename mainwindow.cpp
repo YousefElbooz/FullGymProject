@@ -3,6 +3,9 @@
 #include "ui_mainwindow.h"
 #include "FileHandler.h"
 #include "animations.h"
+#include <QCoreApplication>
+#include <QDebug>
+        
 #include <QFileDialog>
 #include <QDir>
 #include <QCoreApplication>
@@ -32,10 +35,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
-    FileHandler::loadMembers("D:/temp windows/New folder/FullGymProject/members.txt", members, classesmap);
+    FileHandler::loadMembers("G:/cs_project/project/FullGymProject/members.txt", members, classesmap);
     ui->label_36->setText(QString::number(members.size()));
-    FileHandler::loadStaff("D:/temp windows/New folder/FullGymProject/staffs.txt", staffMap);
-    FileHandler::loadClasses("D:/temp windows/New folder/FullGymProject/classes.txt", classesmap, members, staffMap);
+    FileHandler::loadStaff("G:/cs_project/project/FullGymProject/staffs.txt", staffMap);
+    updateTrainerCount();
+    FileHandler::loadClasses("G:/cs_project/project/FullGymProject/classes.txt", classesmap, members, staffMap);
     ui->label_38->setText(QString::number(classesmap.size()));
     ui->stackedWidgetProfile->setCurrentIndex(0);
     // Set up subscription button styles
@@ -577,7 +581,19 @@ MainWindow::MainWindow(QWidget *parent)
         }
 
         selectedClass->addMember(currMember);
-        selectedClass->setEnrolled(selectedClass->getEnrolled() + 1);
+        
+        // Check if member was added to waitlist
+        if (!currMember->getClasses().contains(selectedClass)) {
+            QString message = QString("The class is currently full. You have been added to the waitlist. %1")
+                .arg(currMember->getIsVip() ? "As a VIP member, you will be prioritized." : "");
+            QMessageBox::information(this, "Added to Waitlist", message);
+        } else {
+            QMessageBox::information(this, "Success", "Successfully enrolled in " + selectedClass->getName());
+        }
+
+        updateClassesTable();
+        // FileHandler::saveClasses("G:/cs_project/project/FullGymProject/classes.txt", classesmap);
+
         updateEnrolledClassesTable();
         QMessageBox::information(this, "Success", "Successfully enrolled in " + selectedClass->getName());
 
@@ -659,6 +675,14 @@ MainWindow::MainWindow(QWidget *parent)
         foundClass->removeMember(currMember);
         // Update enrolled count
         foundClass->setEnrolled(foundClass->getEnrolled() - 1);
+
+        // Update class status if not full
+        if (foundClass->getEnrolled() < foundClass->getCapacity()) {
+            foundClass->setStatue("Open");
+        }
+        // Save changes
+        // FileHandler::saveMembers("G:/cs_project/project/FullGymProject/members.txt", members);
+        // FileHandler::saveClasses("G:/cs_project/project/FullGymProject/classes.txt", classesmap);
         // Update UI
         updateEnrolledClassesTable();
         ui->tableWidget_5->clearContents();
@@ -727,7 +751,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         if (role == "member") {
             // Append to members.txt
-            QFile file("D:/temp windows/New folder/FullGymProject/members.txt");
+            QFile file("G:/cs_project/project/FullGymProject/members.txt");
             if (file.open(QIODevice::Append | QIODevice::Text)) {
                 QTextStream out(&file);
                 int newId = members.size() + 1;
@@ -749,8 +773,7 @@ MainWindow::MainWindow(QWidget *parent)
             ui->comboBox->setCurrentIndex(0);
             return;
         }
-
-        QFile file("D:/temp windows/New folder/FullGymProject/staffs.txt");
+        QFile file("G:/cs_project/project/FullGymProject/staffs.txt");
         if (file.open(QIODevice::Append | QIODevice::Text)) {
             QTextStream out(&file);
             int newId = staffMap.size() + 1;
@@ -967,6 +990,11 @@ MainWindow::MainWindow(QWidget *parent)
         }
     });
 
+    // Connect toggleScheduleWaitlist button
+    connect(ui->toggleScheduleWaitlistBtn, &QPushButton::clicked, this, &MainWindow::toggleScheduleWaitlist);
+
+    // Connect paddle court button
+    connect(ui->PadekCourtBtn, &QPushButton::clicked, this, &MainWindow::showPadelCourtPage);
     // ---- PROFILE PAGE LOGIC ----
     // PROFILE PAGE CONNECTIONS (all as lambdas)
     // Helper: displayProfilePage logic as a lambda (can be reused)
@@ -1249,9 +1277,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {
     delete ui;
-    FileHandler::saveMembers("D:/temp windows/New folder/FullGymProject/members.txt", members);
-    FileHandler::saveStaff("D:/temp windows/New folder/FullGymProject/staffs.txt", staffMap);
-    FileHandler::saveClasses("D:/temp windows/New folder/FullGymProject/classes.txt", classesmap);
+    FileHandler::saveMembers("G:/cs_project/project/FullGymProject/members.txt", members);
+    FileHandler::saveStaff("G:/cs_project/project/FullGymProject/staffs.txt", staffMap);
+    FileHandler::saveClasses("G:/cs_project/project/FullGymProject/classes.txt", classesmap);
+
     qDeleteAll(members);
     qDeleteAll(staffMap);
     qDeleteAll(classesmap);
@@ -1465,9 +1494,7 @@ void MainWindow::addClass() {
 
     // Update the classes table
     updateClassesTable();
-
-    // Save to file
-
+    // Save 
     QMessageBox::information(this, "Success", "Class added successfully!");
 
     ui->ClassName_3->clear();
@@ -1491,6 +1518,7 @@ void MainWindow::removeClass() {
 
     GymClass* classToRemove = classesmap[ClassID.toInt()];
     classesmap.remove(ClassID.toInt());
+
 
 
     QMessageBox::information(this, "Success", "Class removed successfully!");
@@ -1652,6 +1680,7 @@ void MainWindow::addMember() {
     members[newId] = newMember;
 
     // Save to file
+
 
     // Update the members table
     updateMembersTable();
@@ -1956,5 +1985,56 @@ void MainWindow::clearWorkouts()
         currMember->setWorkouts(QStack<QString>());
         displayWorkouts();
     }
+}
+
+void MainWindow::showPadelCourtPage() {
+    ui->stackedWidget->setCurrentWidget(ui->page_18);
+    QTableWidget* table = ui->tableWidget_padel;
+    table->clear();
+    table->setColumnCount(5);
+    table->setHorizontalHeaderLabels({"Court ID", "Location", "Type", "Opening Time", "Closing Time"});
+    table->setRowCount(0);
+
+    // --- Modern Table Style ---
+    table->setStyleSheet(R"(
+        QTableWidget {
+            background-color: #2d3e50;
+            color: #f5e9c6;
+            font: 15pt 'Segoe UI', 'Yeasty Flavors';
+            border-radius: 18px;
+            gridline-color: #f5e9c6;
+            selection-background-color: #f1c27d;
+            selection-color: #2d3e50;
+        }
+      
+        QTableWidget::item {
+            border-bottom: 1px solid #f5e9c6;
+            padding: 10px;
+        }
+        QTableWidget::item:selected {
+            background-color: #f1c27d;
+            color: #2d3e50;
+        }
+    )");
+    table->setAlternatingRowColors(true);
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    table->setSortingEnabled(false);
+
+    // Use FileHandler to load courts from new file
+    QString courtsPath = "G:/cs_project/project/FullGymProject/padel_courts.txt";
+    QList<QStringList> courts = FileHandler::loadCourts(courtsPath);
+    int rowCount = 0;
+    for (const QStringList& court : courts) {
+        table->insertRow(rowCount);
+        for (int i = 0; i < 5; ++i)
+            table->setItem(rowCount, i, new QTableWidgetItem(court[i]));
+        rowCount++;
+    }
+    if (rowCount == 0) {
+        QMessageBox::information(this, "No Courts", "No courts found in padel_courts.txt");
+    }
+    table->resizeColumnsToContents();
+    table->horizontalHeader()->setStretchLastSection(true);
 }
 

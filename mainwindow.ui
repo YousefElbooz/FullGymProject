@@ -3815,6 +3815,16 @@ hover background-color: #dcdcdc;
          </size>
         </property>
        </widget>
+       <widget class="QLineEdit" name="lineEdit_padel_location">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>400</y>
+          <width>150</width>
+          <height>36</height>
+         </rect>
+        </property>
+       </widget>
        <zorder>Billbtn_3</zorder>
        <zorder>MainMenuMember</zorder>
        <zorder>EnrollClassBtn</zorder>
@@ -3840,6 +3850,7 @@ hover background-color: #dcdcdc;
         </rect>
        </property>
        <property name="currentIndex">
+        <number>4</number>
         <number>5</number>
        </property>
        <widget class="QWidget" name="page_8">
@@ -4622,6 +4633,19 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
         <widget class="QWidget" name="workoutBackgroundWidget" native="true">
          <property name="geometry">
           <rect>
+           <x>-10</x>
+           <y>-10</y>
+           <width>921</width>
+           <height>691</height>
+          </rect>
+         </property>
+         <widget class="QTableWidget" name="tableWidget_padel">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>911</width>
+            <height>431</height>
            <x>10</x>
            <y>10</y>
            <width>1021</width>
@@ -4797,10 +4821,86 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="styleSheet">
+
+           <string notr="true"/>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_padel_date">
+          <property name="geometry">
+           <rect>
+            <x>230</x>
+            <y>470</y>
+            <width>211</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="placeholderText">
+           <string>Date (YYYY-MM-DD)</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox_padel_time">
+          <property name="geometry">
+           <rect>
+            <x>450</x>
+            <y>470</y>
+            <width>150</width>
+            <height>36</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>03:00</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>05:00</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>07:00</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>10:00</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QPushButton" name="pushButton_padel_book">
+          <property name="geometry">
+           <rect>
+            <x>710</x>
+            <y>460</y>
+            <width>191</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Book Court</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_padel_ID">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>470</y>
+            <width>211</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Court_ID</string>
+          </property>
+          <property name="placeholderText">
+           <string>Date (YYYY-MM-DD)</string>
+
            <string notr="true">color: rgb(249, 234, 205);background-color: transparent;font: 36pt &quot;Yeasty Flavors&quot;;</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Choose Your Plan&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+
           </property>
          </widget>
          <widget class="QWidget" name="subscriptionOptionsContainer" native="true">

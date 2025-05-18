@@ -1,13 +1,6 @@
-1,Yoga,10:00 AM,Open,10,9,Coach: None
-Member: 2
-Member: 1
-
-2,Spin,02:00 PM,Open,20,18,Coach: None
-
-3,HIIT,02:00 PM,Open,12,12,Coach: Alaa
-Member: 1
-
-4,Pilates,02:00 PM,Open,10,8,Coach: None
+1,Yoga,02:00 AM,Open,10,2,Coach: Alaa El Gamed
+Member: 11
+Member: 9
 
 5,CrossFit,02:00 PM,Open,10,7,Coach: None
 Member: 2
@@ -19,10 +12,10 @@ Member: 2
 8,TRX,02:00 PM,Open,12,6,Coach: None
 Member: 2
 
-9,Barre,02:00 PM,Open,10,3,Coach: None
+5,swimming,05:00 PM,Close,1,1,Coach: Ahmed
+Member: 11
+NormalWaitlist:6,
 
-10,Powerlifting,02:00 PM,Open,6,3,Coach: None
-Member: 2
-Member: 5
-
+6,Belly Dance,08:00 AM,Close,1,1,Coach: Sakira
+Member: 11
 /////what to do/???

@@ -1,0 +1,2 @@
+C-201|Nasr City|Indoor|03:00|11:00
+C-202|Down Town|Outdoor|03:00|11:00 

@@ -43,6 +43,9 @@ private slots:
     void addClass();
     void removeClass();
     void updateClassesTable();
+    void viewWaitlist();
+    void toggleScheduleWaitlist();
+    void showPadelCourtPage();
     void addWorkout();
     void removeLastWorkout();
     void displayWorkouts();
