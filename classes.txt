@@ -11,7 +11,6 @@ Member: 11
 
 5,swimming,05:00 PM,Close,1,1,Coach: Ahmed
 Member: 9
-NormalWaitlist:6,
 
 6,Belly Dance,08:00 AM,Open,1,0,Coach: Sakira
 Member: 11
