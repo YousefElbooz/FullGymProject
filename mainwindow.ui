@@ -26,7 +26,7 @@ border-radius:20px;</string>
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1361</width>
+      <width>1381</width>
       <height>731</height>
      </rect>
     </property>
@@ -767,10 +767,10 @@ padding:0px;</string>
         <widget class="QWidget" name="widget_21" native="true">
          <property name="geometry">
           <rect>
-           <x>410</x>
-           <y>230</y>
+           <x>390</x>
+           <y>220</y>
            <width>291</width>
-           <height>121</height>
+           <height>71</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -818,61 +818,6 @@ background-color:#008FC1;
            <string>Male</string>
           </property>
          </widget>
-         <widget class="QWidget" name="widget_22" native="true">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>70</y>
-            <width>291</width>
-            <height>61</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
-          </property>
-          <widget class="QRadioButton" name="Normal_4">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>0</y>
-             <width>131</width>
-             <height>51</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">            padding: 10px;
-    border: 1px solid #ccc;
-background-color:#008FC1;
-            font: 12pt &quot;Yeasty Flavors&quot;;
-            border-radius: 20px;
-            color: rgb(0, 0, 0);</string>
-           </property>
-           <property name="text">
-            <string>Normal</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="Vip_5">
-           <property name="geometry">
-            <rect>
-             <x>150</x>
-             <y>0</y>
-             <width>131</width>
-             <height>51</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">            padding: 10px;
-    border: 1px solid #ccc;
-background-color:#008FC1;
-            font: 12pt &quot;Yeasty Flavors&quot;;
-            border-radius: 20px;
-            color: rgb(0, 0, 0);</string>
-           </property>
-           <property name="text">
-            <string>VIP</string>
-           </property>
-          </widget>
-         </widget>
         </widget>
        </widget>
       </widget>
@@ -914,7 +859,7 @@ QPushButton:hover{
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1371</width>
+        <width>1351</width>
         <height>701</height>
        </rect>
       </property>
@@ -1168,9 +1113,9 @@ hover background-color: #dcdcdc;
        <widget class="QPushButton" name="Billbtn">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>440</y>
-          <width>241</width>
+          <x>60</x>
+          <y>30</y>
+          <width>16</width>
           <height>40</height>
          </rect>
         </property>
@@ -1350,6 +1295,20 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
 border-radius:1px</string>
         </property>
        </widget>
+       <zorder>Billbtn</zorder>
+       <zorder>MainMenuLabel</zorder>
+       <zorder>Dashboardbtn</zorder>
+       <zorder>GymMangbtn</zorder>
+       <zorder>TMbtn</zorder>
+       <zorder>Aubtn</zorder>
+       <zorder>AdminBtn</zorder>
+       <zorder>Notibtn</zorder>
+       <zorder>ProfileBtn</zorder>
+       <zorder>SettingBtn</zorder>
+       <zorder>LogOutBtn</zorder>
+       <zorder>SettingsLabel</zorder>
+       <zorder>logo</zorder>
+       <zorder>widget_7</zorder>
       </widget>
       <widget class="QStackedWidget" name="staffMainStackWidget">
        <property name="geometry">
@@ -1361,7 +1320,7 @@ border-radius:1px</string>
         </rect>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="page">
         <widget class="QWidget" name="widget_5" native="true">
@@ -2455,60 +2414,12 @@ font: 20pt &quot;Yeasty Flavors&quot;;</string>
            </property>
           </widget>
          </widget>
-         <widget class="QPushButton" name="viewWaitlistBtn">
-          <property name="geometry">
-           <rect>
-            <x>680</x>
-            <y>550</y>
-            <width>80</width>
-            <height>24</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(22, 22, 22);</string>
-          </property>
-          <property name="text">
-           <string>View waitlist</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEditWaitlistClassId">
-          <property name="geometry">
-           <rect>
-            <x>800</x>
-            <y>550</y>
-            <width>113</width>
-            <height>24</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(12, 12, 12);color:white;</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="toggleScheduleWaitlistBtn">
-          <property name="geometry">
-           <rect>
-            <x>880</x>
-            <y>210</y>
-            <width>80</width>
-            <height>24</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color:black;</string>
-          </property>
-          <property name="text">
-           <string>Show Waitlist</string>
-          </property>
-         </widget>
          <zorder>widget_36</zorder>
          <zorder>widget_35</zorder>
          <zorder>label_15</zorder>
          <zorder>label_46</zorder>
          <zorder>tableWidget_2</zorder>
          <zorder>label_195</zorder>
-         <zorder>viewWaitlistBtn</zorder>
-         <zorder>lineEditWaitlistClassId</zorder>
-         <zorder>toggleScheduleWaitlistBtn</zorder>
         </widget>
        </widget>
        <widget class="QWidget" name="page_3">
@@ -3026,7 +2937,7 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
             <x>30</x>
             <y>20</y>
             <width>481</width>
-            <height>541</height>
+            <height>500</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -3169,8 +3080,8 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
           <widget class="QPushButton" name="RemoveMemberBtn_3">
            <property name="geometry">
             <rect>
-             <x>150</x>
-             <y>490</y>
+             <x>290</x>
+             <y>160</y>
              <width>161</width>
              <height>40</height>
             </rect>
@@ -3185,8 +3096,8 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
           <widget class="QRadioButton" name="radioButton">
            <property name="geometry">
             <rect>
-             <x>300</x>
-             <y>190</y>
+             <x>350</x>
+             <y>230</y>
              <width>91</width>
              <height>22</height>
             </rect>
@@ -3198,8 +3109,8 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
           <widget class="QRadioButton" name="radioButton_2">
            <property name="geometry">
             <rect>
-             <x>380</x>
-             <y>190</y>
+             <x>350</x>
+             <y>270</y>
              <width>91</width>
              <height>22</height>
             </rect>
@@ -3208,99 +3119,6 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
             <string>female</string>
            </property>
           </widget>
-          <widget class="QLabel" name="label_78">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>390</y>
-             <width>421</width>
-             <height>60</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: #fffbe7; font-family: 'Comic Sans MS', 'Comic Sans', cursive; font-size: 18px; font-weight: bold;</string>
-           </property>
-           <property name="text">
-            <string>To Remove Member Enter Email, password</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="MemberEmail_3">
-           <property name="geometry">
-            <rect>
-             <x>30</x>
-             <y>440</y>
-             <width>200</width>
-             <height>36</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
-           </property>
-           <property name="placeholderText">
-            <string>Enter your email</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="MemberPassword_3">
-           <property name="geometry">
-            <rect>
-             <x>240</x>
-             <y>440</y>
-             <width>200</width>
-             <height>36</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
-           </property>
-           <property name="echoMode">
-            <enum>QLineEdit::EchoMode::Password</enum>
-           </property>
-           <property name="placeholderText">
-            <string>Enter your password</string>
-           </property>
-          </widget>
-          <widget class="QFrame" name="MemberPanel_3">
-           <property name="geometry">
-            <rect>
-             <x>280</x>
-             <y>220</y>
-             <width>191</width>
-             <height>101</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: #3a546b; border-radius: 20px;</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Shape::StyledPanel</enum>
-           </property>
-           <widget class="QRadioButton" name="Normal_3">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>20</y>
-              <width>91</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Normal</string>
-            </property>
-           </widget>
-           <widget class="QRadioButton" name="Vip_4">
-            <property name="geometry">
-             <rect>
-              <x>100</x>
-              <y>20</y>
-              <width>91</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>VIP</string>
-            </property>
-           </widget>
-          </widget>
          </widget>
          <widget class="QFrame" name="ClassPanel_3">
           <property name="geometry">
@@ -3308,7 +3126,7 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
             <x>540</x>
             <y>20</y>
             <width>481</width>
-            <height>381</height>
+            <height>311</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -3349,11 +3167,30 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
             <string>Enter Class name</string>
            </property>
           </widget>
+          <widget class="QLineEdit" name="ClassID_30">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>150</y>
+             <width>200</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::EchoMode::Normal</enum>
+           </property>
+           <property name="placeholderText">
+            <string>Enter Class ID</string>
+           </property>
+          </widget>
           <widget class="QPushButton" name="addClassBtn_3">
            <property name="geometry">
             <rect>
-             <x>300</x>
-             <y>150</y>
+             <x>290</x>
+             <y>100</y>
              <width>120</width>
              <height>40</height>
             </rect>
@@ -3368,8 +3205,8 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
           <widget class="QPushButton" name="RemoveClassBtn_4">
            <property name="geometry">
             <rect>
-             <x>280</x>
-             <y>310</y>
+             <x>290</x>
+             <y>160</y>
              <width>161</width>
              <height>40</height>
             </rect>
@@ -3385,7 +3222,7 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
            <property name="geometry">
             <rect>
              <x>50</x>
-             <y>150</y>
+             <y>200</y>
              <width>200</width>
              <height>36</height>
             </rect>
@@ -3404,7 +3241,7 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
            <property name="geometry">
             <rect>
              <x>50</x>
-             <y>200</y>
+             <y>250</y>
              <width>200</width>
              <height>36</height>
             </rect>
@@ -3417,41 +3254,6 @@ font: 24pt &quot;Yeasty Flavors&quot;;</string>
            </property>
            <property name="placeholderText">
             <string>Enter time </string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_77">
-           <property name="geometry">
-            <rect>
-             <x>40</x>
-             <y>240</y>
-             <width>421</width>
-             <height>60</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: #fffbe7; font-family: 'Comic Sans MS', 'Comic Sans', cursive; font-size: 22px; font-weight: bold;</string>
-           </property>
-           <property name="text">
-            <string>To Remove class Enter class id</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="ClassID_30">
-           <property name="geometry">
-            <rect>
-             <x>60</x>
-             <y>310</y>
-             <width>200</width>
-             <height>36</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">border-radius: 10px; padding: 6px; background: #fffbe7; color: #3a546b; font-size: 16px;</string>
-           </property>
-           <property name="echoMode">
-            <enum>QLineEdit::EchoMode::Normal</enum>
-           </property>
-           <property name="placeholderText">
-            <string>Enter Class ID</string>
            </property>
           </widget>
          </widget>
@@ -3830,9 +3632,9 @@ hover background-color: #dcdcdc;
        <widget class="QPushButton" name="Billbtn_3">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>490</y>
-          <width>241</width>
+          <x>50</x>
+          <y>20</y>
+          <width>20</width>
           <height>40</height>
          </rect>
         </property>
@@ -4023,6 +3825,20 @@ hover background-color: #dcdcdc;
          </rect>
         </property>
        </widget>
+       <zorder>Billbtn_3</zorder>
+       <zorder>MainMenuMember</zorder>
+       <zorder>EnrollClassBtn</zorder>
+       <zorder>CancelClassBtn</zorder>
+       <zorder>AvailableClassesBtn</zorder>
+       <zorder>WorkoutBtn</zorder>
+       <zorder>Subscriptionbtn</zorder>
+       <zorder>NotifiMemberBtn</zorder>
+       <zorder>MemberProfileBtn</zorder>
+       <zorder>LogOutBtn_3</zorder>
+       <zorder>MemberSettings</zorder>
+       <zorder>logo_3</zorder>
+       <zorder>widget_15</zorder>
+       <zorder>PadekCourtBtn</zorder>
       </widget>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="geometry">
@@ -4035,6 +3851,7 @@ hover background-color: #dcdcdc;
        </property>
        <property name="currentIndex">
         <number>4</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="page_8">
         <widget class="QWidget" name="widget_16" native="true">
@@ -4042,7 +3859,7 @@ hover background-color: #dcdcdc;
           <rect>
            <x>-10</x>
            <y>0</y>
-           <width>1061</width>
+           <width>1041</width>
            <height>701</height>
           </rect>
          </property>
@@ -4051,7 +3868,7 @@ hover background-color: #dcdcdc;
            <rect>
             <x>10</x>
             <y>30</y>
-            <width>1021</width>
+            <width>1011</width>
             <height>631</height>
            </rect>
           </property>
@@ -4552,7 +4369,7 @@ hover background-color: #008FC1;</string>
           <widget class="QLineEdit" name="lineEditClassNameRequest">
            <property name="geometry">
             <rect>
-             <x>660</x>
+             <x>640</x>
              <y>10</y>
              <width>161</width>
              <height>41</height>
@@ -4572,6 +4389,28 @@ hover background-color: #008FC1;</string>
             <string>ClassNameRequst</string>
            </property>
           </widget>
+          <widget class="QPushButton" name="SortChooseClassesBtn">
+           <property name="geometry">
+            <rect>
+             <x>470</x>
+             <y>10</y>
+             <width>161</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 10px;
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 20px;
+hover background-color: #008FC1;</string>
+           </property>
+           <property name="text">
+            <string>Sort </string>
+           </property>
+          </widget>
          </widget>
         </widget>
        </widget>
@@ -4580,22 +4419,35 @@ hover background-color: #008FC1;</string>
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>-10</y>
+           <y>20</y>
            <width>971</width>
            <height>611</height>
           </rect>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(55, 91, 106);
+
+color: rgb(0, 0, 0);
+font: 9pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius: 25px;
+hover background-color: #008FC1;
+
+</string>
+         </property>
          <widget class="QLabel" name="label_224">
           <property name="geometry">
            <rect>
-            <x>200</x>
+            <x>40</x>
             <y>20</y>
             <width>291</width>
             <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: rgb(0, 0, 0); font: 20pt &quot;Yeasty Flavors&quot;;</string>
+           <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
           </property>
           <property name="text">
            <string>Cancel Class</string>
@@ -4604,21 +4456,61 @@ hover background-color: #008FC1;</string>
          <widget class="QTableWidget" name="tableWidget_5">
           <property name="geometry">
            <rect>
-            <x>0</x>
+            <x>50</x>
             <y>70</y>
-            <width>800</width>
+            <width>601</width>
             <height>200</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(55, 91, 106);
+font: 11pt &quot;Yeasty Flavors&quot;;
+color:rgb(249, 234, 205);</string>
+          </property>
+          <column>
+           <property name="text">
+            <string>id</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>ClassName</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Time </string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Trainer</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Statue</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Capacity</string>
+           </property>
+          </column>
          </widget>
          <widget class="QLabel" name="lineEditCancelClassId_2">
           <property name="geometry">
            <rect>
-            <x>50</x>
-            <y>300</y>
-            <width>100</width>
+            <x>40</x>
+            <y>330</y>
+            <width>131</width>
             <height>30</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
           </property>
           <property name="text">
            <string>Class ID:</string>
@@ -4627,21 +4519,36 @@ hover background-color: #008FC1;</string>
          <widget class="QLineEdit" name="lineEditCancelClassId">
           <property name="geometry">
            <rect>
-            <x>160</x>
-            <y>300</y>
-            <width>150</width>
-            <height>30</height>
+            <x>170</x>
+            <y>320</y>
+            <width>131</width>
+            <height>41</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius:20px;
+hover background-color: #008FC1</string>
           </property>
          </widget>
          <widget class="QLabel" name="labelCancelClassName">
           <property name="geometry">
            <rect>
-            <x>350</x>
-            <y>300</y>
-            <width>120</width>
+            <x>370</x>
+            <y>320</y>
+            <width>161</width>
             <height>30</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
           </property>
           <property name="text">
            <string>Class Name:</string>
@@ -4650,39 +4557,61 @@ hover background-color: #008FC1;</string>
          <widget class="QLineEdit" name="lineEditCancelClassName">
           <property name="geometry">
            <rect>
-            <x>480</x>
-            <y>300</y>
-            <width>150</width>
-            <height>30</height>
+            <x>540</x>
+            <y>320</y>
+            <width>121</width>
+            <height>41</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(249, 234, 205);
+    padding: 0px;
+padding-left:10px;
+color: rgb(0, 0, 0);
+font: 12pt &quot;Yeasty Flavors&quot;;
+    border: none;
+    border-radius:20px;
+hover background-color: #008FC1</string>
           </property>
          </widget>
          <widget class="QPushButton" name="CancelClassConfirmBtn">
           <property name="geometry">
            <rect>
-            <x>660</x>
-            <y>300</y>
-            <width>150</width>
+            <x>720</x>
+            <y>330</y>
+            <width>191</width>
             <height>30</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(255, 255, 255, 0);
+color: rgb(249, 233, 203);
+font: 20pt &quot;Yeasty Flavors&quot;;</string>
           </property>
           <property name="text">
            <string>Cancel Class</string>
           </property>
          </widget>
+         <zorder>label_224</zorder>
+         <zorder>lineEditCancelClassId_2</zorder>
+         <zorder>lineEditCancelClassId</zorder>
+         <zorder>labelCancelClassName</zorder>
+         <zorder>lineEditCancelClassName</zorder>
+         <zorder>CancelClassConfirmBtn</zorder>
+         <zorder>tableWidget_5</zorder>
         </widget>
        </widget>
-       <widget class="QWidget" name="page_15">
-        <widget class="QWidget" name="widget_23" native="true">
+       <widget class="QWidget" name="page_20">
+        <widget class="QWidget" name="widget_27" native="true">
          <property name="geometry">
           <rect>
-           <x>-130</x>
-           <y>-10</y>
-           <width>901</width>
-           <height>611</height>
+           <x>-10</x>
+           <y>0</y>
+           <width>1051</width>
+           <height>681</height>
           </rect>
          </property>
-         <widget class="QLabel" name="label_225">
+         <widget class="QLabel" name="label_229">
           <property name="geometry">
            <rect>
             <x>200</x>
@@ -4695,14 +4624,13 @@ hover background-color: #008FC1;</string>
            <string notr="true">color: rgb(0, 0, 0);</string>
           </property>
           <property name="text">
-           <string>Workout</string>
+           <string>Billing</string>
           </property>
          </widget>
         </widget>
        </widget>
-       <widget class="QWidget" name="page_17"/>
-       <widget class="QWidget" name="page_18">
-        <widget class="QWidget" name="widget_25" native="true">
+       <widget class="QWidget" name="workoutPage">
+        <widget class="QWidget" name="workoutBackgroundWidget" native="true">
          <property name="geometry">
           <rect>
            <x>-10</x>
@@ -4718,9 +4646,182 @@ hover background-color: #008FC1;</string>
             <y>10</y>
             <width>911</width>
             <height>431</height>
+           <x>10</x>
+           <y>10</y>
+           <width>1021</width>
+           <height>671</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(55, 91, 106);color: rgb(249, 233, 203);border-radius: 25px;</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_workout">
+          <property name="leftMargin">
+           <number>20</number>
+          </property>
+          <property name="topMargin">
+           <number>20</number>
+          </property>
+          <property name="rightMargin">
+           <number>20</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="workoutTitleLabel">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string>background-color: rgba(255, 255, 255, 0);color: rgb(249, 233, 203);font: 24pt &quot;Yeasty Flavors&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Member Workouts</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="workoutListWidget">
+            <property name="styleSheet">
+             <string>QListWidget {background-color: rgba(249, 234, 205, 200);border-radius: 15px;padding: 10px;font: 12pt &quot;Yeasty Flavors&quot;;color: rgb(0, 0, 0);}QListWidget::item {border-bottom: 1px solid rgba(0, 0, 0, 50);padding: 5px;}QListWidget::item:selected {background-color: rgb(0, 143, 193);color: white;}</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="workoutInputLayout">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <property name="topMargin">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="workoutLineEdit">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string>background-color: rgb(249, 234, 205);padding: 0px;padding-left:10px;color: rgb(0, 0, 0);font: 12pt &quot;Yeasty Flavors&quot;;border: none;border-radius: 20px;</string>
+              </property>
+              <property name="placeholderText">
+               <string>Enter workout details...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="addWorkoutButton">
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string>QPushButton {background-color: #008FC1;color: white;border-radius: 15px;padding: 6px 12px;font: bold 12pt &quot;Yeasty Flavors&quot;;}QPushButton:hover {background-color: #006F91;}</string>
+              </property>
+              <property name="text">
+               <string>Add Workout</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="workoutButtonsLayout">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <property name="topMargin">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="removeLastWorkoutButton">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string>QPushButton {background-color: #D55E00;color: white;border-radius: 15px;padding: 6px 12px;font: bold 12pt &quot;Yeasty Flavors&quot;;}QPushButton:hover {background-color: #A84700;}</string>
+              </property>
+              <property name="text">
+               <string>Remove Last Workout</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="clearWorkoutsButton">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string>QPushButton {background-color: #D55E00;color: white;border-radius: 15px;padding: 6px 12px;font: bold 12pt &quot;Yeasty Flavors&quot;;}QPushButton:hover {background-color: #A84700;}</string>
+              </property>
+              <property name="text">
+               <string>Clear All Workouts</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="workoutInfoLabel">
+            <property name="styleSheet">
+             <string>background-color: rgba(255, 255, 255, 0);color: rgb(249, 233, 203);font: italic 10pt &quot;Yeasty Flavors&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Record your workout routines to track your fitness journey</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_4"/>
+       <widget class="QWidget" name="Subscription">
+        <widget class="QWidget" name="Pricing" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1041</width>
+           <height>691</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(55, 91, 106);border-radius: 25px;</string>
+         </property>
+         <widget class="QLabel" name="label_227">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>20</y>
+            <width>1041</width>
+            <height>81</height>
            </rect>
           </property>
+          <property name="whatsThis">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
           <property name="styleSheet">
+
            <string notr="true"/>
           </property>
          </widget>
@@ -4794,49 +4895,535 @@ hover background-color: #008FC1;</string>
           </property>
           <property name="placeholderText">
            <string>Date (YYYY-MM-DD)</string>
+
+           <string notr="true">color: rgb(249, 234, 205);background-color: transparent;font: 36pt &quot;Yeasty Flavors&quot;;</string>
           </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Choose Your Plan&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+
+          </property>
+         </widget>
+         <widget class="QWidget" name="subscriptionOptionsContainer" native="true">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>110</y>
+            <width>971</width>
+            <height>401</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-radius: 20px;</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_subscription">
+           <property name="spacing">
+            <number>20</number>
+           </property>
+           <property name="leftMargin">
+            <number>20</number>
+           </property>
+           <property name="topMargin">
+            <number>20</number>
+           </property>
+           <property name="rightMargin">
+            <number>20</number>
+           </property>
+           <property name="bottomMargin">
+            <number>20</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="vipWidget" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgba(249, 234, 205, 200);border-radius: 15px;</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_vip">
+              <item>
+               <widget class="QCheckBox" name="vipCheckBox">
+                <property name="styleSheet">
+                 <string notr="true">QCheckBox {    color: #2B4570;    font: bold 16pt &quot;Yeasty Flavors&quot;;    background-color: transparent;}QCheckBox::indicator {    width: 24px;    height: 24px;    border: 2px solid #2B4570;    border-radius: 12px;}QCheckBox::indicator:checked {    background-color: #008FC1;    border: 2px solid #2B4570;    image: url(:/img/images/check.png);}</string>
+                </property>
+                <property name="text">
+                 <string>Upgrade to VIP Membership (+$20)</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="vipBenefitsLabel">
+                <property name="styleSheet">
+                 <string notr="true">font: italic 12pt &quot;Yeasty Flavors&quot;;color: #2B4570;background-color: transparent;</string>
+                </property>
+                <property name="text">
+                 <string>Special discounts, priority booking, and exclusive perks!</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="subscriptionButtonsLayout">
+             <property name="spacing">
+              <number>15</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="subBtn1m">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>280</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {    background-color: rgba(249, 234, 205, 220);    color: #2B4570;    font: bold 16pt &quot;Yeasty Flavors&quot;;    border-radius: 20px;    padding: 15px;    text-align: center;    border: 2px solid transparent;}QPushButton:hover {    background-color: rgba(249, 234, 205, 255);    border: 2px solid #008FC1;}QPushButton:pressed {    background-color: #008FC1;    color: white;}</string>
+               </property>
+               <property name="text">
+                <string>1 Month$50.00✓ 
+ Full Access✓
+ All Classes✓ 
+All Equipment</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="subBtn3m">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>280</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {    background-color: rgba(249, 234, 205, 220);    color: #2B4570;    font: bold 16pt &quot;Yeasty Flavors&quot;;    border-radius: 20px;    padding: 0px;    text-align: center;    border: 2px solid transparent;}QPushButton:hover {    background-color: rgba(249, 234, 205, 255);    border: 2px solid #008FC1;}QPushButton:pressed {    background-color: #008FC1;    color: white;}</string>
+               </property>
+               <property name="text">
+                <string>3 Months$130.00✓
+ Save $20✓ 
+Free Towel Service✓
+ 1 Personal Training</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="subBtn6m">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>280</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {    background-color: rgba(249, 234, 205, 220);    color: #2B4570;    font: bold 16pt &quot;Yeasty Flavors&quot;;    border-radius: 20px;    padding: 0px;    text-align: center;    border: 2px solid transparent;}QPushButton:hover {    background-color: rgba(249, 234, 205, 255);    border: 2px solid #008FC1;}QPushButton:pressed {    background-color: #008FC1;    color: white;}</string>
+               </property>
+               <property name="text">
+                <string>6 Months$250.00✓ 
+Save $50✓
+ 2 Personal Trainings✓
+ Free Protein Shake</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="subBtn12m">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>280</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {    background-color: #008FC1;    color: white;    font: bold 16pt &quot;Yeasty Flavors&quot;;    border-radius: 20px;    padding: 5px;    text-align: center;    border: 2px solid #006F91;}QPushButton:hover {    background-color: #006F91;}QPushButton:pressed {    background-color: #004F71;}</string>
+               </property>
+               <property name="text">
+                <string>12 Months$480.00
+★ BEST VALUE ★✓
+ Save $120✓
+ 4 Personal Trainings</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="subscriptionInfoWidget" native="true">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>520</y>
+            <width>941</width>
+            <height>141</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(0, 143, 193, 150);border-radius: 20px;</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_info">
+           <item>
+            <widget class="QLabel" name="infoIcon">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: transparent;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap>:/img/images/info.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="subscriptionInfoLabel">
+             <property name="styleSheet">
+              <string notr="true">color: white;border-radius: 20px;padding: 15px;font: 16pt &quot;Yeasty Flavors&quot;;background-color: transparent;</string>
+             </property>
+             <property name="text">
+              <string>Select a subscription plan that suits your needs. All plans include full access to gym facilities, classes, and equipment. Longer plans offer significant savings!</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </widget>
        </widget>
-       <widget class="QWidget" name="page_19">
+       <widget class="QWidget" name="Notification">
         <widget class="QWidget" name="widget_26" native="true">
          <property name="geometry">
           <rect>
-           <x>-110</x>
-           <y>90</y>
+           <x>0</x>
+           <y>0</y>
            <width>1041</width>
            <height>691</height>
           </rect>
          </property>
-         <widget class="QLabel" name="label_228">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(55, 91, 106);border-radius: 25px;</string>
+         </property>
+         <widget class="QLabel" name="subscriptionTitleLabel">
           <property name="geometry">
            <rect>
-            <x>200</x>
-            <y>170</y>
-            <width>291</width>
-            <height>101</height>
+            <x>0</x>
+            <y>20</y>
+            <width>1041</width>
+            <height>60</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: rgb(0, 0, 0);</string>
+           <string notr="true">color: rgb(249, 234, 205);background-color: transparent;font: 36pt &quot;Yeasty Flavors&quot;;</string>
           </property>
           <property name="text">
-           <string>Notification</string>
+           <string>Your Membership</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+         <widget class="QWidget" name="subscriptionContainer" native="true">
+          <property name="geometry">
+           <rect>
+            <x>150</x>
+            <y>100</y>
+            <width>741</width>
+            <height>561</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(249, 234, 205, 230);border-radius: 25px;</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_status">
+           <property name="spacing">
+            <number>15</number>
+           </property>
+           <property name="leftMargin">
+            <number>30</number>
+           </property>
+           <property name="topMargin">
+            <number>30</number>
+           </property>
+           <property name="rightMargin">
+            <number>30</number>
+           </property>
+           <property name="bottomMargin">
+            <number>30</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="statusWidget" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgba(0, 143, 193, 180);border-radius: 15px;</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_status">
+              <item>
+               <widget class="QLabel" name="statusIcon">
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>60</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: transparent;</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap>:/img/images/check-circle.png</pixmap>
+                </property>
+                <property name="scaledContents">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="statusTextLayout">
+                <item>
+                 <widget class="QLabel" name="statusTitleLabel">
+                  <property name="styleSheet">
+                   <string notr="true">border: none;font: 18pt &quot;Yeasty Flavors&quot;;color: rgb(249, 234, 205);background-color: transparent;</string>
+                  </property>
+                  <property name="text">
+                   <string>Subscription Status:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="subscriptionStatusLabel">
+                  <property name="styleSheet">
+                   <string notr="true">border: none;font: bold 22pt &quot;Yeasty Flavors&quot;;color: rgb(249, 234, 205);background-color: transparent;</string>
+                  </property>
+                  <property name="text">
+                   <string>ACTIVE</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="detailsWidget" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: white;border-radius: 15px;</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_subscription">
+              <property name="leftMargin">
+               <number>20</number>
+              </property>
+              <property name="topMargin">
+               <number>20</number>
+              </property>
+              <property name="rightMargin">
+               <number>20</number>
+              </property>
+              <property name="bottomMargin">
+               <number>20</number>
+              </property>
+              <property name="horizontalSpacing">
+               <number>20</number>
+              </property>
+              <property name="verticalSpacing">
+               <number>15</number>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="typeTitleLabel">
+                <property name="styleSheet">
+                 <string notr="true">border: none;font: 16pt &quot;Yeasty Flavors&quot;;color: rgb(43, 69, 112);background-color: transparent;</string>
+                </property>
+                <property name="text">
+                 <string>Plan Type:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="subscriptionTypeLabel">
+                <property name="styleSheet">
+                 <string notr="true">border: none;font: bold 16pt &quot;Yeasty Flavors&quot;;color: #008FC1;background-color: transparent;</string>
+                </property>
+                <property name="text">
+                 <string>None</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="startTitleLabel">
+                <property name="styleSheet">
+                 <string notr="true">border: none;font: 16pt &quot;Yeasty Flavors&quot;;color: rgb(43, 69, 112);background-color: transparent;</string>
+                </property>
+                <property name="text">
+                 <string>Start Date:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="subscriptionStartLabel">
+                <property name="styleSheet">
+                 <string notr="true">border: none;font: 16pt &quot;Yeasty Flavors&quot;;color: black;background-color: transparent;</string>
+                </property>
+                <property name="text">
+                 <string>N/A</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="endTitleLabel">
+                <property name="styleSheet">
+                 <string notr="true">border: none;font: 16pt &quot;Yeasty Flavors&quot;;color: rgb(43, 69, 112);background-color: transparent;</string>
+                </property>
+                <property name="text">
+                 <string>End Date:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="subscriptionEndLabel">
+                <property name="styleSheet">
+                 <string notr="true">border: none;font: 16pt &quot;Yeasty Flavors&quot;;color: black;background-color: transparent;</string>
+                </property>
+                <property name="text">
+                 <string>N/A</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="daysTitleLabel">
+                <property name="styleSheet">
+                 <string notr="true">border: none;font: 16pt &quot;Yeasty Flavors&quot;;color: rgb(43, 69, 112);background-color: transparent;</string>
+                </property>
+                <property name="text">
+                 <string>Days Remaining:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="subscriptionDaysLabel">
+                <property name="styleSheet">
+                 <string notr="true">border: none;font: bold 16pt &quot;Yeasty Flavors&quot;;color: black;background-color: transparent;</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0" colspan="2">
+               <widget class="QProgressBar" name="daysProgressBar">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>15</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QProgressBar {    border: none;    border-radius: 7px;    background-color: #E0E0E0;    text-align: center;}QProgressBar::chunk {    background-color: #008FC1;    border-radius: 7px;}</string>
+                </property>
+                <property name="value">
+                 <number>80</number>
+                </property>
+                <property name="textVisible">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="reminderLabel">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>100</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: none;font: 16pt &quot;Yeasty Flavors&quot;;color: white;background-color: #D55E00;border-radius: 15px;padding: 15px;</string>
+             </property>
+             <property name="text">
+              <string>Don't forget to renew your subscription before it expires to enjoy uninterrupted access to all gym facilities!</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="renewButton">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {    background-color: #008FC1;    color: white;    font: bold 16pt &quot;Yeasty Flavors&quot;;    border-radius: 15px;    padding: 10px;}QPushButton:hover {    background-color: #006F91;}QPushButton:pressed {    background-color: #004F71;}</string>
+             </property>
+             <property name="text">
+              <string>Renew Membership</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </widget>
        </widget>
-       <widget class="QWidget" name="page_20">
-        <widget class="QWidget" name="widget_27" native="true">
+       <widget class="QWidget" name="page_18">
+        <widget class="QWidget" name="widget_25" native="true">
          <property name="geometry">
           <rect>
-           <x>-10</x>
-           <y>0</y>
-           <width>1051</width>
-           <height>681</height>
+           <x>90</x>
+           <y>-10</y>
+           <width>951</width>
+           <height>701</height>
           </rect>
          </property>
-         <widget class="QLabel" name="label_229">
+         <widget class="QLabel" name="label_227">
           <property name="geometry">
            <rect>
             <x>200</x>
@@ -4849,7 +5436,7 @@ hover background-color: #008FC1;</string>
            <string notr="true">color: rgb(0, 0, 0);</string>
           </property>
           <property name="text">
-           <string>Billing</string>
+           <string>Subscription</string>
           </property>
          </widget>
         </widget>
@@ -4858,62 +5445,564 @@ hover background-color: #008FC1;</string>
         <widget class="QWidget" name="widget_28" native="true">
          <property name="geometry">
           <rect>
-           <x>-10</x>
+           <x>0</x>
            <y>0</y>
-           <width>1051</width>
+           <width>1041</width>
            <height>691</height>
           </rect>
          </property>
-         <widget class="QLabel" name="label_231">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(55, 91, 106);border-radius: 25px;</string>
+         </property>
+         <widget class="QLabel" name="profileTitleLabel">
           <property name="geometry">
            <rect>
-            <x>200</x>
-            <y>170</y>
-            <width>291</width>
-            <height>101</height>
+            <x>0</x>
+            <y>20</y>
+            <width>1041</width>
+            <height>60</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: rgb(0, 0, 0);</string>
+           <string notr="true">color: rgb(249, 234, 205);background-color: transparent;font: 36pt &quot;Yeasty Flavors&quot;;</string>
           </property>
           <property name="text">
-           <string>Profile</string>
+           <string>My Profile</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+         <widget class="QStackedWidget" name="stackedWidgetProfile">
+          <property name="geometry">
+           <rect>
+            <x>150</x>
+            <y>100</y>
+            <width>741</width>
+            <height>551</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(249, 234, 205, 230);border-radius: 25px;</string>
+          </property>
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="profileViewPage">
+           <layout class="QVBoxLayout" name="verticalLayout_profile">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="leftMargin">
+             <number>30</number>
+            </property>
+            <property name="topMargin">
+             <number>30</number>
+            </property>
+            <property name="rightMargin">
+             <number>30</number>
+            </property>
+            <property name="bottomMargin">
+             <number>30</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="profileHeaderLayout">
+              <item>
+               <spacer name="horizontalSpacer_left">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelProfilePic">
+                <property name="minimumSize">
+                 <size>
+                  <width>220</width>
+                  <height>220</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>220</width>
+                  <height>220</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border-radius: 110px;border: 5px solid #008FC1;background-color: white;</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_right">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QWidget" name="profileDetailsWidget" native="true">
+              <property name="styleSheet">
+               <string notr="true">background-color: white;border-radius: 15px;</string>
+              </property>
+              <layout class="QVBoxLayout" name="profileDetailsLayout">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <property name="leftMargin">
+                <number>20</number>
+               </property>
+               <property name="topMargin">
+                <number>20</number>
+               </property>
+               <property name="rightMargin">
+                <number>20</number>
+               </property>
+               <property name="bottomMargin">
+                <number>20</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="labelName">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel {background-color: rgba(0, 143, 193, 50);color: rgb(55, 91, 106);border-radius: 15px;padding: 10px;font: bold 18pt &quot;Yeasty Flavors&quot;;}</string>
+                 </property>
+                 <property name="text">
+                  <string>Charlotte King</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="labelUsername">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel {background-color: rgb(249, 234, 205);color: rgb(55, 91, 106);border-radius: 15px;padding: 5px;font: bold 14pt &quot;Yeasty Flavors&quot;;}</string>
+                 </property>
+                 <property name="text">
+                  <string>@johnkinggraphics</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QWidget" name="membershipStatusWidget" native="true">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>60</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgba(0, 143, 193, 70);border-radius: 15px;</string>
+                 </property>
+                 <layout class="QHBoxLayout" name="membershipStatusLayout">
+                  <item>
+                   <widget class="QLabel" name="membershipTitleLabel">
+                    <property name="styleSheet">
+                     <string notr="true">font: 14pt &quot;Yeasty Flavors&quot;;color: #2B4570;background-color: transparent;</string>
+                    </property>
+                    <property name="text">
+                     <string>Membership Status:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="membershipValueLabel">
+                    <property name="styleSheet">
+                     <string notr="true">font: bold 16pt &quot;Yeasty Flavors&quot;;color: #2B4570;background-color: transparent;</string>
+                    </property>
+                    <property name="text">
+                     <string>VIP Member</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnEditProfile">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {background-color: #008FC1;color: white;border-radius: 15px;padding: 10px;font: bold 16pt &quot;Yeasty Flavors&quot;;}QPushButton:hover {background-color: #006F91;}QPushButton:pressed {background-color: #004F71;}</string>
+              </property>
+              <property name="text">
+               <string>Edit Profile</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>:/img/images/edit.png</normaloff>:/img/images/edit.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="editProfilePage">
+           <layout class="QVBoxLayout" name="verticalLayout_editProfile">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <property name="leftMargin">
+             <number>30</number>
+            </property>
+            <property name="topMargin">
+             <number>30</number>
+            </property>
+            <property name="rightMargin">
+             <number>30</number>
+            </property>
+            <property name="bottomMargin">
+             <number>30</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="editProfilePicLayout">
+              <item>
+               <spacer name="horizontalSpacer_editLeft">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelEditProfilePic">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>120</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>120</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border-radius: 60px;border: 3px solid #008FC1;background-color: white;</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_editRight">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnChangeProfilePic">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {background-color: rgba(0, 143, 193, 200);color: white;border-radius: 15px;padding: 5px;font: bold 12pt &quot;Yeasty Flavors&quot;;}QPushButton:hover {background-color: #008FC1;}QPushButton:pressed {background-color: #006F91;}</string>
+              </property>
+              <property name="text">
+               <string>Change Profile Picture</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>:/img/images/camera.png</normaloff>:/img/images/camera.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="editFormLayout">
+              <property name="horizontalSpacing">
+               <number>15</number>
+              </property>
+              <property name="verticalSpacing">
+               <number>10</number>
+              </property>
+              <item row="0" column="0" colspan="2">
+               <widget class="QLineEdit" name="editName">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLineEdit {background-color: white;color: rgb(55, 91, 106);border-radius: 15px;border: 1px solid #008FC1;padding: 5px 15px;font: bold 14pt &quot;Yeasty Flavors&quot;;}QLineEdit:focus {border: 2px solid #008FC1;}</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Full Name</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QLineEdit" name="editUsername">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLineEdit {background-color: white;color: rgb(55, 91, 106);border-radius: 15px;border: 1px solid #008FC1;padding: 5px 15px;font: bold 14pt &quot;Yeasty Flavors&quot;;}QLineEdit:focus {border: 2px solid #008FC1;}</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Username</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0" colspan="2">
+               <widget class="QLineEdit" name="editEmail">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLineEdit {background-color: white;color: rgb(55, 91, 106);border-radius: 15px;border: 1px solid #008FC1;padding: 5px 15px;font: bold 14pt &quot;Yeasty Flavors&quot;;}QLineEdit:focus {border: 2px solid #008FC1;}</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Email Address</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLineEdit" name="editPassword">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLineEdit {background-color: white;color: rgb(55, 91, 106);border-radius: 15px;border: 1px solid #008FC1;padding: 5px 15px;font: bold 14pt &quot;Yeasty Flavors&quot;;}QLineEdit:focus {border: 2px solid #008FC1;}</string>
+                </property>
+                <property name="echoMode">
+                 <enum>QLineEdit::EchoMode::Password</enum>
+                </property>
+                <property name="placeholderText">
+                 <string>Password</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QToolButton" name="btnTogglePassword">
+                <property name="minimumSize">
+                 <size>
+                  <width>40</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QToolButton {background-color: rgba(0, 143, 193, 200);color: white;border-radius: 15px;font-size: 16px;}QToolButton:hover {background-color: #008FC1;}</string>
+                </property>
+                <property name="text">
+                 <string>👁</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0" colspan="2">
+               <widget class="QLineEdit" name="editPhone">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLineEdit {background-color: white;color: rgb(55, 91, 106);border-radius: 15px;border: 1px solid #008FC1;padding: 5px 15px;font: bold 14pt &quot;Yeasty Flavors&quot;;}QLineEdit:focus {border: 2px solid #008FC1;}</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Phone Number</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="buttonsLayout">
+              <item>
+               <widget class="QPushButton" name="btnSaveProfile">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>45</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {background-color: #008FC1;color: white;border-radius: 15px;padding: 10px;font: bold 16pt &quot;Yeasty Flavors&quot;;}QPushButton:hover {background-color: #006F91;}QPushButton:pressed {background-color: #004F71;}</string>
+                </property>
+                <property name="text">
+                 <string>Save Changes</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>:/img/images/save.png</normaloff>:/img/images/save.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnCancelEdit">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>45</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {background-color: #D55E00;color: white;border-radius: 15px;padding: 10px;font: bold 16pt &quot;Yeasty Flavors&quot;;}QPushButton:hover {background-color: #A84700;}QPushButton:pressed {background-color: #7C3500;}</string>
+                </property>
+                <property name="text">
+                 <string>Cancel</string>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>:/img/images/cancel.png</normaloff>:/img/images/cancel.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_available_classes">
-        <widget class="QTableWidget" name="tableWidget_6">
+        <widget class="QWidget" name="backgroundPanel" native="true">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1000</width>
-           <height>600</height>
+           <width>1041</width>
+           <height>691</height>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">QTableWidget {
-    background-color: rgb(55, 91, 106);
-    font: 11pt &quot;Yeasty Flavors&quot;;
-    color: rgb(249, 234, 205);
-    border-radius: 15px;
-    gridline-color: rgb(249, 234, 205);
-}
-
-QHeaderView::section {
-    background-color: rgb(55, 91, 106);
-    color: rgb(249, 234, 205);
-    font: bold 12pt &quot;Yeasty Flavors&quot;;
-    border: none;
-    padding: 6px;
-}
-
-QTableWidget::item {
-    selection-background-color: rgb(198, 143, 59);
-    selection-color: black;
-}</string>
+          <string notr="true">background-color: rgb(249, 234, 205);
+border-radius: 20px;</string>
          </property>
+        </widget>
+        <widget class="QLabel" name="AvailableClassesTitle">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>20</y>
+           <width>400</width>
+           <height>50</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;
+color: rgb(55, 91, 106);
+font: bold 28pt &quot;Yeasty Flavors&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Available Classes</string>
+         </property>
+        </widget>
+        <widget class="QTableWidget" name="tableWidget_6">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>69</y>
+           <width>1000</width>
+           <height>571</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(55, 91, 106);
+font: 11pt &quot;Yeasty Flavors&quot;;
+color:rgb(249, 234, 205);</string>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+         </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>166</number>
+         </attribute>
          <column>
           <property name="text">
            <string>ID</string>
@@ -4957,3 +6046,6 @@ QTableWidget::item {
  </resources>
  <connections/>
 </ui>
+
+    /////what to do/???
+

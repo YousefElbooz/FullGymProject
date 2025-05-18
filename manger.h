@@ -4,6 +4,7 @@
 #include "staff.h"
 #include "gymClass.h"
 #include "coach.h"
+/////what to do/???
 
 class Manger : public Staff {
 public:

@@ -2,11 +2,11 @@
 #define GYMCLASS_H
 #include <QVector>
 #include <QTime>
-#include <QQueue>
 #include "member.h"
 #include "coach.h"
 class Member;  // Forward declare Member
 class Coach;
+    /////what to do/???
 
 class GymClass
 {
@@ -20,20 +20,13 @@ private:
     QTime time;
     QVector<Member*> members;
     Coach* coach;
-    QQueue<Member*> normalWaitlist;  // Queue for normal members
-    QQueue<Member*> vipWaitlist;     // Queue for VIP members
-
 public:
     GymClass(QString name, QString Statue, int capacity);
 
     void addMember(Member* member);
     void setCoach(Coach* coach);
-    void addToWaitlist(Member* member);  // Add member to appropriate waitlist
-    void processWaitlist();  // Process waitlist when a spot becomes available
 
-    QVector<Member*> getMembers() const;
-    QQueue<Member*>& getNormalList() { return normalWaitlist; }
-    QQueue<Member*>& getVIPList() { return vipWaitlist; }
+    QVector<Member*> getMembers() const ;
     int getId()const;
     QString getName() const;
     QString getStatue() const;

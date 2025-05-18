@@ -10,51 +10,11 @@ void GymClass::addMember(Member* member) {
     if (members.size() < capacity) {
         members.push_back(member);
         member->addClass(this);
-        enrolled = members.size();
-        if (enrolled >= capacity) {
-            statue = "Close";
-        }
     } else {
-        // If class is full, add to waitlist
-        addToWaitlist(member);
+        //handle full capacity
     }
 }
-
-void GymClass::addToWaitlist(Member* member) {
-    if (member->getIsVip()) {
-        vipWaitlist.enqueue(member);
-    } else {
-        normalWaitlist.enqueue(member);
-    }
-}
-
-void GymClass::processWaitlist() {
-    // Process VIP waitlist first
-    while (!vipWaitlist.isEmpty() && members.size() < capacity) {
-        Member* member = vipWaitlist.dequeue();
-        // Only add if not already enrolled
-        if (!members.contains(member)) {
-            members.push_back(member);
-            member->addClass(this); // Add class to member's enrolled classes
-        }
-    }
-    
-    // Then process normal waitlist
-    while (!normalWaitlist.isEmpty() && members.size() < capacity) {
-        Member* member = normalWaitlist.dequeue();
-        if (!members.contains(member)) {
-            members.push_back(member);
-            member->addClass(this); // Add class to member's enrolled classes
-        }
-    }
-    
-    enrolled = members.size();
-    if (enrolled >= capacity) {
-        statue = "Close";
-    } else {
-        statue = "Open";
-    }
-}
+/////what to do/???
 
 void GymClass::setCoach(Coach* coach) {this->coach = coach;}
 void GymClass::setTime(QTime time) {this->time = time;}
@@ -73,9 +33,4 @@ int GymClass::getEnrolled()const {return this->enrolled;}
 void GymClass::setEnrolled(int enrolled){this->enrolled=enrolled;}
 void GymClass::removeMember(Member* member) {
     members.removeOne(member);
-    enrolled = members.size();
-    if (enrolled < capacity) {
-        statue = "Open";
-        processWaitlist();  // Process waitlist when a spot becomes available
-    }
 }

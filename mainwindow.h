@@ -15,7 +15,7 @@
 #include <QParallelAnimationGroup>
 #include <QStackedWidget>
 #include <QWidget>
-#include <QLineEdit>
+#include <QLabel>
 #include "member.h"
 #include "manger.h"
 #include "staff.h"
@@ -25,14 +25,13 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-
+    /////what to do/???
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 private:
     void setPixmapForWidgets();
-    void updateTrainerCount();
-    void updateCapacity();
+    void updateSubscriptionInfo();
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -47,6 +46,12 @@ private slots:
     void viewWaitlist();
     void toggleScheduleWaitlist();
     void showPadelCourtPage();
+    void addWorkout();
+    void removeLastWorkout();
+    void displayWorkouts();
+    void clearWorkouts();
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 private:
     QMap<int, Member*> members;
@@ -54,8 +59,7 @@ private:
     QMap<int, GymClass*> classesmap;
     Member* currMember;
     Staff * currStaff;
+    
     Ui::MainWindow *ui;
-    QLineEdit* lineEditWaitlistClassId;
-    bool showingWaitlist = false;
 };
 #endif // MAINWINDOW_H
