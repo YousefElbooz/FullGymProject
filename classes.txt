@@ -1,5 +1,6 @@
-1,Yoga,02:00 AM,Open,10,1,Coach: Alaa El Gamed
+1,Yoga,02:00 AM,Open,10,2,Coach: Alaa El Gamed
 Member: 11
+Member: 9
 
 2,Zumba,03:00 AM,Open,15,1,Coach: Elbooz
 Member: 11
@@ -10,9 +11,9 @@ Member: 3
 Member: 11
 
 5,swimming,05:00 PM,Close,1,1,Coach: Ahmed
-Member: 9
+Member: 11
 NormalWaitlist:6,
 
-6,Belly Dance,08:00 AM,Open,1,0,Coach: Sakira
+6,Belly Dance,08:00 AM,Close,1,1,Coach: Sakira
 Member: 11
 

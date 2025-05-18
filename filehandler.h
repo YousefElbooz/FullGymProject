@@ -37,6 +37,9 @@ public:
     // Waitlist functions
     static QMap<int, GymClass*> loadClasses(const QString& filePath,QMap<int, GymClass*> gymClasses);  // ✅ Add this
     static void saveQueueData(QTextStream &out, const QQueue<Member*>& normalList, const QQueue<Member*>& VIPList);
+
+    static QList<QStringList> loadCourts(const QString& filePath);
+    static void saveCourts(const QString& filePath, const QList<QStringList>& courts);
 };
 
 #endif // FILEHANDLER_H

@@ -46,6 +46,7 @@ private slots:
     void updateClassesTable();
     void viewWaitlist();
     void toggleScheduleWaitlist();
+    void showPadelCourtPage();
 
 private:
     QMap<int, Member*> members;

@@ -17,13 +17,14 @@ Class: KickBoxing
 8:pedri:pedri@gmail.com:123456:male:false:01062116844:Spain:20
 
 9:vddsf:dsds@gmail.com:123456:male:true:5465665444:hhjhjjh:12
-Class: swimming
+Class: Yoga
 
 10:dsfsdfsdf:dsfsdfsdf@gmail.com:123456:male:true:12345678910:dsddsdd:20
 
 11:Marwan:Marwan@gmail.com:123456:male:true:01062116844:El gemza:33
+Class: Yoga
 Class: Zumba
 Class: KickBoxing
+Class: swimming
 Class: Belly Dance
-Class: Yoga
 

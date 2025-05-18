@@ -339,3 +339,37 @@ void FileHandler::saveQueueData(QTextStream &out, const QQueue<Member*>& normalL
         out << "\n";
     }
 }
+
+QList<QStringList> FileHandler::loadCourts(const QString& filePath) {
+    QList<QStringList> courts;
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open courts file";
+        return courts;
+    }
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty()) continue;
+        QStringList parts = line.split("|");
+        if (parts.size() == 5) {
+            courts.append(parts);
+        }
+    }
+    file.close();
+    return courts;
+}
+
+void FileHandler::saveCourts(const QString& filePath, const QList<QStringList>& courts) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open courts file for writing";
+        return;
+    }
+    QTextStream out(&file);
+    for (const QStringList& court : courts) {
+        if (court.size() == 5)
+            out << court.join("|") << "\n";
+    }
+    file.close();
+}
