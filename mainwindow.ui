@@ -34,7 +34,7 @@ border-radius:20px;</string>
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="LoginPageStack">
      <widget class="QLabel" name="label">
@@ -1361,7 +1361,7 @@ border-radius:1px</string>
         </rect>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="page">
         <widget class="QWidget" name="widget_5" native="true">
@@ -4024,7 +4024,7 @@ hover background-color: #dcdcdc;
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="page_8">
         <widget class="QWidget" name="widget_16" native="true">
@@ -4662,6 +4662,7 @@ hover background-color: #008FC1;</string>
          </widget>
         </widget>
        </widget>
+       <widget class="QWidget" name="page_4"/>
        <widget class="QWidget" name="page_15">
         <widget class="QWidget" name="widget_23" native="true">
          <property name="geometry">
@@ -4690,7 +4691,273 @@ hover background-color: #008FC1;</string>
          </widget>
         </widget>
        </widget>
-       <widget class="QWidget" name="page_17"/>
+       <widget class="QWidget" name="page_17">
+        <widget class="QTableWidget" name="widget_55">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>10</y>
+           <width>541</width>
+           <height>441</height>
+          </rect>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+         </property>
+         <column>
+          <property name="text">
+           <string>Court ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Location</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Opening Time</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Closing Time</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLineEdit" name="padal_location">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>510</y>
+           <width>113</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Enter Location</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="padal_DATE_2">
+         <property name="geometry">
+          <rect>
+           <x>202</x>
+           <y>510</y>
+           <width>151</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Date(YYYY-MMM-DDD)</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox_padal">
+         <property name="geometry">
+          <rect>
+           <x>381</x>
+           <y>510</y>
+           <width>111</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>03:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>05:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>07:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>09:00</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QPushButton" name="Book_Button">
+         <property name="geometry">
+          <rect>
+           <x>620</x>
+           <y>510</y>
+           <width>111</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>BOOK</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="cancelbutton">
+         <property name="geometry">
+          <rect>
+           <x>630</x>
+           <y>590</y>
+           <width>111</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>cancel</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="padal_location_3">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>590</y>
+           <width>113</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Enter Location</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="padal_DATE_4">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>590</y>
+           <width>151</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Date(YYYY-MMM-DDD)</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox_padal_3">
+         <property name="geometry">
+          <rect>
+           <x>380</x>
+           <y>590</y>
+           <width>111</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>03:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>05:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>07:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>09:00</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QPushButton" name="searchButton">
+         <property name="geometry">
+          <rect>
+           <x>640</x>
+           <y>650</y>
+           <width>111</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>cancel</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="padal_DATE_5">
+         <property name="geometry">
+          <rect>
+           <x>210</x>
+           <y>650</y>
+           <width>151</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Date(YYYY-MMM-DDD)</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="padal_location_4">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>650</y>
+           <width>113</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Enter Location</string>
+         </property>
+        </widget>
+        <widget class="QTableWidget" name="widget_56">
+         <property name="geometry">
+          <rect>
+           <x>510</x>
+           <y>10</y>
+           <width>541</width>
+           <height>441</height>
+          </rect>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+         </property>
+         <column>
+          <property name="text">
+           <string>Court ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Location</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Opening Time</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Closing Time</string>
+          </property>
+         </column>
+        </widget>
+       </widget>
        <widget class="QWidget" name="page_18">
         <widget class="QWidget" name="widget_25" native="true">
          <property name="geometry">

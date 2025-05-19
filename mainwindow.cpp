@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include "FileHandler.h"
 #include "animations.h"
+#include "CourtLoader.h"
         
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,13 +24,116 @@ MainWindow::MainWindow(QWidget *parent)
     ui->LoginPageStackedWidget->setCurrentIndex(0);
     ui->staffMainStackWidget->setCurrentIndex(1);
     setPixmapForWidgets();
-    FileHandler::loadMembers("G:/cs_project/FullGymProject/members.txt", members, classesmap);
+    FileHandler::loadMembers("G:/cs_project/ahhhhhhhhh/FullGymProject/members.txt", members, classesmap);
     ui->label_36->setText(QString::number(members.size()));
-    FileHandler::loadStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
+    FileHandler::loadStaff("G:/cs_project/ahhhhhhhhh/FullGymProject/staffs.txt", staffMap);
     updateTrainerCount();
-    FileHandler::loadClasses("G:/cs_project/FullGymProject/classes.txt", classesmap, members, staffMap);
+    FileHandler::loadClasses("G:/cs_project/ahhhhhhhhh/FullGymProject/classes.txt", classesmap, members, staffMap);
     ui->label_38->setText(QString::number(classesmap.size()));
     updateCapacity();
+
+    // Load padel bookings from members.txt
+    QFile file("G:/cs_project/ahhhhhhhhh/FullGymProject/members.txt");
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        while (!file.atEnd()) {
+            QString line = file.readLine().trimmed();
+            if (line.isEmpty()) continue;
+            
+            QStringList parts = line.split(":");
+            if (parts.size() >= 9) {
+                int memberId = parts[0].toInt();
+                QString nextLine = file.readLine().trimmed();
+                if (nextLine.startsWith("Padel:")) {
+                    QStringList bookingParts = nextLine.mid(6).split("|");
+                    if (bookingParts.size() == 3) {
+                        QString location = bookingParts[0].trimmed().toLower();
+                        QString date = bookingParts[1].trimmed();
+                        QString time = bookingParts[2].trimmed();
+                        
+                        // Initialize slots for this location and date if not exists
+                        if (!padelBookings.contains(location)) {
+                            padelBookings[location] = QMap<QString, QStringList>();
+                        }
+                        if (!padelBookings[location].contains(date)) {
+                            padelBookings[location][date] = QStringList{"0", "0", "0", "0"};
+                        }
+                        
+                        // Find the slot index
+                        QStringList slotLabels = {"03:00", "05:00", "07:00", "09:00"};
+                        int slotIndex = slotLabels.indexOf(time);
+                        if (slotIndex != -1) {
+                            padelBookings[location][date][slotIndex] = QString::number(memberId);
+                        }
+                    }
+                }
+            }
+        }
+        file.close();
+    }
+
+    // Load courts
+    courts = CourtLoader::loadCourtsFromFile("G:/cs_project/ahhhhhhhhh/FullGymProject/courts.txt");
+
+    // Connect Padel Court button to display courts
+    connect(ui->PadekCourtBtn, &QPushButton::clicked, this, [=]() {
+        // Clear and setup the table
+        ui->widget_55->clearContents();
+        ui->widget_55->setRowCount(0);
+        ui->widget_55->setColumnCount(5);
+        ui->widget_55->setHorizontalHeaderLabels(QStringList()
+            << "Court Name" << "Location" << "Type" << "Start Time" << "End Time");
+
+        // Populate the table with court data
+        for (const auto& court : courts) {
+            int row = ui->widget_55->rowCount();
+            ui->widget_55->insertRow(row);
+            ui->widget_55->setItem(row, 0, new QTableWidgetItem(court.m_courtName));
+            ui->widget_55->setItem(row, 1, new QTableWidgetItem(court.m_location));
+            ui->widget_55->setItem(row, 2, new QTableWidgetItem(court.m_type));
+            ui->widget_55->setItem(row, 3, new QTableWidgetItem(court.m_startTime));
+            ui->widget_55->setItem(row, 4, new QTableWidgetItem(court.m_endTime));
+        }
+
+        // Style the table to match the class schedule design
+        ui->widget_55->setStyleSheet(R"(
+            QTableWidget {
+                background-color: #3b5a6a;
+                color: #fffbe6;
+                font: 13pt 'Yeasty Flavors';
+                border-radius: 20px;
+                border: none;
+                gridline-color: #fffbe6;
+            }
+            QHeaderView::section {
+                background-color: #3b5a6a;
+                color: #fffbe6;
+                font: bold 14pt 'Yeasty Flavors';
+                border: none;
+                padding: 8px;
+            }
+            QTableWidget::item {
+                border-bottom: 2px solid #fffbe6;
+                padding: 8px;
+            }
+            QTableWidget::item:selected {
+                background-color: #f1c27d;
+                color: #3b5a6a;
+            }
+        )");
+        ui->widget_55->setShowGrid(false);
+        ui->widget_55->verticalHeader()->setVisible(false);
+        ui->widget_55->horizontalHeader()->setHighlightSections(false);
+        ui->widget_55->setAlternatingRowColors(false);
+        ui->widget_55->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->widget_55->setSelectionBehavior(QAbstractItemView::SelectRows);
+        ui->widget_55->setSelectionMode(QAbstractItemView::SingleSelection);
+        ui->widget_55->horizontalHeader()->setStretchLastSection(true);
+        for (int row = 0; row < ui->widget_55->rowCount(); ++row) {
+            ui->widget_55->setRowHeight(row, 40);
+        }
+        ui->widget_55->resizeColumnsToContents();
+    });
+
     // Move updateEnrolledClassesTable here so it is in scope for all later code
     auto updateEnrolledClassesTable = [=]() {
         ui->tableWidget_3->clearContents();
@@ -356,7 +460,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
 
         updateClassesTable();
-        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveClasses("G:/cs_project/ahhhhhhhhh/FullGymProject/classes.txt", classesmap);
         updateEnrolledClassesTable();
         ui->lineEditClassNameRequest->clear();
     });
@@ -465,8 +569,8 @@ MainWindow::MainWindow(QWidget *parent)
             foundClass->setStatue("Open");
         }
         // Save changes
-        // FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
-        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveMembers("G:/cs_project/ahhhhhhhhh/FullGymProject/members.txt", members);
+        // FileHandler::saveClasses("G:/cs_project/ahhhhhhhhh/FullGymProject/classes.txt", classesmap);
         // Update UI
         updateEnrolledClassesTable();
         updateClassesTable();
@@ -536,7 +640,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         if (role == "member") {
             // Append to members.txt
-            QFile file("G:/cs_project/FullGymProject/members.txt");
+            QFile file("G:/cs_project/ahhhhhhhhh/FullGymProject/members.txt");
             if (file.open(QIODevice::Append | QIODevice::Text)) {
                 QTextStream out(&file);
                 int newId = members.size() + 1;
@@ -559,7 +663,7 @@ MainWindow::MainWindow(QWidget *parent)
             return;
         }
         
-        QFile file("G:/cs_project/FullGymProject/staffs.txt");
+        QFile file("G:/cs_project/ahhhhhhhhh/FullGymProject/staffs.txt");
         if (file.open(QIODevice::Append | QIODevice::Text)) {
             QTextStream out(&file);
             int newId = staffMap.size() + 1;
@@ -702,8 +806,8 @@ MainWindow::MainWindow(QWidget *parent)
         gymClass->setCoach(coach);
 
         // Save changes
-        // FileHandler::saveStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
-        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveStaff("G:/cs_project/ahhhhhhhhh/FullGymProject/staffs.txt", staffMap);
+        // FileHandler::saveClasses("G:/cs_project/ahhhhhhhhh/FullGymProject/classes.txt", classesmap);
 
         QMessageBox::information(this, "Success", "Class assigned successfully!");
     });
@@ -768,13 +872,390 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Connect toggleScheduleWaitlist button
     connect(ui->toggleScheduleWaitlistBtn, &QPushButton::clicked, this, &MainWindow::toggleScheduleWaitlist);
+
+    // --- Padel Court Booking Logic ---
+    auto updatePadalSlots = [=]() {
+        QString location = ui->padal_location->text().trimmed().toLower();
+        QString date = ui->padal_DATE_2->text().trimmed();
+        QStringList slotLabels = {"03:00", "05:00", "07:00", "09:00"};
+
+        // Reset all slots to available
+        for (int i = 0; i < 4; ++i) {
+            ui->comboBox_padal->setItemText(i, slotLabels[i]);
+        }
+
+        // Update slots based on bookings
+        if (padelBookings.contains(location) && padelBookings[location].contains(date)) {
+            const QStringList& slotList = padelBookings[location][date];
+            for (int i = 0; i < 4 && i < slotList.size(); ++i) {
+                if (slotList[i] != "0") {
+                    ui->comboBox_padal->setItemText(i, slotLabels[i] + " (Booked)");
+                }
+            }
+        }
+    };
+
+    // Also update the cancel slots function
+    auto updateCancelSlots = [=]() {
+        QString location = ui->padal_location_3->text().trimmed().toLower();
+        QString date = ui->padal_DATE_4->text().trimmed();
+        QStringList slotLabels = {"03:00", "05:00", "07:00", "09:00"};
+
+        // Reset all slots to available
+        for (int i = 0; i < 4; ++i) {
+            ui->comboBox_padal_3->setItemText(i, slotLabels[i]);
+        }
+
+        // Update slots based on bookings
+        if (padelBookings.contains(location) && padelBookings[location].contains(date)) {
+            const QStringList& slotList = padelBookings[location][date];
+            for (int i = 0; i < 4 && i < slotList.size(); ++i) {
+                if (slotList[i] != "0") {
+                    ui->comboBox_padal_3->setItemText(i, slotLabels[i] + " (Booked)");
+                }
+            }
+        }
+    };
+
+    connect(ui->padal_location, &QLineEdit::textChanged, this, updatePadalSlots);
+    connect(ui->padal_DATE_2, &QLineEdit::textChanged, this, updatePadalSlots);
+    connect(ui->padal_location_3, &QLineEdit::textChanged, this, updateCancelSlots);
+    connect(ui->padal_DATE_4, &QLineEdit::textChanged, this, updateCancelSlots);
+
+    connect(ui->Book_Button, &QPushButton::clicked, this, [=]() {
+        if (!currMember) {
+            QMessageBox::warning(this, "Error", "Please log in first.");
+            return;
+        }
+
+        QString location = ui->padal_location->text().trimmed().toLower();
+        QString date = ui->padal_DATE_2->text().trimmed();
+        int slotIndex = ui->comboBox_padal->currentIndex();
+        QStringList slotLabels = {"03:00", "05:00", "07:00", "09:00"};
+
+        // Validate date format and range
+        QDate selectedDate = QDate::fromString(date, "yyyy-MM-dd");
+        QDate today = QDate::currentDate();
+        QDate maxDate = today.addMonths(1);
+
+        if (!selectedDate.isValid()) {
+            QMessageBox::warning(this, "Invalid Date", "Please enter a valid date in yyyy-MM-dd format.");
+            return;
+        }
+
+        if (selectedDate < today) {
+            QMessageBox::warning(this, "Invalid Date", "Cannot book dates in the past.");
+            return;
+        }
+
+        if (selectedDate > maxDate) {
+            QMessageBox::warning(this, "Invalid Date", 
+                "Bookings are only allowed up to " + maxDate.toString("yyyy-MM-dd") + " (one month from today)");
+            return;
+        }
+
+        // Check if booking already exists in file
+        QFile file("G:/cs_project/ahhhhhhhhh/FullGymProject/members.txt");
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QMessageBox::warning(this, "Error", "Could not open members.txt");
+            return;
+        }
+
+        bool bookingExists = false;
+        while (!file.atEnd()) {
+            QString line = file.readLine().trimmed();
+            if (line.isEmpty()) continue;
+            
+            QStringList parts = line.split(":");
+            if (parts.size() >= 9) {
+                QString nextLine = file.readLine().trimmed();
+                if (nextLine.startsWith("Padel:")) {
+                    QStringList bookingParts = nextLine.mid(6).split("|");
+                    if (bookingParts.size() == 3) {
+                        QString existingLocation = bookingParts[0].trimmed().toLower();
+                        QString existingDate = bookingParts[1].trimmed();
+                        QString existingTime = bookingParts[2].trimmed();
+                        
+                        if (existingLocation == location && 
+                            existingDate == date && 
+                            existingTime == slotLabels[slotIndex]) {
+                            bookingExists = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        file.close();
+
+        if (bookingExists) {
+            QMessageBox::warning(this, "Already Booked", "This time slot is already booked.");
+            return;
+        }
+
+        // Initialize slots for this location and date if not exists
+        if (!padelBookings.contains(location)) {
+            padelBookings[location] = QMap<QString, QStringList>();
+        }
+        if (!padelBookings[location].contains(date)) {
+            padelBookings[location][date] = QStringList{"0", "0", "0", "0"};
+        }
+
+        QStringList& slotList = padelBookings[location][date];
+        if (slotList[slotIndex] == "0") {
+            slotList[slotIndex] = QString::number(currMember->getId());
+            
+            // Update members.txt
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                QMessageBox::warning(this, "Error", "Could not open members.txt");
+                return;
+            }
+
+            QStringList lines;
+            while (!file.atEnd()) {
+                QString line = file.readLine().trimmed();
+                if (line.isEmpty()) continue;
+                
+                QStringList parts = line.split(":");
+                if (parts.size() >= 9 && parts[0].toInt() == currMember->getId()) {
+                    // Add booking info to member's line
+                    line += "\nPadel: " + location + "|" + date + "|" + slotLabels[slotIndex];
+                }
+                lines << line;
+            }
+            file.close();
+
+            // Write back to file
+            if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                QTextStream out(&file);
+                for (const QString& l : lines) {
+                    out << l << "\n";
+                }
+                file.close();
+            }
+
+            // Update bookings.txt
+            QFile bookingsFile("G:/cs_project/ahhhhhhhhh/FullGymProject/bookings.txt");
+            if (!bookingsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                QMessageBox::warning(this, "Error", "Could not open bookings.txt");
+                return;
+            }
+
+            QStringList bookingLines;
+            bool found = false;
+            while (!bookingsFile.atEnd()) {
+                QString line = bookingsFile.readLine().trimmed();
+                if (line.isEmpty()) continue;
+
+                QStringList parts = line.split("|");
+                if (parts.size() == 3) {
+                    QString existingLocation = parts[0].trimmed().toLower();
+                    QString existingDate = parts[1].trimmed();
+                    if (existingLocation == location && existingDate == date) {
+                        // Update the slot
+                        QStringList slotValues = parts[2].split(" ");
+                        if (slotValues.size() == 4) {
+                            slotValues[slotIndex] = QString::number(currMember->getId());
+                            line = location + "|" + date + "|" + slotValues.join(" ");
+                            found = true;
+                        }
+                    }
+                }
+                bookingLines << line;
+            }
+            bookingsFile.close();
+
+            // If no existing entry found, add new one
+            if (!found) {
+                QStringList slotValues = {"0", "0", "0", "0"};
+                slotValues[slotIndex] = QString::number(currMember->getId());
+                bookingLines << location + "|" + date + "|" + slotValues.join(" ");
+            }
+
+            // Write back to bookings.txt
+            if (bookingsFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                QTextStream out(&bookingsFile);
+                for (const QString& l : bookingLines) {
+                    out << l << "\n";
+                }
+                bookingsFile.close();
+            }
+
+            QMessageBox::information(this, "Success", 
+                QString("Court booked for %1 at %2!").arg(location, slotLabels[slotIndex]));
+            updatePadalSlots();
+        } else {
+            QMessageBox::warning(this, "Unavailable", "This time slot is already booked.");
+        }
+    });
+
+    connect(ui->cancelbutton, &QPushButton::clicked, this, [=]() {
+        if (!currMember) {
+            QMessageBox::warning(this, "Error", "Please log in first.");
+            return;
+        }
+
+        QString location = ui->padal_location_3->text().trimmed().toLower();
+        QString date = ui->padal_DATE_4->text().trimmed();
+        int slotIndex = ui->comboBox_padal_3->currentIndex();
+        QStringList slotLabels = {"03:00", "05:00", "07:00", "09:00"};
+
+        // Get current date and time
+        QDateTime currentDateTime = QDateTime::currentDateTime();
+        QDate selectedDate = QDate::fromString(date, "yyyy-MM-dd");
+        
+        // Get the booking time
+        QString timeStr = slotLabels[slotIndex];
+        QTime bookingTime = QTime::fromString(timeStr, "hh:mm");
+        QDateTime bookingDateTime(selectedDate, bookingTime);
+        
+        // Check if cancellation is at least 3 hours before booking
+        if (currentDateTime.secsTo(bookingDateTime) < 3 * 3600) { // 3 hours in seconds
+            QMessageBox::warning(this, "Cannot Cancel", 
+                "Cancellations must be made at least 3 hours before the booking time.\n"
+                "Your booking is at " + timeStr + " on " + date);
+            return;
+        }
+
+        if (!padelBookings.contains(location) || 
+            !padelBookings[location].contains(date) ||
+            padelBookings[location][date][slotIndex] != QString::number(currMember->getId())) {
+            QMessageBox::warning(this, "Not Booked", "You don't have a booking for this slot.");
+            return;
+        }
+
+        // Cancel the booking
+        padelBookings[location][date][slotIndex] = "0";
+
+        // Update members.txt
+        QFile file("G:/cs_project/ahhhhhhhhh/FullGymProject/members.txt");
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QMessageBox::warning(this, "Error", "Could not open members.txt");
+            return;
+        }
+
+        QStringList lines;
+        bool foundBooking = false;
+        while (!file.atEnd()) {
+            QString line = file.readLine().trimmed();
+            if (line.isEmpty()) continue;
+            
+            QStringList parts = line.split(":");
+            if (parts.size() >= 9 && parts[0].toInt() == currMember->getId()) {
+                // Skip the booking line we want to remove
+                QString nextLine = file.readLine().trimmed();
+                if (nextLine.startsWith("Padel:") && 
+                    nextLine.contains(location) && 
+                    nextLine.contains(date) && 
+                    nextLine.contains(slotLabels[slotIndex])) {
+                    foundBooking = true;
+                    continue;
+                }
+                lines << line;
+                if (!nextLine.isEmpty()) lines << nextLine;
+            } else {
+                lines << line;
+            }
+        }
+        file.close();
+
+        // Write back to file
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream out(&file);
+            for (const QString& l : lines) {
+                out << l << "\n";
+            }
+            file.close();
+        }
+
+        // Update bookings.txt
+        QFile bookingsFile("G:/cs_project/ahhhhhhhhh/FullGymProject/bookings.txt");
+        if (!bookingsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QMessageBox::warning(this, "Error", "Could not open bookings.txt");
+            return;
+        }
+
+        QStringList bookingLines;
+        while (!bookingsFile.atEnd()) {
+            QString line = bookingsFile.readLine().trimmed();
+            if (line.isEmpty()) continue;
+
+            QStringList parts = line.split("|");
+            if (parts.size() == 3) {
+                QString existingLocation = parts[0].trimmed().toLower();
+                QString existingDate = parts[1].trimmed();
+                if (existingLocation == location && existingDate == date) {
+                    // Update the slot
+                    QStringList slotValues = parts[2].split(" ");
+                    if (slotValues.size() == 4) {
+                        slotValues[slotIndex] = "0";
+                        line = location + "|" + date + "|" + slotValues.join(" ");
+                    }
+                }
+            }
+            bookingLines << line;
+        }
+        bookingsFile.close();
+
+        // Write back to bookings.txt
+        if (bookingsFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream out(&bookingsFile);
+            for (const QString& l : bookingLines) {
+                out << l << "\n";
+            }
+            bookingsFile.close();
+        }
+
+        QMessageBox::information(this, "Success", 
+            QString("Booking canceled for %1 at %2!").arg(location, slotLabels[slotIndex]));
+        updatePadalSlots();
+    });
+
+    // Move the connection inside the constructor
+    connect(ui->searchButton, &QPushButton::clicked, this, &MainWindow::searchCourtAvailability);
 }
 
 MainWindow::~MainWindow() {
+    // Save members with their padel bookings
+    QFile file("G:/cs_project/ahhhhhhhhh/FullGymProject/members.txt");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+        for (auto it = members.begin(); it != members.end(); ++it) {
+            Member* m = it.value();
+            // Write member info
+            out << it.key() << ":" << m->getName() << ":" << m->getEmail() << ":" 
+                << m->getPassword() << ":" << m->getGender() << ":" 
+                << (m->getIsVip() ? "true" : "false") << ":" << m->getPhone() 
+                << ":" << m->getAddress() << ":" << m->getAge() << "\n";
+            
+            // Write member's padel bookings
+            for (auto locIt = padelBookings.begin(); locIt != padelBookings.end(); ++locIt) {
+                QString location = locIt.key();
+                for (auto dateIt = locIt.value().begin(); dateIt != locIt.value().end(); ++dateIt) {
+                    QString date = dateIt.key();
+                    QStringList slotList = dateIt.value();
+                    QStringList slotLabels = {"03:00", "05:00", "07:00", "09:00"};
+                    
+                    for (int i = 0; i < slotList.size(); ++i) {
+                        if (slotList[i] == QString::number(m->getId())) {
+                            out << "Padel: " << location << "|" << date << "|" << slotLabels[i] << "\n";
+                        }
+                    }
+                }
+            }
+            
+            // Write enrolled classes
+            for (auto gc : m->getClasses()) {
+                out << "Class: " << gc->getName() << "\n";
+            }
+            out << "\n"; // Blank line after each member
+        }
+        file.close();
+    }
+
     delete ui;
-    FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
-    FileHandler::saveStaff("G:/cs_project/FullGymProject/staffs.txt", staffMap);
-    FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+    FileHandler::saveStaff("G:/cs_project/ahhhhhhhhh/FullGymProject/staffs.txt", staffMap);
+    FileHandler::saveClasses("G:/cs_project/ahhhhhhhhh/FullGymProject/classes.txt", classesmap);
     qDeleteAll(members);
     qDeleteAll(staffMap);
     qDeleteAll(classesmap);
@@ -984,7 +1465,7 @@ void MainWindow::addClass() {
     updateClassesTable();
 
     // Save to file
-    // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+    // FileHandler::saveClasses("G:/cs_project/ahhhhhhhhh/FullGymProject/classes.txt", classesmap);
 
     QMessageBox::information(this, "Success", "Class added successfully!");
     
@@ -1009,7 +1490,7 @@ void MainWindow::removeClass() {
     GymClass* classToRemove = classesmap[ClassID.toInt()];
     classesmap.remove(ClassID.toInt());
 
-    // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+    // FileHandler::saveClasses("G:/cs_project/ahhhhhhhhh/FullGymProject/classes.txt", classesmap);
 
     QMessageBox::information(this, "Success", "Class removed successfully!");
 
@@ -1171,7 +1652,7 @@ void MainWindow::addMember() {
     members[newId] = newMember;
 
     // Save to file
-    // FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
+    // FileHandler::saveMembers("G:/cs_project/ahhhhhhhhh/FullGymProject/members.txt", members);
 
     // Update the members table
     updateMembersTable();
@@ -1230,8 +1711,8 @@ void MainWindow::removeMember() {
         members.remove(memberIdToRemove);
 
         // Save changes to files
-        // FileHandler::saveMembers("G:/cs_project/FullGymProject/members.txt", members);
-        // FileHandler::saveClasses("G:/cs_project/FullGymProject/classes.txt", classesmap);
+        // FileHandler::saveMembers("G:/cs_project/ahhhhhhhhh/FullGymProject/members.txt", members);
+        // FileHandler::saveClasses("G:/cs_project/ahhhhhhhhh/FullGymProject/classes.txt", classesmap);
 
         // Update the members table
         updateMembersTable();
@@ -1362,5 +1843,123 @@ void MainWindow::toggleScheduleWaitlist() {
         updateClassesTable();
         ui->toggleScheduleWaitlistBtn->setText("Show Waitlist");
         showingWaitlist = false;
+    }
+}
+
+// Add the function definition outside of the constructor
+void MainWindow::searchCourtAvailability() {
+    QString location = ui->padal_location_4->text().trimmed().toLower();
+    QString date = ui->padal_DATE_5->text().trimmed();
+
+    // Validate date format
+    QDate selectedDate = QDate::fromString(date, "yyyy-MM-dd");
+    if (!selectedDate.isValid()) {
+        QMessageBox::warning(this, "Invalid Date", "Please enter a valid date in yyyy-MM-dd format.");
+        return;
+    }
+
+    // Read bookings.txt to get slot information
+    QFile bookingsFile("G:/cs_project/ahhhhhhhhh/FullGymProject/bookings.txt");
+    if (!bookingsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, "Error", "Could not open bookings.txt");
+        return;
+    }
+
+    QStringList slotLabels = {"03:00", "05:00", "07:00", "09:00"};
+    QMap<QString, bool> slotAvailability;
+    bool found = false;
+
+    // Initialize all slots as available
+    for (const QString& slot : slotLabels) {
+        slotAvailability[slot] = true;
+    }
+
+    // Read and process bookings
+    QString content = bookingsFile.readAll();
+    bookingsFile.close();
+    
+    QStringList lines = content.split('\n', Qt::SkipEmptyParts);
+    for (const QString& line : lines) {
+        QStringList parts = line.split("|");
+        if (parts.size() == 3) {
+            QString existingLocation = parts[0].trimmed().toLower();
+            QString existingDate = parts[1].trimmed();
+            
+            if (existingLocation == location && existingDate == date) {
+                found = true;
+                QStringList slotValues = parts[2].split(" ");
+                for (int i = 0; i < slotValues.size() && i < slotLabels.size(); ++i) {
+                    QString value = slotValues[i].trimmed();
+                    slotAvailability[slotLabels[i]] = (value == QString("0"));
+                }
+                break;
+            }
+        }
+    }
+
+    // Setup the table widget
+    ui->widget_56->clearContents();
+    ui->widget_56->setRowCount(0);
+    ui->widget_56->setColumnCount(2);
+    ui->widget_56->setHorizontalHeaderLabels(QStringList() << "Time Slot" << "Status");
+
+    // Style the table
+    ui->widget_56->setStyleSheet(R"(
+        QTableWidget {
+            background-color: #3b5a6a;
+            color: #fffbe6;
+            font: 13pt 'Yeasty Flavors';
+            border-radius: 20px;
+            border: none;
+            gridline-color: #fffbe6;
+        }
+        QHeaderView::section {
+            background-color: #3b5a6a;
+            color: #fffbe6;
+            font: bold 14pt 'Yeasty Flavors';
+            border: none;
+            padding: 8px;
+        }
+        QTableWidget::item {
+            border-bottom: 2px solid #fffbe6;
+            padding: 8px;
+        }
+        QTableWidget::item:selected {
+            background-color: #f1c27d;
+            color: #3b5a6a;
+        }
+    )");
+
+    // Set column widths
+    ui->widget_56->setColumnWidth(0, 150);  // Time Slot
+    ui->widget_56->setColumnWidth(1, 150);  // Status
+
+    // Make the table read-only
+    ui->widget_56->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    
+    // Enable selection of entire rows
+    ui->widget_56->setSelectionBehavior(QAbstractItemView::SelectRows);
+    
+    // Hide vertical header
+    ui->widget_56->verticalHeader()->setVisible(false);
+
+    // Add rows for each time slot
+    for (const QString& slot : slotLabels) {
+        int row = ui->widget_56->rowCount();
+        ui->widget_56->insertRow(row);
+        
+        // Add time slot
+        ui->widget_56->setItem(row, 0, new QTableWidgetItem(slot));
+        
+        // Add status
+        QString status = slotAvailability[slot] ? "Available" : "Booked";
+        QTableWidgetItem* statusItem = new QTableWidgetItem(status);
+        statusItem->setForeground(status == "Available" ? QColor("#4CAF50") : QColor("#f44336"));
+        ui->widget_56->setItem(row, 1, statusItem);
+    }
+
+    // Set row heights
+    for (int row = 0; row < ui->widget_56->rowCount(); ++row) {
+        ui->widget_56->setRowHeight(row, 40);
     }
 }

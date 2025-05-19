@@ -251,26 +251,29 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
             continue;
         }
         
-        // Handle VIP waitlist by IDs
+        // Handle VIP waitlist
         if (line.startsWith("VIPWaitlist:")) {
             if (gc) {
                 QStringList ids = line.mid(QString("VIPWaitlist:").length()).split(",", Qt::SkipEmptyParts);
                 for (const QString& idStr : ids) {
-                    int id = idStr.toInt();
-                    if (members.contains(id)) {
+                    bool ok = false;
+                    int id = idStr.toInt(&ok);
+                    if (ok && members.contains(id)) {
                         gc->getVIPList().enqueue(members[id]);
                     }
                 }
             }
             continue;
         }
-        // Handle Normal waitlist by IDs
+        
+        // Handle Normal waitlist
         if (line.startsWith("NormalWaitlist:")) {
             if (gc) {
                 QStringList ids = line.mid(QString("NormalWaitlist:").length()).split(",", Qt::SkipEmptyParts);
                 for (const QString& idStr : ids) {
-                    int id = idStr.toInt();
-                    if (members.contains(id)) {
+                    bool ok = false;
+                    int id = idStr.toInt(&ok);
+                    if (ok && members.contains(id)) {
                         gc->getNormalList().enqueue(members[id]);
                     }
                 }
@@ -324,17 +327,28 @@ QMap<int, GymClass*> FileHandler::loadClasses(const QString& filePath, QMap<int,
 }
 
 void FileHandler::saveQueueData(QTextStream &out, const QQueue<Member*>& normalList, const QQueue<Member*>& VIPList) {
+    // Save VIP waitlist
     if (!VIPList.isEmpty()) {
         out << "VIPWaitlist:";
-        for (const Member* member : VIPList) {
-            out << member->getId() << ",";
+        QQueue<Member*> tempVIP = VIPList;
+        while (!tempVIP.isEmpty()) {
+            out << tempVIP.dequeue()->getId();
+            if (!tempVIP.isEmpty()) {
+                out << ",";
+            }
         }
         out << "\n";
     }
+    
+    // Save normal waitlist
     if (!normalList.isEmpty()) {
         out << "NormalWaitlist:";
-        for (const Member* member : normalList) {
-            out << member->getId() << ",";
+        QQueue<Member*> tempNormal = normalList;
+        while (!tempNormal.isEmpty()) {
+            out << tempNormal.dequeue()->getId();
+            if (!tempNormal.isEmpty()) {
+                out << ",";
+            }
         }
         out << "\n";
     }

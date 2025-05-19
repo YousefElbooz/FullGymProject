@@ -9,6 +9,11 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    BookingCourt.cpp \
+    BookingLoader.cpp \
+    Court.cpp \
+    CourtLoader.cpp \
+    HelperFunction.cpp \
     animations.cpp \
     coach.cpp \
     filehandler.cpp \
@@ -21,6 +26,11 @@ SOURCES += \
     staff.cpp
 
 HEADERS += \
+    BookingCourt.h \
+    BookingLoader.h \
+    Court.h \
+    CourtLoader.h \
+    HelperFunction.h \
     animations.h \
     coach.h \
     filehandler.h \
@@ -40,7 +50,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    bookings.txt \
     classes.txt \
+    courts.txt \
     members.txt \
     staffs.txt \
     waitlist.txt
