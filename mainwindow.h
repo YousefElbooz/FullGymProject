@@ -16,6 +16,7 @@
 #include <QStackedWidget>
 #include <QWidget>
 #include <QLabel>
+#include <QLabel>
 #include "member.h"
 #include "manger.h"
 #include "staff.h"
@@ -32,6 +33,7 @@ class MainWindow : public QMainWindow
 private:
     void setPixmapForWidgets();
     void updateSubscriptionInfo();
+    void updateSubscriptionInfo();
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -43,6 +45,12 @@ private slots:
     void addClass();
     void removeClass();
     void updateClassesTable();
+    void addWorkout();
+    void removeLastWorkout();
+    void displayWorkouts();
+    void clearWorkouts();
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override;
     void viewWaitlist();
     void toggleScheduleWaitlist();
     void showPadelCourtPage();
@@ -60,6 +68,8 @@ private:
     Member* currMember;
     Staff * currStaff;
     
+    
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
+

@@ -41,6 +41,11 @@ public:
     static QList<QStringList> loadCourts(const QString& filePath);
     static void saveCourts(const QString& filePath, const QList<QStringList>& courts);
 
+    //waitlist functions
+    //    static QMap<int, GymClass*> loadClasses(const QString& filePath,QMap<int, GymClass*> gymClasses);  // ✅ Add thi
+    //     static void saveClasses(const QString& filePath, const QMap<int, GymClass*>& classes);  // ✅ Add this
+
+    //   static void saveQueueData(QTextStream &out, const QQueue<Member*>& normalList, const QQueue<Member*>& VIPList) ;
 };
 
 #endif // FILEHANDLER_H

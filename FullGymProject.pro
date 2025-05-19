@@ -58,5 +58,8 @@ DISTFILES += \
     padel_courts.txt \
     staffs.txt \
     waitlist.txt
+    staffs.txt
+
 RESOURCES += \
     resource.qrc
+

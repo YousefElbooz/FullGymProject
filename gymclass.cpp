@@ -14,6 +14,9 @@ void GymClass::addMember(Member* member) {
         //handle full capacity
     }
 }
+        //handle full capacity
+    }
+}
 /////what to do/???
 
 void GymClass::setCoach(Coach* coach) {this->coach = coach;}
@@ -34,3 +37,4 @@ void GymClass::setEnrolled(int enrolled){this->enrolled=enrolled;}
 void GymClass::removeMember(Member* member) {
     members.removeOne(member);
 }
+
